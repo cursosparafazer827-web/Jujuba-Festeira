@@ -8,9 +8,6 @@ Aplicação de catálogo e encomendas via WhatsApp, com painel administrativo pr
 - Supabase Auth, PostgreSQL e Storage
 - Encomendas finalizadas manualmente pelo WhatsApp
 
-## Estado
-Este repositório estava vazio. A implementação será feita por etapas, preservando a base de dados existente no Supabase.
-
 ## Configuração local
 1. Instalar Node.js LTS.
 2. Executar `npm install`.
@@ -20,6 +17,7 @@ Este repositório estava vazio. A implementação será feita por etapas, preser
 Variáveis necessárias:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+- `NEXT_PUBLIC_WHATSAPP_NUMBER` (número internacional, apenas dígitos; exemplo: `5544997477331`)
 
 Nunca colocar a chave `service_role` em variáveis `NEXT_PUBLIC_*` nem no código do browser.
 
