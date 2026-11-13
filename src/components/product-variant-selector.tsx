@@ -47,10 +47,21 @@ export default function ProductVariantSelector({
     if (variants.length > 0 && !selected) return;
 
     const formData = new FormData(event.currentTarget);
+    const missingRequired = fields.find((field) => field.is_required && (
+      field.field_type === "checkbox"
+        ? formData.getAll(field.field_key).length === 0
+        : !String(formData.get(field.field_key) || "").trim()
+    ));
+    if (missingRequired) {
+      window.alert(`Por favor, preencha: ${missingRequired.label}.`);
+      return;
+    }
     const details = fields
       .map((field) => {
-        const value = String(formData.get(field.field_key) || "").trim();
-        return value ? `${field.label}: ${value}` : null;
+        const values = field.field_type === "checkbox"
+          ? formData.getAll(field.field_key).map((value) => String(value).trim()).filter(Boolean)
+          : [String(formData.get(field.field_key) || "").trim()].filter(Boolean);
+        return values.length ? `${field.label}: ${values.join(", ")}` : null;
       })
       .filter((value): value is string => Boolean(value));
 
