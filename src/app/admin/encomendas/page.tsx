@@ -12,13 +12,13 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
  const {supabase}=await requireAdmin();
  const params=await searchParams;
  const selectedStatus=statuses.includes(params.status as (typeof statuses)[number])?params.status as (typeof statuses)[number]:"";
- const searchTerm=(params.q||"").trim().replace(/[,.()\\%_*]/g," ").replace(/\\s+/g," ").slice(0,80);
+ const searchTerm=(params.q||"").trim().replace(/[,.()\\%_*]/g," ").replace(/\s+/g," ").slice(0,80);
  let ordersQuery=supabase.from("orders").select("*");
  if(selectedStatus) ordersQuery=ordersQuery.eq("status",selectedStatus);
  if(searchTerm){
   const safeTerm=searchTerm.replace(/[%_]/g,"");
   const filters=[`customer_name.ilike.%${safeTerm}%`,`customer_phone.ilike.%${safeTerm}%`];
-  if(/^\\d+$/.test(safeTerm)) filters.push(`order_number.eq.${safeTerm}`);
+  if(/^\d+$/.test(safeTerm)) filters.push(`order_number.eq.${safeTerm}`);
   ordersQuery=ordersQuery.or(filters.join(","));
  }
  const [{data:orders,error:ordersError},{data:products,error:productsError}]=await Promise.all([
