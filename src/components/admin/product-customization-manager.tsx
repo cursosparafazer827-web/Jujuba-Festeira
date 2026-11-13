@@ -1,6 +1,6 @@
 "use client";
 
-import { saveCustomizationField } from "@/app/admin/actions";
+import { saveCustomizationField, updateCustomizationField, deleteCustomizationField } from "@/app/admin/actions";
 
 type Field = {
   id: string;
@@ -18,11 +18,37 @@ export default function ProductCustomizationManager({ productId, fields }: { pro
       <summary className="cursor-pointer text-sm font-bold text-berry">Personalizações do produto ({fields.length})</summary>
       <div className="mt-3 space-y-3">
         {fields.map((field) => (
-          <div key={field.id} className="rounded-lg bg-pink-50/60 p-3 text-sm">
-            <p className="font-semibold">{field.label} <span className="font-normal text-stone-500">· {field.field_type}</span> {field.is_required ? "· Obrigatório" : "· Opcional"}</p>
-            {field.options?.length ? <p className="mt-1 text-xs text-stone-600">Opções: {field.options.join(", ")}</p> : null}
+          <details key={field.id} className="rounded-lg bg-pink-50/60 p-3 text-sm">
+            <summary className="cursor-pointer font-semibold">{field.label} <span className="font-normal text-stone-500">· {field.field_type}</span> {field.is_required ? "· Obrigatório" : "· Opcional"} · Editar</summary>
+            {field.options?.length ? <p className="mt-2 text-xs text-stone-600">Opções atuais: {field.options.join(", ")}</p> : null}
             {!field.is_active ? <p className="text-xs text-red-600">Inativo</p> : null}
-          </div>
+            <form action={updateCustomizationField} className="mt-3 grid gap-2">
+              <input type="hidden" name="id" value={field.id} />
+              <input type="hidden" name="product_id" value={productId} />
+              <label className="field">Pergunta<input name="label" required maxLength={100} defaultValue={field.label}/></label>
+              <label className="field">Tipo de escolha
+                <select name="field_type" defaultValue={field.field_type}>
+                  <option value="select">Lista suspensa</option>
+                  <option value="radio">Escolher uma opção (botões)</option>
+                  <option value="checkbox">Marcar várias opções</option>
+                </select>
+              </label>
+              <label className="field">Opções (uma por linha)
+                <textarea name="options" rows={4} required defaultValue={(field.options || []).join("\\n")} />
+              </label>
+              <label className="field">Texto de ajuda<input name="help_text" maxLength={180} defaultValue={field.help_text || ""}/></label>
+              <label className="flex items-center gap-2"><input type="checkbox" name="is_required" defaultChecked={field.is_required}/> Resposta obrigatória</label>
+              <label className="flex items-center gap-2"><input type="checkbox" name="is_active" defaultChecked={field.is_active}/> Ativo na loja</label>
+              <label className="field">Ordem de apresentação<input name="sort_order" type="number" min="0" max="100000" defaultValue={field.sort_order ?? 0}/></label>
+              <button className="btn mt-1">Guardar alterações</button>
+            </form>
+            <form action={deleteCustomizationField} className="mt-3 flex flex-wrap items-end gap-2 border-t border-red-100 pt-3">
+              <input type="hidden" name="id" value={field.id}/>
+              <input type="hidden" name="product_id" value={productId}/>
+              <label className="field flex-1 text-xs text-red-700">Para apagar, escreva APAGAR<input name="confirmation" required autoComplete="off" placeholder="APAGAR"/></label>
+              <button className="btn bg-red-600 text-white hover:bg-red-700">Apagar opção</button>
+            </form>
+          </details>
         ))}
         <form action={saveCustomizationField} className="grid gap-2 rounded-xl border border-pink-100 p-3">
           <input type="hidden" name="product_id" value={productId} />
