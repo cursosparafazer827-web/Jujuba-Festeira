@@ -2,7 +2,7 @@
 import { requireAdmin } from "@/lib/admin";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-function slugify(s:string){return s.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
+function slugify(s:string){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 export async function saveProduct(formData:FormData){
  const {supabase}=await requireAdmin();
  const id=String(formData.get("id")||""); const name=String(formData.get("name")||"").trim(); const price=Number(String(formData.get("price")||"").replace(",",".")); const categoryId=String(formData.get("category_id")||"");
@@ -86,8 +86,8 @@ export async function saveCustomizationField(formData:FormData){
  const helpText=String(formData.get("help_text")||"").trim();
  const sortOrder=Number(formData.get("sort_order")||0);
  const isRequired=formData.get("is_required")==="on";
- const options=rawOptions.split(/\\r?\\n/).map(value=>value.trim()).filter(Boolean);
- const fieldKey=label.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"");
+ const options=rawOptions.split(/\r?\n/).map(value=>value.trim()).filter(Boolean);
+ const fieldKey=label.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"");
  if(!productId||!label||label.length>100||!["select","radio","checkbox"].includes(fieldType)||options.length<2||options.length>30||options.some(value=>value.length>80)||new Set(options.map(value=>value.toLowerCase())).size!==options.length||!Number.isInteger(sortOrder)||sortOrder<0||sortOrder>100000||!fieldKey) redirect("/admin?error=customization_invalid");
  const {data:product,error:productError}=await supabase.from("products").select("id").eq("id",productId).maybeSingle();
  if(productError||!product) redirect("/admin?error=customization_invalid");
