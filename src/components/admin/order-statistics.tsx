@@ -16,9 +16,23 @@ type Props = {
 };
 
 type Period = "today" | "7days" | "month" | "all";
+type MonthlyStat = {
+  key: string;
+  label: string;
+  orders: number;
+  value: number;
+};
 
 const money = (cents: number) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(cents / 100);
+
+const compactMoney = (cents: number) =>
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(cents / 100);
 
 const periodLabels: Record<Period, string> = {
   today: "Hoje",
@@ -47,6 +61,35 @@ export default function OrderStatistics({ orders, error = false }: Props) {
       return !Number.isNaN(orderDate.getTime()) && orderDate >= start && orderDate <= now;
     });
   }, [orders, period]);
+
+  const monthlyStats = useMemo(() => {
+    const now = new Date();
+    const months: MonthlyStat[] = [];
+
+    for (let offset = 5; offset >= 0; offset -= 1) {
+      const date = new Date(now.getFullYear(), now.getMonth() - offset, 1);
+      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      months.push({
+        key,
+        label: new Intl.DateTimeFormat("pt-BR", { month: "short" }).format(date).replace(".", ""),
+        orders: 0,
+        value: 0,
+      });
+    }
+
+    const byMonth = new Map(months.map((month) => [month.key, month]));
+    for (const order of orders) {
+      const date = new Date(order.order_date);
+      if (Number.isNaN(date.getTime())) continue;
+      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      const month = byMonth.get(key);
+      if (!month) continue;
+      month.orders += 1;
+      if (order.status !== "Cancelada") month.value += order.total_price_cents;
+    }
+
+    return months;
+  }, [orders]);
 
   if (error) {
     return (
@@ -81,6 +124,9 @@ export default function OrderStatistics({ orders, error = false }: Props) {
     { label: "Valor total", value: money(totalValue), detail: "Sem encomendas canceladas" },
   ];
 
+  const maxOrders = Math.max(1, ...monthlyStats.map((month) => month.orders));
+  const maxValue = Math.max(1, ...monthlyStats.map((month) => month.value));
+
   return (
     <section className="mb-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
@@ -111,6 +157,47 @@ export default function OrderStatistics({ orders, error = false }: Props) {
           </article>
         ))}
       </div>
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <div className="panel min-w-0">
+          <h3 className="font-black">Evolução das encomendas</h3>
+          <p className="muted mt-1 text-xs">Quantidade registada por mês, nos últimos 6 meses.</p>
+          <div className="mt-5 flex h-44 items-end gap-2 sm:gap-4" role="img" aria-label="Gráfico de encomendas registadas por mês nos últimos seis meses">
+            {monthlyStats.map((month) => (
+              <div key={month.key} className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-2">
+                <span className="text-xs font-bold tabular-nums">{month.orders}</span>
+                <div className="flex h-28 w-full items-end overflow-hidden rounded-t-lg bg-pink-50">
+                  <div
+                    className="w-full rounded-t-lg bg-pink-400 transition-all"
+                    style={{ height: `${month.orders === 0 ? 0 : Math.max(5, (month.orders / maxOrders) * 100)}%` }}
+                  />
+                </div>
+                <span className="text-[11px] capitalize text-gray-500">{month.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="panel min-w-0">
+          <h3 className="font-black">Valor registado por mês</h3>
+          <p className="muted mt-1 text-xs">Total em reais, sem encomendas canceladas, nos últimos 6 meses.</p>
+          <div className="mt-5 flex h-44 items-end gap-2 sm:gap-4" role="img" aria-label="Gráfico do valor registado por mês nos últimos seis meses">
+            {monthlyStats.map((month) => (
+              <div key={month.key} className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-2">
+                <span className="max-w-full truncate text-[10px] font-bold tabular-nums sm:text-xs">{compactMoney(month.value)}</span>
+                <div className="flex h-28 w-full items-end overflow-hidden rounded-t-lg bg-rose-50">
+                  <div
+                    className="w-full rounded-t-lg bg-rose-400 transition-all"
+                    style={{ height: `${month.value === 0 ? 0 : Math.max(5, (month.value / maxValue) * 100)}%` }}
+                  />
+                </div>
+                <span className="text-[11px] capitalize text-gray-500">{month.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="panel mt-4">
         <h3 className="font-black">Produtos mais pedidos</h3>
         <p className="muted mt-1 text-xs">Classificação pela quantidade de unidades em encomendas não canceladas neste período.</p>
