@@ -9,10 +9,21 @@ type ProductVariant = {
   attributes: Record<string, unknown> | null;
 };
 
+type CustomizationField = {
+  id: string;
+  label: string;
+  field_key: string;
+  field_type: "text" | "number" | "textarea";
+  is_required: boolean;
+  placeholder: string | null;
+  help_text: string | null;
+};
+
 type Props = {
   productName: string;
   basePriceCents: number;
   variants: ProductVariant[];
+  fields: CustomizationField[];
   whatsapp: string;
 };
 
@@ -23,18 +34,39 @@ export default function ProductVariantSelector({
   productName,
   basePriceCents,
   variants,
+  fields,
   whatsapp,
 }: Props) {
   const [selectedId, setSelectedId] = useState("");
   const selected = variants.find((variant) => variant.id === selectedId);
   const price = selected?.price_cents ?? basePriceCents;
-  const message = selected
-    ? `Olá! Gostaria de encomendar: ${productName}. Opção escolhida: ${selected.name}. Preço apresentado: ${money(selected.price_cents)}.`
-    : `Olá! Gostaria de saber mais sobre: ${productName}.`;
-  const href = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+
+  function sendOrder(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (variants.length > 0 && !selected) return;
+
+    const formData = new FormData(event.currentTarget);
+    const details = fields
+      .map((field) => {
+        const value = String(formData.get(field.field_key) || "").trim();
+        return value ? `${field.label}: ${value}` : null;
+      })
+      .filter((value): value is string => Boolean(value));
+
+    const message = [
+      `Olá! Gostaria de encomendar: ${productName}.`,
+      selected ? `Opção escolhida: ${selected.name}.` : null,
+      `Preço apresentado: ${money(price)}.`,
+      details.length ? "Dados para personalização:" : null,
+      ...details,
+    ].filter(Boolean).join("\n");
+
+    const href = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+    window.location.assign(href);
+  }
 
   return (
-    <div className="mt-7">
+    <form className="mt-7" onSubmit={sendOrder}>
       {variants.length ? (
         <div id="opcoes">
           <label htmlFor="product-variant" className="mb-2 block text-sm font-bold text-stone-700">
@@ -44,6 +76,7 @@ export default function ProductVariantSelector({
             id="product-variant"
             value={selectedId}
             onChange={(event) => setSelectedId(event.target.value)}
+            required
             className="w-full rounded-xl border border-pink-200 bg-white px-4 py-3 text-sm outline-none focus:border-berry"
           >
             <option value="">Selecione quantidade, tamanho ou cor</option>
@@ -58,21 +91,55 @@ export default function ProductVariantSelector({
           </p>
         </div>
       ) : null}
+
+      {fields.length ? (
+        <div className="mt-6 space-y-4">
+          <div>
+            <h2 className="text-base font-bold">Personalize o seu produto</h2>
+            <p className="mt-1 text-xs text-stone-500">
+              Preencha os dados para prepararmos a sua encomenda.
+            </p>
+          </div>
+          {fields.map((field) => (
+            <label key={field.id} className="block text-sm font-semibold text-stone-700">
+              {field.label}{field.is_required ? " *" : ""}
+              {field.field_type === "textarea" ? (
+                <textarea
+                  name={field.field_key}
+                  required={field.is_required}
+                  placeholder={field.placeholder || ""}
+                  rows={3}
+                  className="mt-2 w-full rounded-xl border border-pink-200 bg-white px-4 py-3 font-normal outline-none focus:border-berry"
+                />
+              ) : (
+                <input
+                  name={field.field_key}
+                  type={field.field_type === "number" ? "number" : "text"}
+                  min={field.field_type === "number" ? 1 : undefined}
+                  required={field.is_required}
+                  placeholder={field.placeholder || ""}
+                  className="mt-2 w-full rounded-xl border border-pink-200 bg-white px-4 py-3 font-normal outline-none focus:border-berry"
+                />
+              )}
+              {field.help_text ? (
+                <span className="mt-1 block text-xs font-normal text-stone-500">{field.help_text}</span>
+              ) : null}
+            </label>
+          ))}
+          <p className="text-xs text-stone-500">* Campos obrigatórios</p>
+        </div>
+      ) : null}
+
       <p className="mt-5 text-2xl font-black text-berry">
         {variants.length && !selected ? "Escolha uma opção" : money(price)}
       </p>
-      <a
+      <button
+        type="submit"
         className={`btn mt-5 inline-flex ${variants.length && !selected ? "pointer-events-none opacity-50" : ""}`}
-        href={variants.length && !selected ? "#opcoes" : href}
-        aria-disabled={variants.length > 0 && !selected}
-        onClick={(event) => {
-          if (variants.length > 0 && !selected) event.preventDefault();
-        }}
-        target="_blank"
-        rel="noreferrer"
+        disabled={variants.length > 0 && !selected}
       >
-        {variants.length && !selected ? "Selecione uma opção" : "Consultar pelo WhatsApp"}
-      </a>
-    </div>
+        Consultar pelo WhatsApp
+      </button>
+    </form>
   );
 }
