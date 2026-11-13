@@ -10,8 +10,8 @@ type Field = {
   is_required: boolean;
   options: string[];
   is_active: boolean;
-  help_text: string | null;
-  sort_order: number;
+  help_text?: string | null;
+  sort_order?: number;
 };
 
 export default function ProductCustomizationManager({ productId, fields }: { productId: string; fields: Field[] }) {
