@@ -10,6 +10,8 @@ type Field = {
   is_required: boolean;
   options: string[];
   is_active: boolean;
+  help_text: string | null;
+  sort_order: number;
 };
 
 export default function ProductCustomizationManager({ productId, fields }: { productId: string; fields: Field[] }) {
@@ -34,7 +36,7 @@ export default function ProductCustomizationManager({ productId, fields }: { pro
                 </select>
               </label>
               <label className="field">Opções (uma por linha)
-                <textarea name="options" rows={4} required defaultValue={(field.options || []).join("\\n")} />
+                <textarea name="options" rows={4} required defaultValue={(field.options || []).join("\n")} />
               </label>
               <label className="field">Texto de ajuda<input name="help_text" maxLength={180} defaultValue={field.help_text || ""}/></label>
               <label className="flex items-center gap-2"><input type="checkbox" name="is_required" defaultChecked={field.is_required}/> Resposta obrigatória</label>
