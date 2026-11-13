@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProductPhotoCarousel from "@/components/product-photo-carousel";
+import ProductVariantSelector from "@/components/product-variant-selector";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,7 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
   const supabase = await createClient();
   const { data: product } = await supabase
     .from("products")
-    .select("id,name,slug,short_description,description,base_price_cents,product_images(image_url,alt_text,is_primary,sort_order)")
+    .select("id,name,slug,short_description,description,base_price_cents,product_images(image_url,alt_text,is_primary,sort_order),product_variants(id,name,price_cents,attributes,is_active,sort_order)")
     .eq("slug", slug)
     .eq("is_active", true)
     .maybeSingle();
@@ -21,7 +22,7 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
 
   const photos = (product.product_images || []) as { image_url: string | null; alt_text: string | null; is_primary: boolean; sort_order: number }[];
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5544997477331";
-  const message = encodeURIComponent("Olá! Gostaria de saber mais sobre: " + product.name);
+  const variants = ((product.product_variants || []) as { id: string; name: string; price_cents: number; attributes: Record<string, unknown> | null; is_active: boolean; sort_order: number }[]).filter((variant) => variant.is_active).sort((a, b) => a.sort_order - b.sort_order);
 
   return (
     <main className="container min-h-screen py-8">
@@ -36,8 +37,7 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
           <h1 className="mt-3 text-3xl font-black">{product.name}</h1>
           {product.short_description ? <p className="mt-4 text-stone-600">{product.short_description}</p> : null}
           {product.description ? <div className="mt-5 whitespace-pre-wrap text-sm leading-7 text-stone-700">{product.description}</div> : null}
-          <p className="mt-7 text-2xl font-black text-berry">{money(product.base_price_cents)}</p>
-          <a className="btn mt-5 inline-flex" href={`https://wa.me/${whatsapp}?text=${message}`} target="_blank" rel="noreferrer">Consultar pelo WhatsApp</a>
+          <ProductVariantSelector productName={product.name} basePriceCents={product.base_price_cents} variants={variants} whatsapp={whatsapp} />
         </section>
       </div>
     </main>
