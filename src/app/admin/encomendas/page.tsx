@@ -8,13 +8,16 @@ type ProductOption={id:string;name:string};
 type OrderRecord={id:string;order_number:number;customer_name:string;customer_phone:string;product_name:string;variant_name:string|null;quantity:number;unit_price_cents:number;total_price_cents:number;customizations:{details?:string}|null;notes:string|null;status:(typeof statuses)[number];order_date:string};
 const money=(cents:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(cents/100);
 
-export default async function OrdersPage({searchParams}:{searchParams:Promise<{saved?:string;updated?:string;error?:string}>}){
+export default async function OrdersPage({searchParams}:{searchParams:Promise<{saved?:string;updated?:string;error?:string;status?:string}>}){
  const {supabase}=await requireAdmin();
+ const params=await searchParams;
+ const selectedStatus=statuses.includes(params.status as (typeof statuses)[number])?params.status as (typeof statuses)[number]:"";
+ let ordersQuery=supabase.from("orders").select("*");
+ if(selectedStatus) ordersQuery=ordersQuery.eq("status",selectedStatus);
  const [{data:orders,error:ordersError},{data:products,error:productsError}]=await Promise.all([
-  supabase.from("orders").select("*").order("order_date",{ascending:false}).limit(100),
+  ordersQuery.order("order_date",{ascending:false}).limit(100),
   supabase.from("products").select("id,name").order("name")
  ]);
- const params=await searchParams;
  const errorMessage=params.error==="invalid"?"Verifique os dados da encomenda e tente novamente.":params.error==="save"?"Não foi possível registar a encomenda. Tente novamente.":params.error==="status"?"Não foi possível atualizar o estado da encomenda.":ordersError?"Não foi possível carregar as encomendas.":productsError?"Não foi possível carregar os produtos.":null;
  return <main className="container py-10">
   <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
@@ -41,14 +44,19 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
    </form>
   </section>
   <section className="panel">
-   <div className="mb-5 flex items-center justify-between gap-3"><h2 className="text-xl font-black">Encomendas recebidas</h2><span className="pill">{orders?.length||0}</span></div>
+   <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="text-xl font-black">Encomendas recebidas</h2><span className="pill">{orders?.length||0} {selectedStatus?"encomendas neste estado":"encomendas recentes"}</span></div>
+   <form method="get" className="mb-5 flex flex-wrap items-end gap-3 rounded-xl bg-pink-50/60 p-3">
+    <label className="field min-w-48 flex-1">Filtrar por estado<select name="status" defaultValue={selectedStatus}><option value="">Todos os estados</option>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label>
+    <button className="btn btn-light" type="submit">Filtrar</button>
+    {selectedStatus?<Link href="/admin/encomendas" className="btn btn-light">Limpar filtro</Link>:null}
+   </form>
    <div className="grid gap-4">
     {orders?.map((order:OrderRecord)=><article key={order.id} className="rounded-xl border border-pink-100 p-4">
      <div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-bold">Encomenda #{order.order_number} · {order.customer_name}</h3><p className="muted mt-1 text-xs">{new Date(order.order_date).toLocaleString("pt-BR")}</p><p className="mt-2 text-sm">{order.product_name}{order.variant_name?" · "+order.variant_name:""} · {order.quantity} un.</p><p className="mt-1 font-black text-berry">{money(order.total_price_cents)}</p></div><a className="btn btn-light text-xs" href={"https://wa.me/"+String(order.customer_phone).replace(/\D/g,"")} target="_blank" rel="noreferrer">Abrir WhatsApp</a></div>
      <div className="mt-3 grid gap-1 text-sm"><p><strong>Telefone:</strong> {order.customer_phone}</p>{order.customizations?.details?<p className="whitespace-pre-line"><strong>Personalizações:</strong> {order.customizations.details}</p>:null}{order.notes?<p className="whitespace-pre-line"><strong>Observações:</strong> {order.notes}</p>:null}</div>
      <form action={updateOrderStatus} className="mt-4 flex flex-wrap items-end gap-2 border-t border-pink-100 pt-3"><input type="hidden" name="id" value={order.id}/><label className="field min-w-48 flex-1">Estado da encomenda<select name="status" defaultValue={order.status}>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label><button className="btn btn-light">Atualizar estado</button></form>
     </article>)}
-    {!orders?.length?<p className="muted">Ainda não existem encomendas registadas.</p>:null}
+    {!orders?.length?<p className="muted">{selectedStatus?"Não existem encomendas com este estado.":"Ainda não existem encomendas registadas."}</p>:null}
    </div>
   </section>
  </main>;
