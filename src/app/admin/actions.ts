@@ -76,3 +76,28 @@ export async function deleteVariant(formData:FormData){
  redirect("/admin?variant_deleted=1");
 }
 export async function logoutAction(){const {supabase}=await requireAdmin();await supabase.auth.signOut();redirect("/admin/login");}
+
+export async function saveCustomizationField(formData:FormData){
+ const {supabase}=await requireAdmin();
+ const productId=String(formData.get("product_id")||"").trim();
+ const label=String(formData.get("label")||"").trim();
+ const fieldType=String(formData.get("field_type")||"");
+ const rawOptions=String(formData.get("options")||"");
+ const helpText=String(formData.get("help_text")||"").trim();
+ const sortOrder=Number(formData.get("sort_order")||0);
+ const isRequired=formData.get("is_required")==="on";
+ const options=rawOptions.split(/\\r?\\n/).map(value=>value.trim()).filter(Boolean);
+ const fieldKey=label.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"");
+ if(!productId||!label||label.length>100||!["select","radio","checkbox"].includes(fieldType)||options.length<2||options.length>30||options.some(value=>value.length>80)||new Set(options.map(value=>value.toLowerCase())).size!==options.length||!Number.isInteger(sortOrder)||sortOrder<0||sortOrder>100000||!fieldKey) redirect("/admin?error=customization_invalid");
+ const {data:product,error:productError}=await supabase.from("products").select("id").eq("id",productId).maybeSingle();
+ if(productError||!product) redirect("/admin?error=customization_invalid");
+ const {data:existing,error:existingError}=await supabase.from("customization_fields").select("id").eq("product_id",productId).eq("field_key",fieldKey).maybeSingle();
+ if(existingError) redirect("/admin?error=customization_save");
+ if(existing) redirect("/admin?error=customization_duplicate");
+ const {error}=await supabase.from("customization_fields").insert({product_id:productId,label,field_key:fieldKey,field_type:fieldType,is_required:isRequired,placeholder:null,help_text:helpText||null,options,sort_order:sortOrder,is_active:true});
+ if(error) redirect("/admin?error=customization_save");
+ revalidatePath("/");
+ revalidatePath("/admin");
+ revalidatePath("/produto/[slug]");
+ redirect("/admin?customization_saved=1");
+}
