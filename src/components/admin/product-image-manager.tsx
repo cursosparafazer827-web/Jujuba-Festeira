@@ -38,6 +38,8 @@ export default function ProductImageManager({ productId, productName, initialIma
     const supabase = createClient();
 
     try {
+      let hasImages = images.length > 0;
+      let nextOrder = images.reduce((max, image) => Math.max(max, image.sort_order), -1) + 1;
       for (const file of files) {
         if (!file.type.startsWith("image/") || !["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
           throw new Error("Use imagens JPG, PNG, WEBP ou GIF.");
@@ -56,8 +58,7 @@ export default function ProductImageManager({ productId, productName, initialIma
         if (uploadError) throw uploadError;
 
         const { data: publicData } = supabase.storage.from(BUCKET).getPublicUrl(storagePath);
-        const isPrimary = images.length === 0;
-        const nextOrder = images.reduce((max, image) => Math.max(max, image.sort_order), -1) + 1;
+        const isPrimary = !hasImages;
         const { data: inserted, error: insertError } = await supabase
           .from("product_images")
           .insert({
@@ -75,6 +76,8 @@ export default function ProductImageManager({ productId, productName, initialIma
           await supabase.storage.from(BUCKET).remove([storagePath]);
           throw insertError ?? new Error("Não foi possível guardar a fotografia.");
         }
+        hasImages = true;
+        nextOrder += 1;
         setImages((current) => [...current, inserted]);
       }
 
