@@ -6,7 +6,7 @@ export default async function Home(){
  const supabase=await createClient();
  const [{data:categories},{data:products}]=await Promise.all([
   supabase.from("categories").select("id,name,slug").eq("is_active",true).order("sort_order"),
-  supabase.from("products").select("id,name,slug,short_description,base_price_cents,category_id,is_featured,product_images(image_url,alt_text,is_primary)").eq("is_active",true).order("is_featured",{ascending:false}).order("sort_order")
+  supabase.from("products").select("id,name,slug,short_description,base_price_cents,category_id,is_featured,product_images(image_url,alt_text,is_primary)").eq("is_active",true).order("is_featured",{ascending:false}).order("sort_order").order("sort_order",{referencedTable:"product_images",ascending:true})
  ]);
  const whatsapp=process.env.NEXT_PUBLIC_WHATSAPP_NUMBER||"5544997477331";
  return <main><header className="border-b border-pink-100 bg-white"><div className="container flex items-center justify-between py-5"><Link href="/" className="text-2xl font-black text-berry">Jujuba Festeira<span className="text-pink-400"> ♥</span></Link><nav className="flex gap-5 text-sm font-semibold"><a href="#catalogo">Catálogo</a><a href={"https://wa.me/"+whatsapp} target="_blank" rel="noreferrer">Fale connosco</a></nav></div></header>
