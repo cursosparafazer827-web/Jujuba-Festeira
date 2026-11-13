@@ -115,7 +115,7 @@ export async function updateCustomizationField(formData:FormData){
  const isRequired=formData.get("is_required")==="on";
  const isActive=formData.get("is_active")==="on";
  const options=rawOptions.split(/\r?\n/).map(value=>value.trim()).filter(Boolean);
- const fieldKey=label.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"");
+ const fieldKey=label.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"");
  if(!id||!productId||!label||label.length>100||!["select","radio","checkbox"].includes(fieldType)||options.length<2||options.length>30||options.some(value=>value.length>80)||new Set(options.map(value=>value.toLowerCase())).size!==options.length||!Number.isInteger(sortOrder)||sortOrder<0||sortOrder>100000||!fieldKey) redirect("/admin?error=customization_invalid");
  const {data:existing,error:existingError}=await supabase.from("customization_fields").select("id").eq("product_id",productId).eq("field_key",fieldKey).neq("id",id).maybeSingle();
  if(existingError) redirect("/admin?error=customization_save");
