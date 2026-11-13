@@ -30,4 +30,51 @@ export async function deleteProduct(formData:FormData){
  if(error||!deleted) redirect("/admin?error=delete");
  revalidatePath("/");revalidatePath("/admin");redirect("/admin?deleted=1");
 }
+
+export async function saveVariant(formData:FormData){
+ const {supabase}=await requireAdmin();
+ const id=String(formData.get("id")||"").trim();
+ const productId=String(formData.get("product_id")||"").trim();
+ const name=String(formData.get("name")||"").trim();
+ const sku=String(formData.get("sku")||"").trim()||null;
+ const price=Number(String(formData.get("price")||"").replace(",","."));
+ const sortOrder=Number(formData.get("sort_order")||0);
+ const rawAttributes=String(formData.get("attributes")||"{}").trim()||"{}";
+ if(!productId||!name||name.length>120||!Number.isFinite(price)||price<0||price>1000000||!Number.isInteger(sortOrder)||sortOrder<0||sortOrder>100000) redirect("/admin?error=variant_invalid");
+ let attributes:Record<string,unknown>;
+ try {
+  const parsed:unknown=JSON.parse(rawAttributes);
+  if(!parsed||typeof parsed!=="object"||Array.isArray(parsed)) redirect("/admin?error=variant_attributes");
+  attributes=parsed as Record<string,unknown>;
+ } catch { redirect("/admin?error=variant_attributes"); }
+ const {data:product,error:productError}=await supabase.from("products").select("id").eq("id",productId).maybeSingle();
+ if(productError||!product) redirect("/admin?error=variant_invalid");
+ const payload={product_id:productId,name,sku,price_cents:Math.round(price*100),attributes,is_active:id?formData.get("is_active")==="on":true,sort_order:sortOrder,updated_at:new Date().toISOString()};
+ const result=id
+  ? await supabase.from("product_variants").update(payload).eq("id",id).eq("product_id",productId).select("id").maybeSingle()
+  : await supabase.from("product_variants").insert(payload).select("id").maybeSingle();
+ if(result.error){
+  if(result.error.code==="23505") redirect("/admin?error=variant_sku");
+  redirect("/admin?error=variant_save");
+ }
+ if(!result.data) redirect("/admin?error=variant_save");
+ revalidatePath("/");
+ revalidatePath("/admin");
+ redirect("/admin?variant_saved=1");
+}
+export async function deleteVariant(formData:FormData){
+ const {supabase}=await requireAdmin();
+ const id=String(formData.get("id")||"").trim();
+ const productId=String(formData.get("product_id")||"").trim();
+ const confirmation=String(formData.get("confirmation")||"").trim();
+ if(!id||!productId) redirect("/admin?error=variant_invalid");
+ if(confirmation!=="APAGAR") redirect("/admin?error=variant_confirm");
+ const {data:variant,error:variantError}=await supabase.from("product_variants").select("id,product_id").eq("id",id).eq("product_id",productId).maybeSingle();
+ if(variantError||!variant) redirect("/admin?error=variant_delete");
+ const {data:deleted,error}=await supabase.from("product_variants").delete().eq("id",id).eq("product_id",productId).select("id").maybeSingle();
+ if(error||!deleted) redirect("/admin?error=variant_delete");
+ revalidatePath("/");
+ revalidatePath("/admin");
+ redirect("/admin?variant_deleted=1");
+}
 export async function logoutAction(){const {supabase}=await requireAdmin();await supabase.auth.signOut();redirect("/admin/login");}
