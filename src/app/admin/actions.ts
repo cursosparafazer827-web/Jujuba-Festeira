@@ -40,13 +40,11 @@ export async function saveVariant(formData:FormData){
  const price=Number(String(formData.get("price")||"").replace(",","."));
  const sortOrder=Number(formData.get("sort_order")||0);
  const rawAttributes=String(formData.get("attributes")||"{}").trim()||"{}";
- if(!productId||!name||name.length>120||!Number.isFinite(price)||price<0||price>1000000||!Number.isInteger(sortOrder)||sortOrder<0||sortOrder>100000) redirect("/admin?error=variant_invalid");
- let attributes:Record<string,unknown>;
- try {
-  const parsed:unknown=JSON.parse(rawAttributes);
-  if(!parsed||typeof parsed!=="object"||Array.isArray(parsed)) redirect("/admin?error=variant_attributes");
-  attributes=parsed as Record<string,unknown>;
- } catch { redirect("/admin?error=variant_attributes"); }
+ if(!productId||!name||name.length>120||(sku!==null&&sku.length>80)||!Number.isFinite(price)||price<0||price>1000000||!Number.isInteger(sortOrder)||sortOrder<0||sortOrder>100000) redirect("/admin?error=variant_invalid");
+ let parsed:unknown;
+ try { parsed=JSON.parse(rawAttributes); } catch { redirect("/admin?error=variant_attributes"); }
+ if(!parsed||typeof parsed!=="object"||Array.isArray(parsed)) redirect("/admin?error=variant_attributes");
+ const attributes=parsed as Record<string,unknown>;
  const {data:product,error:productError}=await supabase.from("products").select("id").eq("id",productId).maybeSingle();
  if(productError||!product) redirect("/admin?error=variant_invalid");
  const payload={product_id:productId,name,sku,price_cents:Math.round(price*100),attributes,is_active:id?formData.get("is_active")==="on":true,sort_order:sortOrder,updated_at:new Date().toISOString()};
