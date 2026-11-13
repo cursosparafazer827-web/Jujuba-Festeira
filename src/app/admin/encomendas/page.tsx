@@ -45,11 +45,14 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
   </section>
   <section className="panel">
    <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="text-xl font-black">Encomendas recebidas</h2><span className="pill">{orders?.length||0} {selectedStatus?"encomendas neste estado":"encomendas recentes"}</span></div>
-   <form method="get" className="mb-5 flex flex-wrap items-end gap-3 rounded-xl bg-pink-50/60 p-3">
-    <label className="field min-w-48 flex-1">Filtrar por estado<select name="status" defaultValue={selectedStatus}><option value="">Todos os estados</option>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label>
-    <button className="btn btn-light" type="submit">Filtrar</button>
-    {selectedStatus?<Link href="/admin/encomendas" className="btn btn-light">Limpar filtro</Link>:null}
-   </form>
+   <nav aria-label="Filtrar encomendas por estado" className="mb-5 flex flex-wrap gap-2 rounded-xl bg-pink-50/60 p-3">
+    <Link href="/admin/encomendas" aria-current={!selectedStatus?"page":undefined} className={!selectedStatus?"btn":"btn btn-light"}>Todas</Link>
+    {statuses.map(status=>{
+     const labels:Record<(typeof statuses)[number],string>={"Pendente":"Pendentes","Confirmada":"Confirmadas","Em produção":"Em produção","Concluída":"Concluídas","Entregue":"Entregues","Cancelada":"Canceladas"};
+     const active=selectedStatus===status;
+     return <Link key={status} href={`/admin/encomendas?status=${encodeURIComponent(status)}`} aria-current={active?"page":undefined} className={active?"btn":"btn btn-light"}>{labels[status]}</Link>;
+    })}
+   </nav>
    <div className="grid gap-4">
     {orders?.map((order:OrderRecord)=><article key={order.id} className="rounded-xl border border-pink-100 p-4">
      <div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-bold">Encomenda #{order.order_number} · {order.customer_name}</h3><p className="muted mt-1 text-xs">{new Date(order.order_date).toLocaleString("pt-BR")}</p><p className="mt-2 text-sm">{order.product_name}{order.variant_name?" · "+order.variant_name:""} · {order.quantity} un.</p><p className="mt-1 font-black text-berry">{money(order.total_price_cents)}</p></div><a className="btn btn-light text-xs" href={"https://wa.me/"+String(order.customer_phone).replace(/\D/g,"")} target="_blank" rel="noreferrer">Abrir WhatsApp</a></div>
