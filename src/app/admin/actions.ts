@@ -13,4 +13,21 @@ export async function saveProduct(formData:FormData){
  revalidatePath("/");revalidatePath("/admin");redirect("/admin?saved=1");
 }
 export async function toggleProduct(formData:FormData){const {supabase}=await requireAdmin();const id=String(formData.get("id")||"");const active=String(formData.get("active"))==="true";if(!id)redirect("/admin?error=invalid");const {error}=await supabase.from("products").update({is_active:active,updated_at:new Date().toISOString()}).eq("id",id);if(error)redirect("/admin?error=save");revalidatePath("/");revalidatePath("/admin");redirect("/admin?saved=1");}
+export async function deleteProduct(formData:FormData){
+ const {supabase}=await requireAdmin();
+ const id=String(formData.get("id")||"").trim();
+ const confirmation=String(formData.get("confirmation")||"").trim();
+ if(!id) redirect("/admin?error=invalid");
+ if(confirmation!=="APAGAR") redirect("/admin?error=confirm_delete");
+ const {data:product,error:productError}=await supabase.from("products").select("id,is_active").eq("id",id).maybeSingle();
+ if(productError||!product) redirect("/admin?error=delete");
+ if(product.is_active) redirect("/admin?error=active_delete");
+ const relatedTables=["product_variants","product_images","customization_fields","product_options"] as const;
+ const checks=await Promise.all(relatedTables.map(table=>supabase.from(table).select("id",{count:"exact",head:true}).eq("product_id",id)));
+ if(checks.some(check=>check.error)) redirect("/admin?error=delete");
+ if(checks.some(check=>(check.count||0)>0)) redirect("/admin?error=has_dependencies");
+ const {data:deleted,error}=await supabase.from("products").delete().eq("id",id).eq("is_active",false).select("id").maybeSingle();
+ if(error||!deleted) redirect("/admin?error=delete");
+ revalidatePath("/");revalidatePath("/admin");redirect("/admin?deleted=1");
+}
 export async function logoutAction(){const {supabase}=await requireAdmin();await supabase.auth.signOut();redirect("/admin/login");}
