@@ -21,7 +21,7 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
   const [{ data: customizationFields }, { data: variantsData }] = await Promise.all([
     supabase
       .from("customization_fields")
-      .select("id,label,field_key,field_type,is_required,placeholder,help_text,sort_order")
+      .select("id,label,field_key,field_type,is_required,placeholder,help_text,options,sort_order")
       .eq("product_id", product.id)
       .eq("is_active", true)
       .order("sort_order"),
@@ -50,7 +50,8 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
     id: string;
     label: string;
     field_key: string;
-    field_type: "text" | "number" | "textarea";
+    field_type: "text" | "number" | "textarea" | "select" | "radio" | "checkbox";
+    options: string[];
     is_required: boolean;
     placeholder: string | null;
     help_text: string | null;
