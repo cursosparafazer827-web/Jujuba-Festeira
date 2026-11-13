@@ -101,3 +101,44 @@ export async function saveCustomizationField(formData:FormData){
  revalidatePath("/produto/[slug]");
  redirect("/admin?customization_saved=1");
 }
+
+
+export async function updateCustomizationField(formData:FormData){
+ const {supabase}=await requireAdmin();
+ const id=String(formData.get("id")||"").trim();
+ const productId=String(formData.get("product_id")||"").trim();
+ const label=String(formData.get("label")||"").trim();
+ const fieldType=String(formData.get("field_type")||"");
+ const rawOptions=String(formData.get("options")||"");
+ const helpText=String(formData.get("help_text")||"").trim();
+ const sortOrder=Number(formData.get("sort_order")||0);
+ const isRequired=formData.get("is_required")==="on";
+ const isActive=formData.get("is_active")==="on";
+ const options=rawOptions.split(/\\r?\\n/).map(value=>value.trim()).filter(Boolean);
+ const fieldKey=label.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"");
+ if(!id||!productId||!label||label.length>100||!["select","radio","checkbox"].includes(fieldType)||options.length<2||options.length>30||options.some(value=>value.length>80)||new Set(options.map(value=>value.toLowerCase())).size!==options.length||!Number.isInteger(sortOrder)||sortOrder<0||sortOrder>100000||!fieldKey) redirect("/admin?error=customization_invalid");
+ const {data:existing,error:existingError}=await supabase.from("customization_fields").select("id").eq("product_id",productId).eq("field_key",fieldKey).neq("id",id).maybeSingle();
+ if(existingError) redirect("/admin?error=customization_save");
+ if(existing) redirect("/admin?error=customization_duplicate");
+ const {data:updated,error}=await supabase.from("customization_fields").update({label,field_key:fieldKey,field_type:fieldType,is_required:isRequired,help_text:helpText||null,options,sort_order:sortOrder,is_active:isActive}).eq("id",id).eq("product_id",productId).select("id").maybeSingle();
+ if(error||!updated) redirect("/admin?error=customization_save");
+ revalidatePath("/");
+ revalidatePath("/admin");
+ revalidatePath("/produto/[slug]");
+ redirect("/admin?customization_saved=1");
+}
+
+export async function deleteCustomizationField(formData:FormData){
+ const {supabase}=await requireAdmin();
+ const id=String(formData.get("id")||"").trim();
+ const productId=String(formData.get("product_id")||"").trim();
+ const confirmation=String(formData.get("confirmation")||"").trim();
+ if(!id||!productId) redirect("/admin?error=customization_delete");
+ if(confirmation!=="APAGAR") redirect("/admin?error=customization_confirm");
+ const {data:deleted,error}=await supabase.from("customization_fields").delete().eq("id",id).eq("product_id",productId).select("id").maybeSingle();
+ if(error||!deleted) redirect("/admin?error=customization_delete");
+ revalidatePath("/");
+ revalidatePath("/admin");
+ revalidatePath("/produto/[slug]");
+ redirect("/admin?customization_deleted=1");
+}
