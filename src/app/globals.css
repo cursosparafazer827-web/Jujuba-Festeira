@@ -1066,3 +1066,339 @@ button, input, textarea, select { font: inherit; }
   .site-shell .jf-catalog-heading h2 { font-size: 2.55rem; }
   .site-shell .jf-product-info { padding: 1.15rem; }
 }
+
+
+/* Polimento final — consistência, acessibilidade e adaptação a ecrãs pequenos */
+.site-shell,
+.site-shell * {
+  min-width: 0;
+}
+.site-shell {
+  width: 100%;
+  overflow-x: clip;
+  overflow-wrap: break-word;
+}
+.site-shell img,
+.site-shell video,
+.site-shell iframe {
+  max-width: 100%;
+}
+.site-shell button,
+.site-shell a,
+.site-shell input,
+.site-shell select,
+.site-shell textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+.site-shell button,
+.site-shell a {
+  touch-action: manipulation;
+}
+.site-shell button:focus-visible,
+.site-shell a:focus-visible,
+.site-shell input:focus-visible,
+.site-shell select:focus-visible,
+.site-shell textarea:focus-visible {
+  outline: 3px solid rgba(134,102,148,.34);
+  outline-offset: 3px;
+}
+.site-shell input,
+.site-shell select,
+.site-shell textarea {
+  max-width: 100%;
+  font-size: 16px;
+}
+.site-shell .btn,
+.site-shell .jf-header-cta,
+.site-shell .jf-product-link,
+.site-shell .jf-category-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.35;
+}
+.site-shell .jf-product-grid,
+.site-shell .jf-about-grid,
+.site-shell .jf-footer-grid,
+.site-shell .jf-product-layout {
+  min-width: 0;
+}
+.site-shell .jf-product-card,
+.site-shell .jf-product-info,
+.site-shell .jf-product-bottom,
+.site-shell .jf-product-details,
+.site-shell .jf-customization-fields,
+.site-shell .jf-custom-field {
+  min-width: 0;
+}
+.site-shell .jf-product-title,
+.site-shell .jf-product-description,
+.site-shell .jf-product-price,
+.site-shell .jf-footer-bottom,
+.site-shell .jf-footer-contact-link {
+  overflow-wrap: anywhere;
+}
+.site-shell .jf-product-bottom {
+  align-items: center;
+}
+.site-shell .jf-product-link {
+  min-height: 44px;
+}
+.site-shell .jf-category-chip {
+  min-height: 44px;
+}
+.site-shell .jf-form-control {
+  min-height: 50px;
+  font-size: 16px;
+}
+.site-shell .jf-choice-item {
+  min-height: 44px;
+  padding: 7px 2px;
+  cursor: pointer;
+}
+.site-shell .jf-choice-item input {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+}
+.site-shell .jf-whatsapp-submit {
+  min-height: 54px;
+}
+.site-shell .jf-footer-nav a,
+.site-shell .jf-footer-contact-link {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
+.site-shell .jf-product-carousel {
+  min-width: 0;
+}
+.site-shell .jf-product-carousel button[aria-label^="Ver fotografia"] {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  position: relative;
+}
+.site-shell .jf-product-carousel button[aria-label^="Ver fotografia"]::before {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 11px;
+  height: 11px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: rgba(118,84,134,.72);
+  content: "";
+}
+.site-shell .jf-product-carousel button[aria-label^="Ver fotografia"][aria-current="true"]::before,
+.site-shell .jf-product-carousel button[aria-label^="Ver fotografia"][aria-pressed="true"]::before {
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(118,84,134,.5);
+}
+@media (max-width: 900px) {
+  .site-shell .jf-about-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 2.8rem);
+  }
+  .site-shell .jf-footer-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(130px, .8fr);
+  }
+  .site-shell .jf-footer-contact {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 700px) {
+  .site-shell .container {
+    width: calc(100% - 32px);
+  }
+  .site-shell .jf-header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 12px;
+  }
+  .site-shell .jf-brand {
+    max-width: calc(100% - 60px);
+  }
+  .site-shell .jf-brand-logo {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 56px;
+  }
+  .site-shell .jf-menu-toggle {
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+  }
+  .site-shell .jf-navigation {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+  .site-shell .jf-navigation a {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+  }
+  .site-shell .jf-navigation .jf-header-cta {
+    width: 100%;
+    margin-top: 8px;
+  }
+  .site-shell .jf-hero-art {
+    width: calc(100% - 24px);
+  }
+  .site-shell .jf-hero-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  .site-shell .jf-hero-caption {
+    width: calc(100% - 36px);
+  }
+  .site-shell .jf-about-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .site-shell .jf-about-visual {
+    width: min(100% - 20px, 470px);
+  }
+  .site-shell .jf-product-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .site-shell .jf-product-photo {
+    min-width: 0;
+  }
+  .site-shell .jf-product-bottom {
+    justify-content: space-between;
+  }
+  .site-shell .jf-product-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .site-shell .jf-product-details {
+    position: static;
+    width: 100%;
+  }
+  .site-shell .jf-product-gallery-frame,
+  .site-shell .jf-product-carousel {
+    max-width: 100%;
+  }
+  .site-shell .jf-footer-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .site-shell .container {
+    width: calc(100% - 28px);
+  }
+  .site-shell h1 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+  .site-shell .jf-hero-message h1 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 1.08;
+  }
+  .site-shell .jf-catalog-heading h2 {
+    font-size: clamp(2rem, 9vw, 2.6rem);
+  }
+  .site-shell .jf-about-copy h2 {
+    font-size: clamp(2rem, 8.5vw, 2.8rem);
+  }
+  .site-shell .jf-eyebrow {
+    font-size: .66rem;
+    letter-spacing: .16em;
+  }
+  .site-shell .jf-category-filters {
+    max-width: 100%;
+    gap: .5rem;
+    overscroll-behavior-x: contain;
+  }
+  .site-shell .jf-category-chip {
+    padding-inline: 15px;
+    white-space: nowrap;
+  }
+  .site-shell .jf-product-info {
+    padding: 1.1rem;
+  }
+  .site-shell .jf-product-bottom {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .site-shell .jf-product-link {
+    width: 100%;
+  }
+  .site-shell .jf-product-gallery-frame {
+    padding: 6px;
+    border-radius: 20px;
+  }
+  .site-shell .jf-product-carousel {
+    height: clamp(250px, 78vw, 340px);
+    border-radius: 15px;
+  }
+  .site-shell .jf-product-details {
+    padding: 1.05rem !important;
+    border-radius: 20px !important;
+  }
+  .site-shell .jf-product-heading {
+    font-size: clamp(1.8rem, 8vw, 2.45rem) !important;
+    overflow-wrap: anywhere;
+  }
+  .site-shell .jf-option-block,
+  .site-shell .jf-order-summary {
+    padding: .9rem;
+  }
+  .site-shell .jf-choice-list {
+    padding: .65rem;
+  }
+  .site-shell .jf-footer-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
+  .site-shell .jf-footer-brand,
+  .site-shell .jf-footer-contact {
+    grid-column: auto;
+  }
+  .site-shell .jf-footer-bottom {
+    align-items: flex-start;
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 360px) {
+  .site-shell .container {
+    width: calc(100% - 24px);
+  }
+  .site-shell .jf-brand-logo {
+    height: 49px;
+  }
+  .site-shell .jf-hero-message h1 {
+    font-size: 1.9rem;
+  }
+  .site-shell .jf-product-gallery-heading {
+    gap: .35rem;
+  }
+  .site-shell .jf-product-carousel {
+    height: 245px;
+  }
+  .site-shell .jf-whatsapp-submit {
+    padding-inline: 12px;
+    font-size: .86rem;
+  }
+}
+@media (hover: none) {
+  .site-shell .jf-product-card:hover,
+  .site-shell .panel:hover,
+  .site-shell .btn:hover {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-shell *,
+  .site-shell *::before,
+  .site-shell *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
