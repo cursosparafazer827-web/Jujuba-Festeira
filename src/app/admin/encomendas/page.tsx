@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin";
-import { createOrder, updateOrderStatus } from "./actions";
+import { createOrder, updateOrder, updateOrderStatus } from "./actions";
 
 export const dynamic="force-dynamic";
 const statuses=["Pendente","Confirmada","Em produção","Concluída","Entregue","Cancelada"] as const;
@@ -8,7 +8,7 @@ type ProductOption={id:string;name:string};
 type OrderRecord={id:string;order_number:number;customer_name:string;customer_phone:string;product_name:string;variant_name:string|null;quantity:number;unit_price_cents:number;total_price_cents:number;customizations:{details?:string}|null;notes:string|null;status:(typeof statuses)[number];order_date:string};
 const money=(cents:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(cents/100);
 
-export default async function OrdersPage({searchParams}:{searchParams:Promise<{saved?:string;updated?:string;error?:string;status?:string;q?:string}>}){
+export default async function OrdersPage({searchParams}:{searchParams:Promise<{saved?:string;updated?:string;edited?:string;error?:string;status?:string;q?:string}>}){
  const {supabase}=await requireAdmin();
  const params=await searchParams;
  const selectedStatus=statuses.includes(params.status as (typeof statuses)[number])?params.status as (typeof statuses)[number]:"";
@@ -25,7 +25,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
   ordersQuery.order("order_date",{ascending:false}).limit(100),
   supabase.from("products").select("id,name").order("name")
  ]);
- const errorMessage=params.error==="invalid"?"Verifique os dados da encomenda e tente novamente.":params.error==="save"?"Não foi possível registar a encomenda. Tente novamente.":params.error==="status"?"Não foi possível atualizar o estado da encomenda.":ordersError?"Não foi possível carregar as encomendas.":productsError?"Não foi possível carregar os produtos.":null;
+ const errorMessage=params.error==="invalid"?"Verifique os dados da encomenda e tente novamente.":params.error==="save"?"Não foi possível registar a encomenda. Tente novamente.":params.error==="status"?"Não foi possível atualizar o estado da encomenda.":params.error==="edit"?"Não foi possível editar a encomenda. Verifique os dados e tente novamente.":ordersError?"Não foi possível carregar as encomendas.":productsError?"Não foi possível carregar os produtos.":null;
  return <main className="container py-10">
   <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
    <div><Link href="/admin" className="text-sm font-bold text-berry">← Painel administrativo</Link><h1 className="mt-2 text-3xl font-black">Gestão de encomendas</h1><p className="muted mt-1">Regista os pedidos recebidos pelo WhatsApp e acompanha cada etapa.</p></div>
@@ -33,6 +33,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
   </header>
   {params.saved?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Encomenda registada com sucesso.</p>:null}
   {params.updated?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Estado da encomenda atualizado.</p>:null}
+  {params.edited?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Encomenda atualizada com sucesso.</p>:null}
   {errorMessage?<p className="mb-4 rounded-xl bg-red-50 p-3 text-red-700">{errorMessage}</p>:null}
   <details className="panel mb-8 group">
    <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
@@ -90,6 +91,25 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
         <span className="btn btn-light text-xs">Abrir detalhes</span>
        </summary>
        <div className="mt-4">
+        <details className="mb-4 rounded-xl bg-pink-50/60 p-3 group">
+         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden">
+          <span>Editar dados da encomenda</span>
+          <span className="btn btn-light text-xs">Editar encomenda</span>
+         </summary>
+         <form action={updateOrder} className="mt-4 grid gap-3 border-t border-pink-100 pt-4 sm:grid-cols-2">
+          <input type="hidden" name="id" value={order.id}/>
+          <label className="field">Nome do cliente<input name="customer_name" required maxLength={120} defaultValue={order.customer_name}/></label>
+          <label className="field">Telefone / WhatsApp<input name="customer_phone" required maxLength={40} defaultValue={order.customer_phone}/></label>
+          <label className="field sm:col-span-2">Produto<select name="product_id" required defaultValue={products?.find((product:ProductOption)=>product.name===order.product_name)?.id||""}><option value="" disabled>Escolhe um produto</option>{products?.map((product:ProductOption)=><option key={product.id} value={product.id}>{product.name}</option>)}</select></label>
+          <label className="field">Variante / opção<input name="variant_name" maxLength={120} defaultValue={order.variant_name||""}/></label>
+          <label className="field">Quantidade<input name="quantity" type="number" min="1" max="10000" required defaultValue={order.quantity}/></label>
+          <label className="field">Preço unitário (R$)<input name="unit_price" type="number" min="0" max="1000000" step="0.01" required defaultValue={(order.unit_price_cents/100).toFixed(2)}/></label>
+          <label className="field sm:col-span-2">Personalizações escolhidas<textarea name="customizations" rows={3} defaultValue={order.customizations?.details||""}/></label>
+          <label className="field sm:col-span-2">Observações internas<textarea name="notes" rows={2} defaultValue={order.notes||""}/></label>
+          <p className="muted text-xs sm:col-span-2">O valor total será recalculado automaticamente. O estado da encomenda não será alterado.</p>
+          <button className="btn sm:col-span-2">Guardar alterações</button>
+         </form>
+        </details>
         <a className="btn btn-light text-xs" href={"https://wa.me/"+String(order.customer_phone).replace(/\\D/g,"")} target="_blank" rel="noreferrer">Abrir WhatsApp</a>
         <div className="mt-3 grid gap-2 text-sm">
          <p><strong>Telefone:</strong> {order.customer_phone}</p>
