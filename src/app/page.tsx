@@ -25,9 +25,12 @@ export default async function Home() {
       <header className="border-b border-pink-100 bg-white">
         <div className="container flex items-center justify-between py-5">
           <Link href="/" aria-label="Jujuba Festeira - página inicial" className="flex items-center">
-            <img
+            <Image
               src="/images/jujuba-logo.png"
               alt="Jujuba Festeira — Papelaria Criativa"
+              width={885}
+              height={390}
+              priority
               className="h-16 w-auto object-contain sm:h-20"
             />
           </Link>
@@ -39,11 +42,14 @@ export default async function Home() {
       </header>
 
       <section aria-label="Jujuba Festeira — Papelaria Criativa" className="w-full overflow-hidden bg-white">
-        <img
+        <Image
           src="/images/jujuba-banner.webp"
           alt="Jujuba Festeira — transformamos papel em memórias inesquecíveis"
+          width={1600}
+          height={600}
+          priority
+          sizes="100vw"
           className="block h-auto w-full"
-          fetchPriority="high"
         />
       </section>
 
