@@ -23,8 +23,12 @@ export default async function Home() {
     <main>
       <header className="border-b border-pink-100 bg-white">
         <div className="container flex items-center justify-between py-5">
-          <Link href="/" className="text-2xl font-black text-berry">
-            Jujuba Festeira<span className="text-pink-400"> ♥</span>
+          <Link href="/" aria-label="Jujuba Festeira - página inicial" className="flex items-center">
+            <img
+              src="/images/jujuba-logo.png"
+              alt="Jujuba Festeira — Papelaria Criativa"
+              className="h-16 w-auto object-contain sm:h-20"
+            />
           </Link>
           <nav className="flex gap-5 text-sm font-semibold">
             <a href="#catalogo">Catálogo</a>
@@ -33,26 +37,13 @@ export default async function Home() {
         </div>
       </header>
 
-      <section className="bg-candy/40">
-        <div className="container grid gap-8 py-20 md:grid-cols-2 md:items-center">
-          <div>
-            <span className="pill">Papelaria personalizada</span>
-            <h1 className="mt-5 text-4xl font-black leading-tight md:text-6xl">
-              A festa dos seus sonhos começa nos detalhes.
-            </h1>
-            <p className="mt-5 max-w-lg text-lg text-stone-600">
-              Peças feitas com carinho para transformar cada comemoração numa memória especial.
-            </p>
-            <a className="btn mt-8" href="#catalogo">Explorar catálogo</a>
-          </div>
-          <div className="panel flex min-h-64 items-center justify-center bg-white text-center">
-            <div>
-              <div className="text-7xl">🎀 🎉</div>
-              <p className="mt-4 text-lg font-bold text-berry">Detalhes que encantam!</p>
-              <p className="muted text-sm">Personalize com tema, nome e idade.</p>
-            </div>
-          </div>
-        </div>
+      <section aria-label="Jujuba Festeira — Papelaria Criativa" className="w-full overflow-hidden bg-white">
+        <img
+          src="/images/jujuba-banner.webp"
+          alt="Jujuba Festeira — transformamos papel em memórias inesquecíveis"
+          className="block h-auto w-full"
+          fetchPriority="high"
+        />
       </section>
 
       <section id="catalogo" className="container py-16">
