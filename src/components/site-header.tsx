@@ -48,7 +48,7 @@ export default function SiteHeader({ whatsapp }: Props) {
           aria-label="Navegação principal"
         >
           <Link href="/" onClick={() => setMenuOpen(false)}>Início</Link>
-          <a href="/#catalogo" onClick={() => setMenuOpen(false)}>Produtos</a>
+          <Link href="/#catalogo" onClick={() => setMenuOpen(false)}>Produtos</Link>
           <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
             Contacto
           </a>
