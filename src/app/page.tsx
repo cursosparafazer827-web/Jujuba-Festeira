@@ -42,8 +42,11 @@ export default async function Home() {
           />
         </div>
         <div className="jf-hero-caption">
-          <span>Detalhes feitos com carinho</span>
-          <span>Momentos que ficam na memória</span>
+          <div className="jf-hero-message">
+            <span className="jf-eyebrow">Papelaria criativa e personalizada</span>
+            <h1>Detalhes feitos com carinho. Momentos que ficam na memória.</h1>
+          </div>
+          <p>Peças especiais para dar vida às suas ideias e tornar cada celebração ainda mais sua.</p>
         </div>
       </section>
 
@@ -85,10 +88,10 @@ export default async function Home() {
       </section>
 
       <section id="catalogo" className="container py-16">
-        <div className="mb-8">
-          <p className="font-bold uppercase tracking-widest text-berry">Feito para celebrar</p>
-          <h2 className="mt-2 text-3xl font-black">O nosso catálogo</h2>
-          <p className="mt-2 text-sm text-stone-500">Pesquise um produto ou escolha uma categoria.</p>
+        <div className="jf-catalog-heading mb-8">
+          <span className="jf-eyebrow">Escolha os seus favoritos</span>
+          <h2>O nosso catálogo</h2>
+          <p>Descubra peças personalizadas para celebrar momentos especiais. Pesquise um produto ou explore as categorias.</p>
         </div>
         <CatalogBrowser categories={categories || []} products={products || []} />
         {!products?.length ? (
