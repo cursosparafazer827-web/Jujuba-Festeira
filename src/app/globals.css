@@ -391,3 +391,127 @@ button, input, textarea, select { font: inherit; }
     font-size: .78rem;
   }
 }
+
+/* Etapa 3 — apresentação da marca */
+.site-shell .jf-about-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 8vw, 7.5rem) 0;
+  background:
+    radial-gradient(ellipse at 5% 85%, rgba(246,200,240,.34), transparent 28rem),
+    linear-gradient(135deg, #fffafd 0%, #f8f1fc 52%, #fdf5fb 100%);
+}
+.site-shell .jf-about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .92fr);
+  align-items: center;
+  gap: clamp(2.5rem, 7vw, 6.5rem);
+}
+.site-shell .jf-about-visual {
+  position: relative;
+  min-height: 420px;
+  aspect-ratio: 1 / .92;
+  overflow: visible;
+  border: 10px solid rgba(255,255,255,.9);
+  border-radius: 48% 48% 28px 28px;
+  background: linear-gradient(145deg, #e9ddf6, #f8e5f5);
+  box-shadow: 0 24px 60px rgba(112,83,135,.14);
+  transform: rotate(-2deg);
+}
+.site-shell .jf-about-visual::before {
+  position: absolute;
+  inset: 14px;
+  z-index: 1;
+  border: 1px solid rgba(255,255,255,.75);
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+.site-shell .jf-about-photo {
+  object-fit: cover;
+  border-radius: inherit;
+}
+.site-shell .jf-about-placeholder {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  color: #80648e;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+}
+.site-shell .jf-about-placeholder img {
+  width: min(78%, 300px);
+  height: auto;
+  object-fit: contain;
+}
+.site-shell .jf-about-sticker {
+  position: absolute;
+  right: -22px;
+  bottom: 34px;
+  z-index: 2;
+  display: grid;
+  width: 112px;
+  height: 112px;
+  place-items: center;
+  padding: 18px;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  background: #f6c8f0;
+  color: #765486;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: .95rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  transform: rotate(9deg);
+  box-shadow: 0 10px 28px rgba(112,83,135,.13);
+}
+.site-shell .jf-about-copy { max-width: 560px; }
+.site-shell .jf-eyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #9870a4;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.site-shell .jf-about-copy h2 {
+  margin: 0 0 1.4rem;
+  font-size: clamp(2.15rem, 4vw, 3.5rem);
+}
+.site-shell .jf-about-copy p {
+  margin: 0 0 1rem;
+  color: #706477;
+  font-size: 1rem;
+}
+.site-shell .jf-about-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: .8rem;
+  text-align: center;
+}
+@media (max-width: 760px) {
+  .site-shell .jf-about-section { padding: 3.5rem 0 4rem; }
+  .site-shell .jf-about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .site-shell .jf-about-visual {
+    width: min(100% - 18px, 470px);
+    min-height: 300px;
+    margin: 0 auto;
+    aspect-ratio: 1 / .85;
+  }
+  .site-shell .jf-about-sticker {
+    right: -14px;
+    bottom: 20px;
+    width: 94px;
+    height: 94px;
+    font-size: .82rem;
+  }
+  .site-shell .jf-about-copy { max-width: none; text-align: center; }
+}
