@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import CatalogBrowser from "@/components/catalog-browser";
 import SiteHeader from "@/components/site-header";
@@ -19,6 +20,9 @@ export default async function Home() {
   ]);
 
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5544997477331";
+  const brandPhoto = (products || [])
+    .flatMap((product) => product.product_images || [])
+    .find((photo) => photo.image_url)?.image_url;
 
   return (
     <main className="site-shell">
@@ -39,6 +43,43 @@ export default async function Home() {
         <div className="jf-hero-caption">
           <span>Detalhes feitos com carinho</span>
           <span>Momentos que ficam na memória</span>
+        </div>
+      </section>
+
+      <section className="jf-about-section" aria-labelledby="jf-about-title">
+        <div className="container jf-about-grid">
+          <div className="jf-about-visual">
+            {brandPhoto ? (
+              <Image
+                src={brandPhoto}
+                alt="Exemplo de produto personalizado da Jujuba Festeira"
+                fill
+                sizes="(max-width: 760px) 90vw, 44vw"
+                className="jf-about-photo"
+                unoptimized
+              />
+            ) : (
+              <div className="jf-about-placeholder" aria-hidden="true">
+                <Image src="/images/jujuba-logo.png" alt="" width={360} height={158} />
+                <span>Criado com carinho, pensado para celebrar</span>
+              </div>
+            )}
+            <span className="jf-about-sticker">Feito com amor</span>
+          </div>
+          <div className="jf-about-copy">
+            <span className="jf-eyebrow">Um pouco sobre nós</span>
+            <h2 id="jf-about-title">Pequenos detalhes que transformam grandes momentos.</h2>
+            <p>
+              Na Jujuba Festeira, cada detalhe é pensado para tornar a sua celebração
+              ainda mais especial. Criamos papelaria personalizada e peças cheias de
+              carinho para dar vida às suas ideias e guardar boas memórias.
+            </p>
+            <p>
+              Escolha os seus favoritos, conte-nos como imagina a sua festa e vamos
+              preparar algo feito especialmente para si.
+            </p>
+            <Link href="/#catalogo" className="btn jf-about-button">Conheça os nossos produtos</Link>
+          </div>
         </div>
       </section>
 
