@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import CatalogBrowser from "@/components/catalog-browser";
 import SiteHeader from "@/components/site-header";
+import SiteFooter from "@/components/site-footer";
 
 export const dynamic = "force-dynamic";
 
@@ -95,11 +96,7 @@ export default async function Home() {
         ) : null}
       </section>
 
-      <footer className="mt-12 bg-stone-900 py-10 text-center text-white">
-        <p className="text-xl font-black">Jujuba Festeira</p>
-        <p className="mt-2 text-sm text-stone-300">Feito com carinho para celebrar os seus melhores momentos.</p>
-        <p className="mt-5 text-xs text-stone-400">© {new Date().getFullYear()} Jujuba Festeira</p>
-      </footer>
+      <SiteFooter whatsapp={whatsapp} />
     </main>
   );
 }
