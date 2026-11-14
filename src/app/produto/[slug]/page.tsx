@@ -59,42 +59,44 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
   }[];
 
   return (
-    <main className="container min-h-screen py-8">
-      <Link href="/" className="text-sm font-bold text-berry hover:underline">
-        ← Voltar ao catálogo
-      </Link>
-      <div className="mt-6 grid gap-8 md:grid-cols-2 md:items-start">
-        <div>
-          <ProductPhotoCarousel
-            photos={photos}
-            productName={product.name}
-            className="h-[360px] rounded-2xl sm:h-[480px]"
-          />
-          {photos.length > 1 ? (
-            <p className="mt-3 text-center text-sm text-stone-500">
-              Use as setas ou os pontos para ver todas as {photos.length} fotografias.
-            </p>
-          ) : null}
+    <main className="site-shell">
+      <div className="container min-h-screen py-8">
+        <Link href="/" className="text-sm font-bold text-berry hover:underline">
+          ← Voltar ao catálogo
+        </Link>
+        <div className="mt-6 grid gap-8 md:grid-cols-2 md:items-start">
+          <div>
+            <ProductPhotoCarousel
+              photos={photos}
+              productName={product.name}
+              className="h-[360px] rounded-2xl sm:h-[480px]"
+            />
+            {photos.length > 1 ? (
+              <p className="mt-3 text-center text-sm text-stone-500">
+                Use as setas ou os pontos para ver todas as {photos.length} fotografias.
+              </p>
+            ) : null}
+          </div>
+          <section className="panel">
+            <p className="text-xs font-bold uppercase tracking-widest text-berry">Jujuba Festeira</p>
+            <h1 className="mt-3 text-3xl font-black">{product.name}</h1>
+            {product.short_description ? (
+              <p className="mt-4 text-stone-600">{product.short_description}</p>
+            ) : null}
+            {product.description ? (
+              <div className="mt-5 whitespace-pre-wrap text-sm leading-7 text-stone-700">
+                {product.description}
+              </div>
+            ) : null}
+            <ProductVariantSelector
+              productName={product.name}
+              basePriceCents={product.base_price_cents}
+              variants={variants}
+              fields={fields}
+              whatsapp={whatsapp}
+            />
+          </section>
         </div>
-        <section className="panel">
-          <p className="text-xs font-bold uppercase tracking-widest text-berry">Jujuba Festeira</p>
-          <h1 className="mt-3 text-3xl font-black">{product.name}</h1>
-          {product.short_description ? (
-            <p className="mt-4 text-stone-600">{product.short_description}</p>
-          ) : null}
-          {product.description ? (
-            <div className="mt-5 whitespace-pre-wrap text-sm leading-7 text-stone-700">
-              {product.description}
-            </div>
-          ) : null}
-          <ProductVariantSelector
-            productName={product.name}
-            basePriceCents={product.base_price_cents}
-            variants={variants}
-            fields={fields}
-            whatsapp={whatsapp}
-          />
-        </section>
       </div>
     </main>
   );
