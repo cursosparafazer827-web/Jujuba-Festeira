@@ -75,9 +75,34 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
     </nav>
     <div className="grid gap-4">
      {orders?.map((order:OrderRecord)=><article key={order.id} className="rounded-xl border border-pink-100 p-4">
-      <div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-bold">Encomenda #{order.order_number} · {order.customer_name}</h3><p className="muted mt-1 text-xs">{new Date(order.order_date).toLocaleString("pt-BR")}</p><p className="mt-2 text-sm">{order.product_name}{order.variant_name?" · "+order.variant_name:""} · {order.quantity} un.</p><p className="mt-1 font-black text-berry">{money(order.total_price_cents)}</p></div><a className="btn btn-light text-xs" href={"https://wa.me/"+String(order.customer_phone).replace(/\D/g,"")} target="_blank" rel="noreferrer">Abrir WhatsApp</a></div>
-      <div className="mt-3 grid gap-1 text-sm"><p><strong>Telefone:</strong> {order.customer_phone}</p>{order.customizations?.details?<p className="whitespace-pre-line"><strong>Personalizações:</strong> {order.customizations.details}</p>:null}{order.notes?<p className="whitespace-pre-line"><strong>Observações:</strong> {order.notes}</p>:null}</div>
-      <form action={updateOrderStatus} className="mt-4 flex flex-wrap items-end gap-2 border-t border-pink-100 pt-3"><input type="hidden" name="id" value={order.id}/><label className="field min-w-48 flex-1">Estado da encomenda<select name="status" defaultValue={order.status}>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label><button className="btn btn-light">Atualizar estado</button></form>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+       <div className="min-w-0">
+        <h3 className="font-bold">Encomenda #{order.order_number} · {order.customer_name}</h3>
+        <p className="muted mt-1 text-xs">{new Date(order.order_date).toLocaleString("pt-BR")}</p>
+        <p className="mt-2 text-sm">{order.product_name}{order.variant_name?" · "+order.variant_name:""} · {order.quantity} un.</p>
+        <p className="mt-1 font-black text-berry">{money(order.total_price_cents)}</p>
+       </div>
+       <span className="pill">{order.status}</span>
+      </div>
+      <details className="mt-4 border-t border-pink-100 pt-3 group">
+       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold text-berry [&::-webkit-details-marker]:hidden">
+        <span>Ver detalhes da encomenda</span>
+        <span className="btn btn-light text-xs">Abrir detalhes</span>
+       </summary>
+       <div className="mt-4">
+        <a className="btn btn-light text-xs" href={"https://wa.me/"+String(order.customer_phone).replace(/\\D/g,"")} target="_blank" rel="noreferrer">Abrir WhatsApp</a>
+        <div className="mt-3 grid gap-2 text-sm">
+         <p><strong>Telefone:</strong> {order.customer_phone}</p>
+         {order.customizations?.details?<p className="whitespace-pre-line"><strong>Personalizações:</strong> {order.customizations.details}</p>:null}
+         {order.notes?<p className="whitespace-pre-line"><strong>Observações:</strong> {order.notes}</p>:null}
+        </div>
+        <form action={updateOrderStatus} className="mt-4 flex flex-wrap items-end gap-2 border-t border-pink-100 pt-3">
+         <input type="hidden" name="id" value={order.id}/>
+         <label className="field min-w-48 flex-1">Estado da encomenda<select name="status" defaultValue={order.status}>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label>
+         <button className="btn btn-light">Atualizar estado</button>
+        </form>
+       </div>
+      </details>
      </article>)}
      {!orders?.length?<p className="muted">{searchTerm?"Não foram encontradas encomendas para esta pesquisa.":selectedStatus?"Não existem encomendas com este estado.":"Ainda não existem encomendas registadas."}</p>:null}
     </div>
