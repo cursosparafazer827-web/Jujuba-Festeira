@@ -777,3 +777,292 @@ button, input, textarea, select { font: inherit; }
   .site-shell .jf-footer-contact { grid-column: 1 / -1; }
   .site-shell .jf-footer-bottom { flex-direction: column; align-items: flex-start; }
 }
+
+
+/* Refinamento visual — direção editorial e consistência da marca */
+:root {
+  --jf-purple: #866694;
+  --jf-ink: #493d50;
+  --jf-muted: #817587;
+  --jf-border: #e9dfed;
+  --jf-shadow: 0 18px 48px rgba(92, 69, 111, .075);
+}
+.site-shell {
+  color: var(--jf-ink);
+  background:
+    radial-gradient(ellipse at 4% 12%, rgba(215,207,248,.18), transparent 32rem),
+    radial-gradient(ellipse at 96% 44%, rgba(246,200,240,.13), transparent 30rem),
+    #fdfbfe;
+  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.site-shell .container { width: min(1180px, calc(100% - 48px)); }
+.site-shell h1,
+.site-shell h2,
+.site-shell h3,
+.site-shell .jf-display {
+  color: #70527f;
+  font-family: "Bodoni 72", Didot, "Iowan Old Style", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -.045em;
+}
+.site-shell h1 { line-height: 1.04; }
+.site-shell h2 { line-height: 1.1; }
+.site-shell p { line-height: 1.8; }
+.site-shell .jf-eyebrow {
+  margin-bottom: .8rem;
+  color: #9875a5;
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .22em;
+}
+.site-shell .btn {
+  min-height: 48px;
+  padding: 12px 25px;
+  border-color: #866694;
+  background: #866694;
+  box-shadow: 0 8px 20px rgba(134,102,148,.16);
+  letter-spacing: .025em;
+}
+.site-shell .btn:hover { background: #70527f; border-color: #70527f; }
+.site-shell .jf-header {
+  border-bottom-color: rgba(215,207,248,.58);
+  background: rgba(253,251,254,.94);
+  box-shadow: 0 5px 24px rgba(83,62,101,.045);
+}
+.site-shell .jf-header-inner { min-height: 92px; }
+.site-shell .jf-brand-logo { height: 68px; }
+.site-shell .jf-navigation { gap: clamp(1.2rem, 2.8vw, 2.5rem); }
+.site-shell .jf-navigation a:not(.jf-header-cta) {
+  font-size: .86rem;
+  font-weight: 650;
+  letter-spacing: .015em;
+}
+.site-shell .jf-navigation .jf-header-cta {
+  min-height: 46px;
+  padding-inline: 24px;
+  border-radius: 999px;
+  background: #866694;
+}
+.site-shell .jf-hero-banner {
+  padding: clamp(16px, 2.4vw, 30px) 0 clamp(38px, 5vw, 66px);
+  background:
+    radial-gradient(ellipse at 0% 25%, rgba(205,191,232,.52), transparent 34%),
+    radial-gradient(ellipse at 100% 75%, rgba(246,200,240,.46), transparent 36%),
+    linear-gradient(115deg, #f8f2fc 0%, #f2eefb 54%, #fcf2fa 100%);
+}
+.site-shell .jf-hero-art {
+  width: min(1380px, calc(100% - clamp(28px, 6vw, 88px)));
+  border: 7px solid rgba(255,255,255,.88);
+  border-radius: clamp(20px, 2.6vw, 34px);
+  box-shadow: 0 24px 65px rgba(91,67,111,.13);
+}
+.site-shell .jf-hero-caption {
+  display: grid;
+  width: min(1080px, calc(100% - 56px));
+  grid-template-columns: minmax(0, 1.2fr) minmax(230px, .55fr);
+  align-items: end;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  margin-top: clamp(26px, 4vw, 46px);
+  color: #806d89;
+  font-family: inherit;
+  font-style: normal;
+}
+.site-shell .jf-hero-message .jf-eyebrow { margin-bottom: .85rem; }
+.site-shell .jf-hero-message h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #674b76;
+  font-size: clamp(2.35rem, 5vw, 4.4rem);
+  letter-spacing: -.055em;
+}
+.site-shell .jf-hero-caption > p {
+  max-width: 340px;
+  margin: 0 0 .35rem;
+  color: #817487;
+  font-size: .98rem;
+  line-height: 1.85;
+}
+.site-shell .jf-about-section {
+  padding: clamp(4.5rem, 8vw, 7.8rem) 0;
+  background: linear-gradient(135deg, #fff 0%, #faf6fd 52%, #fff9fd 100%);
+}
+.site-shell .jf-about-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, .94fr);
+  gap: clamp(3rem, 7vw, 7rem);
+}
+.site-shell .jf-about-visual {
+  min-height: 0;
+  aspect-ratio: 1 / .96;
+  border: 9px solid #fff;
+  border-radius: 32px 32px 32px 110px;
+  box-shadow: 0 26px 65px rgba(92,69,111,.12);
+  transform: none;
+}
+.site-shell .jf-about-visual::before { inset: 12px; border-radius: 23px 23px 23px 96px; }
+.site-shell .jf-about-photo { border-radius: 23px 23px 23px 96px; }
+.site-shell .jf-about-sticker {
+  right: -26px;
+  bottom: 28px;
+  width: auto;
+  height: auto;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 4px solid #fff;
+  border-radius: 999px;
+  background: #f2d9ef;
+  color: #765486;
+  font-family: inherit;
+  font-size: .78rem;
+  letter-spacing: .04em;
+  transform: rotate(-4deg);
+}
+.site-shell .jf-about-copy h2 {
+  max-width: 620px;
+  margin-bottom: 1.5rem;
+  font-size: clamp(2.35rem, 4.3vw, 3.8rem);
+}
+.site-shell .jf-about-copy p {
+  max-width: 570px;
+  color: #776d7d;
+  font-size: .97rem;
+  line-height: 1.9;
+}
+.site-shell .jf-about-button { margin-top: 1.05rem; }
+.site-shell #catalogo.container {
+  padding-top: clamp(4.5rem, 8vw, 7.5rem);
+  padding-bottom: clamp(4.5rem, 8vw, 7.5rem);
+}
+.site-shell .jf-catalog-heading {
+  max-width: 720px;
+  margin-bottom: clamp(2rem, 4vw, 3.2rem);
+}
+.site-shell .jf-catalog-heading .jf-eyebrow { display: inline-block; }
+.site-shell .jf-catalog-heading h2 {
+  margin: 0;
+  color: #70527f;
+  font-size: clamp(2.4rem, 4.6vw, 3.65rem);
+}
+.site-shell .jf-catalog-heading p {
+  max-width: 590px;
+  margin: .9rem 0 0;
+  color: #817587;
+  font-size: .96rem;
+}
+.site-shell .jf-catalog-tools { gap: 1.1rem; }
+.site-shell .jf-catalog-search {
+  max-width: 620px;
+  min-height: 56px;
+  border-color: #e7ddec !important;
+  border-radius: 15px !important;
+  padding-inline: 1.2rem;
+  box-shadow: 0 5px 18px rgba(92,69,111,.045);
+}
+.site-shell .jf-category-chip {
+  min-height: 42px;
+  padding: 9px 19px;
+  font-size: .82rem;
+}
+.site-shell .jf-category-chip.is-active {
+  border-color: #866694 !important;
+  background: #866694 !important;
+  box-shadow: 0 5px 14px rgba(134,102,148,.15);
+}
+.site-shell .jf-product-grid { gap: clamp(1.15rem, 2.4vw, 1.8rem); }
+.site-shell .jf-product-card {
+  border-color: #ece4f0;
+  border-radius: 22px;
+  box-shadow: 0 9px 28px rgba(92,69,111,.055);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.site-shell .jf-product-card:hover {
+  transform: translateY(-5px);
+  border-color: #ded0e7;
+  box-shadow: 0 20px 42px rgba(92,69,111,.11);
+}
+.site-shell .jf-product-photo { background: #f8f4fa; }
+.site-shell .jf-product-info { padding: 1.4rem; }
+.site-shell .jf-product-title { color: #70527f; font-size: 1.3rem; }
+.site-shell .jf-product-description { color: #817587; font-size: .88rem; line-height: 1.7; }
+.site-shell .jf-product-bottom { border-top-color: #f0eaf3; }
+.site-shell .jf-product-price { color: #80618f; }
+.site-shell .jf-product-link {
+  min-height: 42px;
+  padding-inline: 18px;
+  border-color: #e6d9ec;
+  background: #faf6fc;
+  color: #765486;
+  box-shadow: none;
+}
+.site-shell .jf-product-link:hover { background: #f0e5f5; color: #674b76; }
+.site-shell .jf-site-footer {
+  padding-top: clamp(3.5rem, 6vw, 5.2rem);
+  background: linear-gradient(125deg, #f0eaf7 0%, #f8f1fa 55%, #fcf2fa 100%) !important;
+}
+.site-shell .jf-footer-wordmark { color: #70527f; }
+.site-shell .jf-footer-nav h2,
+.site-shell .jf-footer-contact h2 { color: #70527f; }
+.site-shell .jf-footer-bottom { color: #817587; }
+
+/* Refinamento da página de produto — mesma linguagem visual da loja */
+.site-shell .jf-product-container { padding-top: clamp(2rem, 4vw, 3.5rem); }
+.site-shell .jf-product-breadcrumb { margin-bottom: clamp(2rem, 4vw, 3rem); }
+.site-shell .jf-product-layout { gap: clamp(2rem, 4vw, 3.8rem); }
+.site-shell .jf-product-gallery-frame {
+  border-color: #ebe2ef;
+  border-radius: 26px;
+  box-shadow: 0 22px 58px rgba(92,69,111,.09);
+}
+.site-shell .jf-product-details {
+  border-color: #ebe3ef;
+  border-radius: 26px !important;
+  box-shadow: 0 16px 44px rgba(92,69,111,.075);
+}
+.site-shell .jf-product-heading { color: #70527f; }
+.site-shell .jf-product-summary,
+.site-shell .jf-product-description { color: #786e7e; }
+.site-shell .jf-option-block { border-color: #eee6f1; background: #fdfafe; }
+.site-shell .jf-order-summary { border-color: #e9deef; background: linear-gradient(120deg,#faf6fc,#fff9fd); }
+.site-shell .jf-current-price { color: #80618f; }
+.site-shell .jf-whatsapp-submit { min-height: 54px; }
+
+@media (max-width: 760px) {
+  .site-shell .container { width: min(100% - 32px, 1180px); }
+  .site-shell .jf-hero-caption {
+    width: calc(100% - 36px);
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+  .site-shell .jf-hero-message h1 { max-width: 620px; font-size: clamp(2.2rem, 8vw, 3.25rem); }
+  .site-shell .jf-hero-caption > p { max-width: 440px; font-size: .9rem; }
+  .site-shell .jf-about-section { padding: 3.8rem 0 4.2rem; }
+  .site-shell .jf-about-grid { gap: 2.5rem; }
+  .site-shell .jf-about-visual {
+    width: min(100% - 18px, 470px);
+    min-height: 0;
+    aspect-ratio: 1 / .88;
+    border-radius: 26px 26px 26px 76px;
+  }
+  .site-shell .jf-about-visual::before { border-radius: 18px 18px 18px 65px; }
+  .site-shell .jf-about-photo { border-radius: 18px 18px 18px 65px; }
+  .site-shell .jf-about-sticker { right: -12px; bottom: 18px; min-height: 42px; padding: 9px 15px; }
+  .site-shell .jf-about-copy { text-align: left; }
+  .site-shell #catalogo.container { padding-top: 3.8rem; padding-bottom: 4rem; }
+}
+@media (max-width: 700px) {
+  .site-shell .jf-header-inner { min-height: 78px; }
+  .site-shell .jf-brand-logo { height: 58px; }
+  .site-shell .jf-navigation { padding: 10px 0 12px; }
+  .site-shell .jf-navigation a { padding: 13px 10px; }
+  .site-shell .jf-footer-grid { gap: 1.8rem 1.2rem; }
+}
+@media (max-width: 520px) {
+  .site-shell .jf-hero-art { border-width: 4px; border-radius: 18px; }
+  .site-shell .jf-hero-caption { margin-top: 25px; }
+  .site-shell .jf-catalog-heading h2 { font-size: 2.55rem; }
+  .site-shell .jf-product-info { padding: 1.15rem; }
+}
