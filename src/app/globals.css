@@ -217,3 +217,177 @@ button, input, textarea, select { font: inherit; }
   body.printing-order .print-only .print-pre { white-space: pre-wrap; }
   @page { size: auto; margin: 12mm; }
 }
+
+/* Etapa 2 — cabeçalho e banner principal */
+.site-shell .jf-header {
+  position: relative;
+  z-index: 20;
+  border-bottom: 1px solid rgba(205,191,232,.62);
+  background: rgba(252,249,253,.96);
+  box-shadow: 0 8px 28px rgba(112,83,135,.07);
+  backdrop-filter: blur(16px);
+}
+.site-shell .jf-header-inner {
+  min-height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.site-shell .jf-brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  border-radius: 14px;
+}
+.site-shell .jf-brand-logo {
+  display: block;
+  width: auto;
+  height: 76px;
+  max-width: min(245px, 32vw);
+  object-fit: contain;
+}
+.site-shell .jf-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(1rem, 2.5vw, 2.2rem);
+}
+.site-shell .jf-navigation a {
+  color: #6f587d;
+  font-size: .91rem;
+  font-weight: 650;
+  transition: color .2s ease, background .2s ease, transform .2s ease;
+}
+.site-shell .jf-navigation a:hover { color: #b36cae; }
+.site-shell .jf-navigation .jf-header-cta {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 21px;
+  border: 1px solid #9870a4;
+  border-radius: 999px;
+  background: #9870a4;
+  color: #fff;
+  box-shadow: 0 7px 18px rgba(152,112,164,.18);
+}
+.site-shell .jf-navigation .jf-header-cta:hover {
+  transform: translateY(-2px);
+  background: #805c90;
+  color: #fff;
+}
+.site-shell .jf-menu-toggle { display: none; }
+.site-shell .jf-hero-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(12px, 2.2vw, 28px) 0 clamp(20px, 3vw, 38px);
+  background:
+    radial-gradient(ellipse at 0% 30%, rgba(205,191,232,.78), transparent 34%),
+    radial-gradient(ellipse at 100% 70%, rgba(246,200,240,.72), transparent 35%),
+    linear-gradient(110deg, #f8e9fb, #eee7fb 52%, #fbeafa);
+}
+.site-shell .jf-hero-banner::before,
+.site-shell .jf-hero-banner::after {
+  position: absolute;
+  z-index: -1;
+  width: clamp(170px, 25vw, 360px);
+  height: clamp(170px, 25vw, 360px);
+  border: 1px solid rgba(255,255,255,.68);
+  border-radius: 42% 58% 63% 37% / 42% 38% 62% 58%;
+  content: "";
+  pointer-events: none;
+}
+.site-shell .jf-hero-banner::before { top: -45%; left: -9%; transform: rotate(24deg); }
+.site-shell .jf-hero-banner::after { right: -10%; bottom: -55%; transform: rotate(-28deg); }
+.site-shell .jf-hero-art {
+  width: min(1440px, calc(100% - clamp(24px, 5vw, 72px)));
+  margin-inline: auto;
+  overflow: hidden;
+  border: 5px solid rgba(255,255,255,.8);
+  border-radius: clamp(18px, 3vw, 34px);
+  background: #f6e6ff;
+  box-shadow: 0 20px 55px rgba(105,76,130,.16);
+}
+.site-shell .jf-hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.site-shell .jf-hero-caption {
+  display: flex;
+  width: min(1440px, calc(100% - clamp(24px, 5vw, 72px)));
+  margin: 13px auto 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #80648e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(.78rem, 1.4vw, 1rem);
+  font-style: italic;
+}
+@media (max-width: 700px) {
+  .site-shell .jf-header-inner {
+    min-height: 82px;
+    flex-wrap: wrap;
+    gap: 0;
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+  .site-shell .jf-brand-logo { height: 62px; max-width: min(205px, 62vw); }
+  .site-shell .jf-menu-toggle {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid #e7d5ee;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+  }
+  .site-shell .jf-menu-toggle span {
+    display: block;
+    width: 17px;
+    height: 2px;
+    border-radius: 2px;
+    background: #805d91;
+  }
+  .site-shell .jf-navigation {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 0 10px;
+  }
+  .site-shell .jf-navigation.is-open { display: flex; }
+  .site-shell .jf-navigation a {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(220,204,233,.55);
+    font-size: .95rem;
+  }
+  .site-shell .jf-navigation .jf-header-cta {
+    justify-content: center;
+    margin-top: 10px;
+    border: 0;
+  }
+  .site-shell .jf-hero-banner { padding: 12px 0 19px; }
+  .site-shell .jf-hero-art {
+    width: calc(100% - 22px);
+    border-width: 3px;
+    border-radius: 17px;
+  }
+  .site-shell .jf-hero-caption {
+    width: calc(100% - 28px);
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 2px 12px;
+    font-size: .78rem;
+  }
+}
