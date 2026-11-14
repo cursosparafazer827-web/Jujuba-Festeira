@@ -1,7 +1,7 @@
-import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import CatalogBrowser from "@/components/catalog-browser";
+import SiteHeader from "@/components/site-header";
 
 export const dynamic = "force-dynamic";
 
@@ -22,35 +22,24 @@ export default async function Home() {
 
   return (
     <main className="site-shell">
-      <header className="border-b border-pink-100 bg-white">
-        <div className="container flex items-center justify-between py-5">
-          <Link href="/" aria-label="Jujuba Festeira - página inicial" className="flex items-center">
-            <Image
-              src="/images/jujuba-logo.png"
-              alt="Jujuba Festeira — Papelaria Criativa"
-              width={885}
-              height={390}
-              priority
-              className="h-16 w-auto object-contain sm:h-20"
-            />
-          </Link>
-          <nav className="flex gap-5 text-sm font-semibold">
-            <a href="#catalogo">Catálogo</a>
-            <a href={"https://wa.me/" + whatsapp} target="_blank" rel="noreferrer">Fale connosco</a>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader whatsapp={whatsapp} />
 
-      <section aria-label="Jujuba Festeira — Papelaria Criativa" className="w-full overflow-hidden bg-white">
-        <Image
-          src="/images/jujuba-banner.webp"
-          alt="Jujuba Festeira — transformamos papel em memórias inesquecíveis"
-          width={1600}
-          height={600}
-          priority
-          sizes="100vw"
-          className="block h-auto w-full"
-        />
+      <section className="jf-hero-banner" aria-label="Jujuba Festeira — Papelaria Criativa">
+        <div className="jf-hero-art">
+          <Image
+            src="/images/jujuba-banner.webp"
+            alt="Jujuba Festeira — transformamos papel em memórias inesquecíveis"
+            width={1600}
+            height={600}
+            priority
+            sizes="100vw"
+            className="jf-hero-image"
+          />
+        </div>
+        <div className="jf-hero-caption">
+          <span>Detalhes feitos com carinho</span>
+          <span>Momentos que ficam na memória</span>
+        </div>
       </section>
 
       <section id="catalogo" className="container py-16">
