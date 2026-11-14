@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import ProductPhotoCarousel from "@/components/product-photo-carousel";
 import ProductVariantSelector from "@/components/product-variant-selector";
 import SiteHeader from "@/components/site-header";
+import SiteFooter from "@/components/site-footer";
 
 export const dynamic = "force-dynamic";
 
@@ -125,10 +126,7 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
         </div>
       </div>
 
-      <footer className="jf-product-footer">
-        <p>Jujuba Festeira</p>
-        <span>Feito com carinho para celebrar os seus melhores momentos.</span>
-      </footer>
+      <SiteFooter whatsapp={whatsapp} />
     </main>
   );
 }
