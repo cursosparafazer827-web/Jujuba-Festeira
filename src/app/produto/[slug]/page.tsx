@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProductPhotoCarousel from "@/components/product-photo-carousel";
 import ProductVariantSelector from "@/components/product-variant-selector";
+import SiteHeader from "@/components/site-header";
 
 export const dynamic = "force-dynamic";
 
@@ -59,35 +60,57 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
   }[];
 
   return (
-    <main className="site-shell">
-      <div className="container min-h-screen py-8">
-        <Link href="/" className="text-sm font-bold text-berry hover:underline">
-          ← Voltar ao catálogo
-        </Link>
-        <div className="mt-6 grid gap-8 md:grid-cols-2 md:items-start">
-          <div>
-            <ProductPhotoCarousel
-              photos={photos}
-              productName={product.name}
-              className="h-[360px] rounded-2xl sm:h-[480px]"
-            />
+    <main className="site-shell jf-product-page">
+      <SiteHeader whatsapp={whatsapp} />
+
+      <div className="container jf-product-container">
+        <nav className="jf-product-breadcrumb" aria-label="Caminho de navegação">
+          <Link href="/">Início</Link>
+          <span aria-hidden="true">/</span>
+          <Link href="/#catalogo">Catálogo</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{product.name}</span>
+        </nav>
+
+        <div className="jf-product-layout">
+          <section className="jf-product-gallery" aria-label="Fotografias do produto">
+            <div className="jf-product-gallery-heading">
+              <span className="jf-eyebrow">Detalhes que encantam</span>
+              <span className="jf-gallery-note">Feito com carinho para celebrar</span>
+            </div>
+            <div className="jf-product-gallery-frame">
+              <ProductPhotoCarousel
+                photos={photos}
+                productName={product.name}
+                className="jf-product-carousel"
+              />
+            </div>
             {photos.length > 1 ? (
-              <p className="mt-3 text-center text-sm text-stone-500">
-                Use as setas ou os pontos para ver todas as {photos.length} fotografias.
+              <p className="jf-product-photo-hint">
+                Explore as {photos.length} fotografias para ver todos os detalhes.
               </p>
             ) : null}
-          </div>
-          <section className="panel">
-            <p className="text-xs font-bold uppercase tracking-widest text-berry">Jujuba Festeira</p>
-            <h1 className="mt-3 text-3xl font-black">{product.name}</h1>
+            <div className="jf-product-trust-note">
+              <span aria-hidden="true">✿</span>
+              <p>Personalizado especialmente para tornar a sua festa ainda mais especial.</p>
+            </div>
+          </section>
+
+          <section className="jf-product-details panel">
+            <div className="jf-product-brandline">
+              <span className="jf-product-brand-dot" aria-hidden="true" />
+              Jujuba Festeira
+            </div>
+            <h1 className="jf-product-heading">{product.name}</h1>
             {product.short_description ? (
-              <p className="mt-4 text-stone-600">{product.short_description}</p>
+              <p className="jf-product-summary">{product.short_description}</p>
             ) : null}
             {product.description ? (
-              <div className="mt-5 whitespace-pre-wrap text-sm leading-7 text-stone-700">
+              <div className="jf-product-description whitespace-pre-wrap">
                 {product.description}
               </div>
             ) : null}
+            <div className="jf-product-divider" />
             <ProductVariantSelector
               productName={product.name}
               basePriceCents={product.base_price_cents}
@@ -95,9 +118,17 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
               fields={fields}
               whatsapp={whatsapp}
             />
+            <p className="jf-product-whatsapp-note">
+              O seu pedido será enviado diretamente pelo WhatsApp. Não há pagamento online nesta etapa.
+            </p>
           </section>
         </div>
       </div>
+
+      <footer className="jf-product-footer">
+        <p>Jujuba Festeira</p>
+        <span>Feito com carinho para celebrar os seus melhores momentos.</span>
+      </footer>
     </main>
   );
 }
