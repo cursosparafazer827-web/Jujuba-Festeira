@@ -40,3 +40,30 @@ export async function updateOrderStatus(formData:FormData){
  revalidatePath("/admin/encomendas");
  redirect("/admin/encomendas?updated=1");
 }
+
+export async function updateOrder(formData:FormData){
+ const {supabase}=await requireAdmin();
+ const id=String(formData.get("id")||"").trim();
+ const customerName=String(formData.get("customer_name")||"").trim();
+ const customerPhone=String(formData.get("customer_phone")||"").trim();
+ const productId=String(formData.get("product_id")||"").trim();
+ const variantName=String(formData.get("variant_name")||"").trim();
+ const quantity=Number(formData.get("quantity")||1);
+ const unitPrice=Number(String(formData.get("unit_price")||"").replace(",","."));
+ const customizations=String(formData.get("customizations")||"").trim();
+ const notes=String(formData.get("notes")||"").trim();
+ if(!id||!customerName||customerName.length>120||!customerPhone||customerPhone.length>40||!productId||!Number.isInteger(quantity)||quantity<1||quantity>10000||!Number.isFinite(unitPrice)||unitPrice<0||unitPrice>1000000) redirect("/admin/encomendas?error=edit");
+ const {data:product,error:productError}=await supabase.from("products").select("id,name").eq("id",productId).maybeSingle();
+ if(productError||!product) redirect("/admin/encomendas?error=edit");
+ const unitPriceCents=Math.round(unitPrice*100);
+ const {data,error}=await supabase.from("orders").update({
+  customer_name:customerName,customer_phone:customerPhone,product_name:product.name,
+  variant_name:variantName||null,quantity,unit_price_cents:unitPriceCents,
+  total_price_cents:unitPriceCents*quantity,
+  customizations:customizations?{details:customizations}:{},notes:notes||null,
+  updated_at:new Date().toISOString()
+ }).eq("id",id).select("id").maybeSingle();
+ if(error||!data) redirect("/admin/encomendas?error=edit");
+ revalidatePath("/admin/encomendas");
+ redirect("/admin/encomendas?edited=1");
+}
