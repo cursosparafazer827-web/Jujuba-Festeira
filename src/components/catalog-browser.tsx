@@ -39,7 +39,7 @@ export default function CatalogBrowser({ categories, products }: Props) {
 
   return (
     <>
-      <div className="mb-8 space-y-4">
+      <div className="jf-catalog-tools mb-8 space-y-4">
         <label htmlFor="catalog-search" className="sr-only">Pesquisar produtos</label>
         <input
           id="catalog-search"
@@ -47,14 +47,14 @@ export default function CatalogBrowser({ categories, products }: Props) {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Pesquisar produto..."
-          className="w-full rounded-xl border border-pink-200 bg-white px-4 py-3 outline-none focus:border-berry"
+          className="jf-catalog-search w-full rounded-xl border border-pink-200 bg-white px-4 py-3 outline-none focus:border-berry"
         />
-        <div className="flex flex-wrap gap-2" aria-label="Filtrar por categoria">
+        <div className="jf-category-filters flex flex-wrap gap-2" aria-label="Filtrar por categoria">
           <button
             type="button"
             onClick={() => setCategoryId("all")}
             aria-pressed={categoryId === "all"}
-            className={`rounded-full border px-4 py-2 text-sm ${categoryId === "all" ? "border-berry bg-berry text-white" : "border-pink-200 bg-white"}`}
+            className={`jf-category-chip rounded-full border px-4 py-2 text-sm ${categoryId === "all" ? "is-active border-berry bg-berry text-white" : "border-pink-200 bg-white"}`}
           >
             Todos
           </button>
@@ -64,7 +64,7 @@ export default function CatalogBrowser({ categories, products }: Props) {
               type="button"
               onClick={() => setCategoryId(category.id)}
               aria-pressed={categoryId === category.id}
-              className={`rounded-full border px-4 py-2 text-sm ${categoryId === category.id ? "border-berry bg-berry text-white" : "border-pink-200 bg-white"}`}
+              className={`jf-category-chip rounded-full border px-4 py-2 text-sm ${categoryId === category.id ? "is-active border-berry bg-berry text-white" : "border-pink-200 bg-white"}`}
             >
               {category.name}
             </button>
@@ -73,21 +73,21 @@ export default function CatalogBrowser({ categories, products }: Props) {
       </div>
 
       {filteredProducts.length ? (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="jf-product-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProducts.map((product) => {
             const photos = product.product_images || [];
             return (
-              <article key={product.id} className="panel overflow-hidden p-0">
-                <ProductPhotoCarousel photos={photos} productName={product.name} className="h-52" />
-                <div className="p-5">
+              <article key={product.id} className="jf-product-card panel overflow-hidden p-0">
+                <div className="jf-product-photo"><ProductPhotoCarousel photos={photos} productName={product.name} className="h-52" /></div>
+                <div className="jf-product-info p-5">
                   {product.is_featured ? <span className="pill">Destaque</span> : null}
-                  <h3 className="mt-2 text-lg font-bold">{product.name}</h3>
-                  <p className="mt-1 min-h-10 text-sm text-stone-500">
+                  <h3 className="jf-product-title mt-2 text-lg font-bold">{product.name}</h3>
+                  <p className="jf-product-description mt-1 min-h-10 text-sm text-stone-500">
                     {product.short_description || "Personalize este produto para a sua festa."}
                   </p>
-                  <div className="mt-4 flex items-center justify-between gap-3">
-                    <strong className="text-lg text-berry">{money(product.base_price_cents)}</strong>
-                    <Link className="btn btn-light text-sm" href={"/produto/" + product.slug}>Ver produto</Link>
+                  <div className="jf-product-bottom mt-4 flex items-center justify-between gap-3">
+                    <strong className="jf-product-price text-lg text-berry">{money(product.base_price_cents)}</strong>
+                    <Link className="jf-product-link btn btn-light text-sm" href={"/produto/" + product.slug}>Ver produto</Link>
                   </div>
                 </div>
               </article>
