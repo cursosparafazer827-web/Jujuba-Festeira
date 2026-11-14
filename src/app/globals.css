@@ -1,17 +1,219 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#fffaf7;color:#30252c;font-family:Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}.container{width:min(1120px,calc(100% - 40px));margin:auto}.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:12px 20px;background:#9b4169;color:white;font-weight:700;cursor:pointer}.btn:disabled{opacity:.55;cursor:not-allowed}.btn-light{background:#f7dce8;color:#6d2949}.field{display:grid;gap:7px;margin:12px 0}.field input,.field textarea,.field select{width:100%;border:1px solid #e7d9df;border-radius:12px;padding:12px;background:white;color:#30252c}.muted{color:#796d74}.panel{background:white;border:1px solid #f0e4e9;border-radius:18px;padding:20px;box-shadow:0 8px 30px #6d29490b}.pill{display:inline-block;border-radius:999px;background:#f7dce8;color:#6d2949;padding:5px 10px;font-size:12px;font-weight:700}
-.print-only{display:none}
-@media print{
- body.printing-order{background:#fff!important}
- body.printing-order *{visibility:hidden!important}
- body.printing-order .print-only,
- body.printing-order .print-only *{visibility:visible!important}
- body.printing-order .print-only{display:block!important;position:fixed;inset:0;width:100%;padding:28px;color:#222!important;background:#fff!important;font-family:Arial,Helvetica,sans-serif;font-size:12pt}
- body.printing-order .print-only h1{font-size:22pt;font-weight:700;margin:0 0 8px}
- body.printing-order .print-only h2{font-size:16pt;font-weight:700;margin:0 0 20px}
- body.printing-order .print-only p{margin:0 0 10px;white-space:normal}
- body.printing-order .print-only .print-pre{white-space:pre-wrap}
- @page{size:auto;margin:12mm}
+
+/*
+ * Design system público Jujuba Festeira.
+ * Os estilos visuais são limitados a .site-shell para não alterar o painel admin.
+ */
+:root {
+  color-scheme: light;
+  --jf-lilac: #cdbfe8;
+  --jf-lilac-soft: #d7cff8;
+  --jf-lilac-pale: #f9f3fe;
+  --jf-pink: #f6c8f0;
+  --jf-pink-soft: #f6e6ff;
+  --jf-purple: #9870a4;
+  --jf-ink: #45364d;
+  --jf-muted: #786d80;
+  --jf-white: #fcf9fd;
+  --jf-border: #eadff1;
+  --jf-shadow: 0 14px 38px rgba(112, 83, 135, .09);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: #fffaf7; color: #30252c; font-family: Arial, Helvetica, sans-serif; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea, select { font: inherit; }
+.container { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+
+/* Base tipográfica e fundo apenas das páginas públicas */
+.site-shell {
+  min-height: 100vh;
+  color: var(--jf-ink);
+  background:
+    radial-gradient(ellipse at 8% 8%, rgba(205,191,232,.24), transparent 29rem),
+    radial-gradient(ellipse at 94% 34%, rgba(246,200,240,.18), transparent 27rem),
+    var(--jf-white);
+  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  line-height: 1.65;
+}
+.site-shell h1,
+.site-shell h2,
+.site-shell h3,
+.site-shell .jf-display {
+  color: #765486;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: -.035em;
+  line-height: 1.12;
+}
+.site-shell h1 { font-size: clamp(2.15rem, 5vw, 3.8rem); }
+.site-shell h2 { font-size: clamp(1.8rem, 3.8vw, 2.8rem); }
+.site-shell h3 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
+.site-shell p { line-height: 1.75; }
+.site-shell .text-berry { color: var(--jf-purple) !important; }
+.site-shell .text-stone-500 { color: var(--jf-muted) !important; }
+.site-shell .text-stone-600,
+.site-shell .text-stone-700 { color: #65596c !important; }
+.site-shell .border-pink-100 { border-color: var(--jf-border) !important; }
+.site-shell .border-pink-200 { border-color: #e5d6ee !important; }
+.site-shell .bg-white { background-color: #fff !important; }
+
+/* Navegação pública */
+.site-shell header {
+  position: relative;
+  z-index: 5;
+  border-color: rgba(205,191,232,.55) !important;
+  background: rgba(252,249,253,.94) !important;
+  box-shadow: 0 5px 24px rgba(112,83,135,.05);
+  backdrop-filter: blur(14px);
+}
+.site-shell header nav a {
+  color: #6f587d;
+  transition: color .2s ease;
+}
+.site-shell header nav a:hover { color: #b36cae; }
+
+/* Banner e secções */
+.site-shell section[aria-label] {
+  background: linear-gradient(115deg, #f8e9fb, #eee7fb 55%, #fbeafa) !important;
+}
+.site-shell #catalogo { padding-top: clamp(3rem, 7vw, 5.5rem); padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+.site-shell #catalogo > div:first-child {
+  position: relative;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  border: 1px solid rgba(205,191,232,.48);
+  border-radius: 26px;
+  background: linear-gradient(120deg, rgba(249,243,254,.92), rgba(246,230,255,.72));
+}
+.site-shell #catalogo > div:first-child > p:first-child {
+  color: var(--jf-purple);
+  font-size: .72rem;
+  letter-spacing: .2em;
+}
+
+/* Cartões, painéis e etiquetas */
+.site-shell .panel {
+  overflow: hidden;
+  border: 1px solid rgba(220,204,233,.7);
+  border-radius: 22px;
+  background: rgba(255,255,255,.94);
+  box-shadow: var(--jf-shadow);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.site-shell .panel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 42px rgba(112,83,135,.13);
+}
+.site-shell .pill {
+  border: 1px solid #ead7f0;
+  background: #f8eafa;
+  color: #805d91;
+  letter-spacing: .04em;
+}
+.site-shell .btn {
+  min-height: 44px;
+  border: 1px solid #9870a4;
+  border-radius: 999px;
+  padding: 11px 22px;
+  background: #9870a4;
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: .015em;
+  box-shadow: 0 7px 18px rgba(152,112,164,.18);
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.site-shell .btn:hover {
+  transform: translateY(-2px);
+  background: #805c90;
+  box-shadow: 0 10px 22px rgba(152,112,164,.24);
+}
+.site-shell .btn:focus-visible,
+.site-shell a:focus-visible,
+.site-shell button:focus-visible {
+  outline: 3px solid rgba(190,137,196,.55);
+  outline-offset: 3px;
+}
+.site-shell .btn-light {
+  border-color: #e7d5ee;
+  background: #f8edf9;
+  color: #765486;
+  box-shadow: none;
+}
+.site-shell .btn-light:hover { background: #efdef5; color: #684879; }
+
+/* Campos do catálogo e de personalização */
+.site-shell input,
+.site-shell textarea,
+.site-shell select {
+  border-color: #e5d6ee;
+  border-radius: 14px;
+  color: var(--jf-ink);
+}
+.site-shell input::placeholder,
+.site-shell textarea::placeholder { color: #a295aa; }
+.site-shell input:focus,
+.site-shell textarea:focus,
+.site-shell select:focus {
+  border-color: #ad8abb;
+  outline: 3px solid rgba(205,191,232,.28);
+}
+.site-shell input[type="checkbox"],
+.site-shell input[type="radio"] { accent-color: #9870a4; }
+
+/* Página individual de produto */
+.site-shell main.container { padding-top: 2.5rem; padding-bottom: 4rem; }
+.site-shell main.container > a:first-child { color: var(--jf-purple); }
+.site-shell main.container > .grid > section.panel { padding: clamp(1.25rem, 3vw, 2rem); }
+.site-shell main.container > .grid > section.panel h1 { margin-top: .6rem; }
+
+/* Rodapé público */
+.site-shell footer {
+  border-top: 1px solid rgba(205,191,232,.55);
+  background: #e8def5 !important;
+  color: #594765 !important;
+}
+.site-shell footer .text-stone-300,
+.site-shell footer .text-stone-400 { color: #766783 !important; }
+
+.print-only { display: none; }
+@media (max-width: 640px) {
+  .container { width: min(100% - 28px, 1120px); }
+  .site-shell header .container { gap: 12px; }
+  .site-shell header img { max-width: 190px; }
+  .site-shell header nav { gap: 12px; font-size: .78rem; }
+  .site-shell .panel { border-radius: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-shell *, .site-shell *::before, .site-shell *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media print {
+  body.printing-order { background: #fff !important; }
+  body.printing-order * { visibility: hidden !important; }
+  body.printing-order .print-only,
+  body.printing-order .print-only * { visibility: visible !important; }
+  body.printing-order .print-only {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    padding: 28px;
+    color: #222 !important;
+    background: #fff !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+  }
+  body.printing-order .print-only h1 { font-size: 22pt; font-weight: 700; margin: 0 0 8px; }
+  body.printing-order .print-only h2 { font-size: 16pt; font-weight: 700; margin: 0 0 20px; }
+  body.printing-order .print-only p { margin: 0 0 10px; white-space: normal; }
+  body.printing-order .print-only .print-pre { white-space: pre-wrap; }
+  @page { size: auto; margin: 12mm; }
 }
