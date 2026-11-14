@@ -21,7 +21,7 @@ export default async function Home() {
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5544997477331";
 
   return (
-    <main>
+    <main className="site-shell">
       <header className="border-b border-pink-100 bg-white">
         <div className="container flex items-center justify-between py-5">
           <Link href="/" aria-label="Jujuba Festeira - página inicial" className="flex items-center">
