@@ -681,3 +681,99 @@ button, input, textarea, select { font: inherit; }
   .jf-product-details { padding: 1.2rem !important; border-radius: 21px !important; }
   .jf-product-trust-note { padding: .85rem; }
 }
+
+
+/* Etapa 6 — rodapé completo e consistente em todas as páginas públicas */
+.site-shell .jf-site-footer {
+  margin-top: 0;
+  padding: clamp(2.8rem, 6vw, 4.8rem) 0 1.2rem;
+  border-top: 1px solid rgba(205,191,232,.7);
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(246,200,240,.42), transparent 26rem),
+    linear-gradient(125deg, #eee6f8 0%, #f8effb 52%, #fceefa 100%) !important;
+  color: #594765 !important;
+}
+.site-shell .jf-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(150px, .65fr) minmax(220px, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-bottom: 2.6rem;
+}
+.site-shell .jf-footer-brand { max-width: 390px; }
+.site-shell .jf-footer-wordmark {
+  display: inline-block;
+  color: #765486;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+  font-weight: 700;
+  letter-spacing: -.04em;
+}
+.site-shell .jf-footer-brand p,
+.site-shell .jf-footer-contact p {
+  margin: .8rem 0 0;
+  color: #786d80;
+  font-size: .88rem;
+  line-height: 1.8;
+}
+.site-shell .jf-footer-signature {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #9870a4;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: .9rem;
+  font-style: italic;
+}
+.site-shell .jf-footer-nav,
+.site-shell .jf-footer-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .65rem;
+}
+.site-shell .jf-footer-nav h2,
+.site-shell .jf-footer-contact h2 {
+  margin: .2rem 0 .45rem;
+  color: #765486;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  letter-spacing: -.02em;
+}
+.site-shell .jf-footer-nav a,
+.site-shell .jf-footer-contact-link {
+  color: #766783;
+  font-size: .87rem;
+  transition: color .2s ease, transform .2s ease;
+}
+.site-shell .jf-footer-nav a:hover,
+.site-shell .jf-footer-contact-link:hover {
+  color: #a45f9d;
+  transform: translateX(2px);
+}
+.site-shell .jf-footer-contact p { margin: -.1rem 0 .3rem; }
+.site-shell .jf-footer-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-weight: 700;
+}
+.site-shell .jf-footer-contact-link span { color: #b879b4; }
+.site-shell .jf-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .7rem 1.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(152,112,164,.2);
+  color: #8a7b91;
+  font-size: .74rem;
+}
+.site-shell .jf-footer-bottom a { color: #9870a4; font-weight: 650; }
+.site-shell .jf-footer-bottom a:hover { color: #a45f9d; }
+@media (max-width: 700px) {
+  .site-shell .jf-site-footer { padding-top: 2.8rem; }
+  .site-shell .jf-footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.2rem; }
+  .site-shell .jf-footer-brand { grid-column: 1 / -1; max-width: 520px; }
+  .site-shell .jf-footer-contact { grid-column: 1 / -1; }
+  .site-shell .jf-footer-bottom { flex-direction: column; align-items: flex-start; }
+}
