@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin";
 import { createOrder, updateOrder, updateOrderStatus } from "./actions";
+import { OrderPrintButton } from "@/components/admin/order-print-button";
 
 export const dynamic="force-dynamic";
 const statuses=["Pendente","Confirmada","Em produção","Concluída","Entregue","Cancelada"] as const;
@@ -75,7 +76,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
      })}
     </nav>
     <div className="grid gap-4">
-     {orders?.map((order:OrderRecord)=><article key={order.id} className="rounded-xl border border-pink-100 p-4">
+     {orders?.map((order:OrderRecord)=><article key={order.id} data-order-card={order.id} className="rounded-xl border border-pink-100 p-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
        <div className="min-w-0">
         <h3 className="font-bold">Encomenda #{order.order_number} · {order.customer_name}</h3>
@@ -85,12 +86,28 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
        </div>
        <span className="pill">{order.status}</span>
       </div>
+      <div className="print-only">
+       <h1>Jujuba Festeira</h1>
+       <h2>Resumo da encomenda #{order.order_number}</h2>
+       <p><strong>Data:</strong> {new Date(order.order_date).toLocaleString("pt-BR")}</p>
+       <p><strong>Cliente:</strong> {order.customer_name}</p>
+       <p><strong>Telefone / WhatsApp:</strong> {order.customer_phone}</p>
+       <p><strong>Produto:</strong> {order.product_name}</p>
+       {order.variant_name?<p><strong>Variante:</strong> {order.variant_name}</p>:null}
+       <p><strong>Quantidade:</strong> {order.quantity}</p>
+       <p><strong>Preço unitário:</strong> {money(order.unit_price_cents)}</p>
+       <p><strong>Valor total:</strong> {money(order.total_price_cents)}</p>
+       <p><strong>Estado:</strong> {order.status}</p>
+       {order.customizations?.details?<p className="print-pre"><strong>Personalizações:</strong>{"\n"}{order.customizations.details}</p>:null}
+       {order.notes?<p className="print-pre"><strong>Observações:</strong>{"\n"}{order.notes}</p>:null}
+      </div>
       <details className="mt-4 border-t border-pink-100 pt-3 group">
        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold text-berry [&::-webkit-details-marker]:hidden">
         <span>Ver detalhes da encomenda</span>
         <span className="btn btn-light text-xs">Abrir detalhes</span>
        </summary>
        <div className="mt-4">
+        <div className="mb-3"><OrderPrintButton orderId={order.id}/></div>
         <details className="mb-4 rounded-xl bg-pink-50/60 p-3 group">
          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden">
           <span>Editar dados da encomenda</span>
