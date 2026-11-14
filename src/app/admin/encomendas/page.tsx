@@ -34,22 +34,24 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
   {params.saved?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Encomenda registada com sucesso.</p>:null}
   {params.updated?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Estado da encomenda atualizado.</p>:null}
   {errorMessage?<p className="mb-4 rounded-xl bg-red-50 p-3 text-red-700">{errorMessage}</p>:null}
-  <section className="panel mb-8">
-   <h2 className="text-xl font-black">Registar nova encomenda</h2>
-   <p className="muted mt-1 text-sm">Preenche os dados conforme a conversa com o cliente no WhatsApp.</p>
-   <form action={createOrder} className="mt-4 grid gap-3 sm:grid-cols-2">
+  <details className="panel mb-8 group">
+   <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
+    <span><span className="block text-xl font-black">＋ Registar nova encomenda</span><span className="muted mt-1 block text-sm">Abre este formulário quando precisares de registar um pedido recebido pelo WhatsApp.</span></span>
+    <span className="btn btn-light">Abrir formulário</span>
+   </summary>
+   <form action={createOrder} className="mt-4 grid gap-3 border-t border-pink-100 pt-4 sm:grid-cols-2">
     <label className="field">Nome do cliente<input name="customer_name" required maxLength={120}/></label>
     <label className="field">Telefone / WhatsApp<input name="customer_phone" required maxLength={40} placeholder="+55..."/></label>
     <label className="field">Produto<select name="product_id" required defaultValue=""><option value="" disabled>Escolhe um produto</option>{products?.map((p:ProductOption)=><option key={p.id} value={p.id}>{p.name}</option>)}</select></label>
     <label className="field">Variante / opção<input name="variant_name" maxLength={120} placeholder="Ex.: 20 peças"/></label>
     <label className="field">Quantidade<input name="quantity" type="number" min="1" max="10000" defaultValue="1" required/></label>
     <label className="field">Preço unitário (R$)<input name="unit_price" type="number" min="0" max="1000000" step="0.01" required/></label>
-    <label className="field sm:col-span-2">Personalizações escolhidas<textarea name="customizations" rows={3} placeholder={"Tema: Safari\nNome: Maria\nIdade: 5 anos\nCor: Rosa"}/></label>
+    <label className="field sm:col-span-2">Personalizações escolhidas<textarea name="customizations" rows={3} placeholder={"Tema: Safari\\nNome: Maria\\nIdade: 5 anos\\nCor: Rosa"}/></label>
     <label className="field sm:col-span-2">Observações internas<textarea name="notes" rows={2} placeholder="Prazo combinado, entrega, sinal, etc."/></label>
     <p className="muted text-xs sm:col-span-2">O valor total é calculado automaticamente a partir do preço unitário × quantidade.</p>
     <button className="btn sm:col-span-2">Registar encomenda</button>
    </form>
-  </section>
+  </details>
   <section className="panel">
    <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="text-xl font-black">Encomendas recebidas</h2><span className="pill">{orders?.length||0} {selectedStatus?"encomendas neste estado":"encomendas recentes"}</span></div>
    <form method="get" className="mb-4 flex flex-wrap items-end gap-2 rounded-xl bg-pink-50/60 p-3">
