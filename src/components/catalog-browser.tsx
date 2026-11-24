@@ -78,7 +78,7 @@ export default function CatalogBrowser({ categories, products }: Props) {
             const photos = product.product_images || [];
             return (
               <article key={product.id} className="jf-product-card panel overflow-hidden p-0">
-                <div className="jf-product-photo"><ProductPhotoCarousel photos={photos} productName={product.name} className="h-52" /></div>
+                <div className="jf-product-photo"><ProductPhotoCarousel photos={photos} productName={product.name} className="h-52" imageFit="contain" /></div>
                 <div className="jf-product-info p-5">
                   {product.is_featured ? <span className="pill">Destaque</span> : null}
                   <h3 className="jf-product-title mt-2 text-lg font-bold">{product.name}</h3>
