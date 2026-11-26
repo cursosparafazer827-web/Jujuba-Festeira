@@ -178,7 +178,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
           <p className="muted text-xs sm:col-span-2">O valor total será recalculado automaticamente. O estado da encomenda não será alterado.</p>
           <button className="btn sm:col-span-2">Guardar alterações</button>
          </form>
-        </details>:<section className="panel"><p className="font-semibold text-berry">Escolhe uma opção em <strong>Gestão de encomendas</strong>, no menu lateral, para registar uma encomenda ou consultar as encomendas existentes.</p></section>}
+        </details>
         <form action={updateOrderStatus} className="flex flex-wrap items-end gap-2 border-t border-pink-100 pt-4">
          <input type="hidden" name="id" value={order.id}/>
          <label className="field min-w-48 flex-1">Estado da encomenda<select name="status" defaultValue={order.status}>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label>
@@ -193,3 +193,4 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
   </details>
  </main></AdminShell>;
 }
+:<section className="panel"><p className="font-semibold text-berry">Escolhe uma opção em <strong>Gestão de encomendas</strong>, no menu lateral, para registar uma encomenda ou consultar as encomendas existentes.</p></section>}
