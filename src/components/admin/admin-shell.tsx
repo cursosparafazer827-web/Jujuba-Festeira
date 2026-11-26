@@ -13,7 +13,7 @@ export default function AdminShell({ active, children }: Props) {
     { key: "orders" as const, label: "Gestão de encomendas", icon: "▤", open: ordersOpen, toggle: () => setOrdersOpen(v => !v), items: [{ href: "/admin/encomendas?section=register", label: "Registar encomenda" }, { href: "/admin/encomendas?section=existing", label: "Ver encomendas existentes" }] },
   ];
   return (
-    <div className="min-h-screen bg-[#f3f4f8] text-slate-800 md:flex">
+    <div className="admin-shell min-h-screen bg-[#f3f4f8] text-slate-800 md:flex">
       <aside className="w-full shrink-0 bg-[#351078] text-white md:sticky md:top-0 md:flex md:h-screen md:w-[250px] md:flex-col">
         <div className="border-b border-white/10 px-6 py-6"><Link href="/admin" className="text-2xl font-black tracking-tight text-white">jujuba<span className="text-pink-300">.</span></Link><p className="mt-1 text-xs text-violet-200">PAINEL DE ADMINISTRAÇÃO</p></div>
         <div className="px-5 py-5"><p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-violet-300">Menu principal</p>
