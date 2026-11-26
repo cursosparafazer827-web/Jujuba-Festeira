@@ -1553,3 +1553,111 @@ button, input, textarea, select { font: inherit; }
   .admin-shell .panel { border-radius: 18px; }
   .admin-shell .admin-product-form > label:nth-of-type(5) { grid-column: 1 / -1; }
 }
+
+
+/* Filtros do catálogo — controlos compactos e profissionais */
+.admin-shell .admin-product-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) repeat(2, minmax(180px, 1fr));
+  align-items: end;
+  gap: 1rem;
+  padding: 1.15rem;
+  border: 1px solid #eee5f2;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fdfaff 0%, #faf6fc 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
+.admin-shell .admin-product-filters .field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .5rem;
+  color: #65566d;
+  font-size: .8rem;
+  font-weight: 750;
+  letter-spacing: .015em;
+}
+.admin-shell .admin-product-filters input[type="search"],
+.admin-shell .admin-product-filters select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 50px;
+  padding: .75rem 2.6rem .75rem 1rem;
+  border: 1px solid #e5d9eb;
+  border-radius: 13px;
+  background-color: #fff;
+  color: #493d50;
+  font-size: .92rem;
+  font-weight: 500;
+  line-height: 1.4;
+  box-shadow: 0 3px 10px rgba(92,69,111,.035);
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.admin-shell .admin-product-filters input[type="search"] {
+  padding-left: 1rem;
+  appearance: none;
+}
+.admin-shell .admin-product-filters input[type="search"]::placeholder {
+  color: #a296aa;
+  opacity: 1;
+}
+.admin-shell .admin-product-filters select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23866694' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .9rem center;
+  background-size: 16px;
+}
+.admin-shell .admin-product-filters input[type="search"]:hover,
+.admin-shell .admin-product-filters select:hover {
+  border-color: #cbb8d5;
+}
+.admin-shell .admin-product-filters input[type="search"]:focus,
+.admin-shell .admin-product-filters select:focus {
+  border-color: #9878a6;
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(205,191,232,.25), 0 5px 14px rgba(92,69,111,.06);
+}
+.admin-shell .admin-product-filters > div {
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: .8rem;
+  padding-top: .15rem;
+}
+.admin-shell .admin-product-filters > div .muted {
+  color: #85778c;
+  font-size: .78rem;
+}
+.admin-shell .admin-product-filters .btn {
+  min-height: 44px;
+  padding: .65rem 1.35rem;
+}
+@media (max-width: 760px) {
+  .admin-shell .admin-product-filters {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: .85rem;
+  }
+  .admin-shell .admin-product-filters > label:first-of-type {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 520px) {
+  .admin-shell .admin-product-filters {
+    grid-template-columns: minmax(0, 1fr);
+    padding: .9rem;
+    border-radius: 15px;
+  }
+  .admin-shell .admin-product-filters > label:first-of-type {
+    grid-column: auto;
+  }
+  .admin-shell .admin-product-filters > div {
+    grid-column: auto;
+    align-items: stretch;
+  }
+  .admin-shell .admin-product-filters > div .btn {
+    width: 100%;
+  }
+}
