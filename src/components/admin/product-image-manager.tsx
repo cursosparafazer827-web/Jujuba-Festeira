@@ -167,9 +167,10 @@ export default function ProductImageManager({ productId, productName, initialIma
   }
 
   return (
-    <div className="mt-3 border-t border-pink-100 pt-3">
+    <details className="mt-3 border-t border-pink-100 pt-3">
+      <summary className="cursor-pointer text-sm font-bold text-berry">Fotografias ({images.length}) · Gerir fotografias</summary>
+      <div className="mt-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm font-bold text-berry">Fotografias ({images.length})</p>
         <label className="btn btn-light cursor-pointer text-xs">
           {busy ? "Aguarde..." : "Adicionar fotografias"}
           <input className="hidden" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple disabled={busy} onChange={uploadFiles} />
@@ -194,6 +195,7 @@ export default function ProductImageManager({ productId, productName, initialIma
           ))}
         </div>
       ) : <p className="muted mt-3 text-sm">Ainda não há fotografias para este produto.</p>}
-    </div>
+      </div>
+    </details>
   );
 }
