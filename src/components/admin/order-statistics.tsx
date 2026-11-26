@@ -128,8 +128,8 @@ export default function OrderStatistics({ orders, error = false }: Props) {
   const maxValue = Math.max(1, ...monthlyStats.map((month) => month.value));
 
   return (
-    <section className="mb-8 space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm">
+    <section className="admin-statistics mb-8 space-y-5">
+      <div className="admin-statistics-header flex flex-wrap items-end justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm">
         <div>
           <p className="mb-1 text-[10px] font-bold uppercase tracking-[.18em] text-violet-600">Visão geral</p><h2 className="text-2xl font-black tracking-tight text-slate-800">Resumo das encomendas</h2>
           <p className="muted mt-1 text-sm">Estatísticas atualizadas com os registos do painel.</p>
@@ -148,9 +148,9 @@ export default function OrderStatistics({ orders, error = false }: Props) {
         </label>
       </div>
       <p className="mb-0 text-xs text-slate-500">A mostrar: {periodLabels[period].toLowerCase()}.</p>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="admin-statistics-cards grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map((card) => (
-          <article key={card.label} className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <article key={card.label} className="admin-stat-card relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-600 to-fuchsia-400" />
             <div className="flex items-center justify-between gap-3">
               <p className="text-xs font-bold text-slate-500">{card.label}</p>
@@ -162,8 +162,8 @@ export default function OrderStatistics({ orders, error = false }: Props) {
         ))}
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-2">
-        <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="admin-statistics-charts grid gap-4 xl:grid-cols-2">
+        <div className="admin-stat-chart min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 className="text-base font-extrabold text-slate-800">Evolução das encomendas</h3>
           <p className="muted mt-1 text-xs">Quantidade registada por mês, nos últimos 6 meses.</p>
           <div className="mt-5 flex h-44 items-end gap-2 sm:gap-4" role="img" aria-label="Gráfico de encomendas registadas por mês nos últimos seis meses">
@@ -202,7 +202,7 @@ export default function OrderStatistics({ orders, error = false }: Props) {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="admin-stat-products rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <h3 className="text-base font-extrabold text-slate-800">Produtos mais pedidos</h3>
         <p className="muted mt-1 text-xs">Classificação pela quantidade de unidades em encomendas não canceladas neste período.</p>
         {popularProducts.length ? (
