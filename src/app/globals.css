@@ -1798,3 +1798,299 @@ button, input, textarea, select { font: inherit; }
   .admin-shell .admin-product-card > form:last-child { align-items: stretch; }
   .admin-shell .admin-product-card > form:last-child .btn { width: 100%; }
 }
+
+
+/* Refinamento das áreas de edição de produto e personalizações no painel */
+.admin-shell .admin-product-edit-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1rem 1.15rem;
+}
+.admin-shell .admin-product-edit-form .field,
+.admin-shell .admin-custom-form .field,
+.admin-shell .admin-custom-delete-form .field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .48rem;
+  color: #5f5068;
+  font-size: .84rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+.admin-shell .admin-product-edit-form .field input,
+.admin-shell .admin-product-edit-form .field select,
+.admin-shell .admin-product-edit-form .field textarea,
+.admin-shell .admin-custom-form .field input,
+.admin-shell .admin-custom-form .field select,
+.admin-shell .admin-custom-form .field textarea,
+.admin-shell .admin-custom-delete-form .field input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 49px;
+  padding: .78rem .95rem;
+  border: 1px solid #e5d9eb;
+  border-radius: 13px;
+  background: #fdfbfe;
+  color: #493d50;
+  font-size: 16px;
+  font-weight: 450;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(92,69,111,.025);
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.admin-shell .admin-product-edit-form .field textarea,
+.admin-shell .admin-custom-form .field textarea {
+  min-height: 118px;
+  resize: vertical;
+}
+.admin-shell .admin-product-edit-form .field input:focus,
+.admin-shell .admin-product-edit-form .field select:focus,
+.admin-shell .admin-product-edit-form .field textarea:focus,
+.admin-shell .admin-custom-form .field input:focus,
+.admin-shell .admin-custom-form .field select:focus,
+.admin-shell .admin-custom-form .field textarea:focus,
+.admin-shell .admin-custom-delete-form .field input:focus {
+  border-color: #a98ab8;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(205,191,232,.25);
+}
+.admin-shell .admin-product-edit-form > label:nth-of-type(1),
+.admin-shell .admin-product-edit-form > label:nth-of-type(2),
+.admin-shell .admin-product-edit-form > label:nth-of-type(3),
+.admin-shell .admin-product-edit-form > label:nth-of-type(4) {
+  grid-column: span 1;
+}
+.admin-shell .admin-product-edit-form > label:nth-of-type(5) {
+  grid-column: 1 / -1;
+}
+.admin-shell .admin-product-edit-form > label:nth-of-type(6),
+.admin-shell .admin-product-edit-form > label:nth-of-type(7) {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: .65rem;
+  padding: .7rem .9rem;
+  border: 1px solid #eee5f2;
+  border-radius: 13px;
+  background: #fcf9fd;
+  color: #65566d;
+  font-size: .86rem;
+  font-weight: 650;
+}
+.admin-shell .admin-product-edit-form input[type="checkbox"],
+.admin-shell .admin-custom-flags input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  accent-color: #866694;
+}
+.admin-shell .admin-product-edit-form > button {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: .2rem;
+}
+.admin-shell .admin-customization-manager > summary {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  padding: .65rem .85rem;
+  border: 1px solid #eee5f2;
+  border-radius: 12px;
+  background: #fcf9fd;
+  color: #70527f;
+  font-size: .88rem;
+  font-weight: 800;
+  list-style: none;
+}
+.admin-shell .admin-customization-manager > summary::-webkit-details-marker,
+.admin-shell .admin-custom-edit-card > summary::-webkit-details-marker {
+  display: none;
+}
+.admin-shell .admin-custom-count {
+  display: inline-flex;
+  min-width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #f0e7f5;
+  color: #765486;
+  font-size: .76rem;
+  font-weight: 800;
+}
+.admin-shell .admin-customization-content {
+  display: grid;
+  gap: 1rem;
+}
+.admin-shell .admin-custom-edit-card,
+.admin-shell .admin-custom-add-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #eadfed;
+  border-radius: 17px;
+  background: linear-gradient(145deg, #fff 0%, #fefcff 100%);
+  box-shadow: 0 6px 20px rgba(79,55,95,.04);
+}
+.admin-shell .admin-custom-edit-summary {
+  display: flex;
+  min-height: 66px;
+  align-items: center;
+  gap: .85rem;
+  padding: .8rem 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+.admin-shell .admin-custom-index,
+.admin-shell .admin-custom-add-icon {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #f1e8f5;
+  color: #805d91;
+  font-size: .8rem;
+  font-weight: 850;
+}
+.admin-shell .admin-custom-meta,
+.admin-shell .admin-custom-hint {
+  display: inline-block;
+  margin-top: .22rem;
+  color: #8b7d91;
+  font-size: .75rem;
+  font-weight: 500;
+}
+.admin-shell .admin-custom-edit-action {
+  flex: 0 0 auto;
+  color: #866694;
+  font-size: .78rem;
+  font-weight: 800;
+}
+.admin-shell .admin-custom-edit-body {
+  padding: 1rem;
+  border-top: 1px solid #f0e8f3;
+  background: #fdfbfe;
+}
+.admin-shell .admin-custom-current-options {
+  margin-bottom: 1rem;
+  padding: .75rem .9rem;
+  border: 1px solid #eee5f2;
+  border-radius: 12px;
+  background: #f8f2fa;
+  color: #74657b;
+  font-size: .8rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.admin-shell .admin-custom-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1rem;
+}
+.admin-shell .admin-custom-form .admin-custom-wide {
+  grid-column: 1 / -1;
+}
+.admin-shell .admin-custom-type-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-column: 1 / -1;
+  gap: 1rem;
+  min-width: 0;
+}
+.admin-shell .admin-custom-type-fields > * {
+  min-width: 0;
+}
+.admin-shell .admin-custom-flags {
+  display: flex;
+  min-height: 49px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .7rem 1rem;
+  padding: .65rem .85rem;
+  border: 1px solid #eee5f2;
+  border-radius: 13px;
+  background: #fcf9fd;
+}
+.admin-shell .admin-custom-flags label {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  color: #65566d;
+  font-size: .82rem;
+  font-weight: 650;
+}
+.admin-shell .admin-custom-save {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: .15rem;
+}
+.admin-shell .admin-custom-delete-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: .8rem;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0e3e7;
+}
+.admin-shell .admin-custom-delete-form .field {
+  color: #916b76;
+}
+.admin-shell .admin-custom-delete {
+  border-color: #b85f70 !important;
+  background: #b85f70 !important;
+  box-shadow: 0 5px 14px rgba(184,95,112,.13) !important;
+}
+.admin-shell .admin-custom-add-card {
+  padding: clamp(1rem, 2vw, 1.4rem);
+  border-color: #e4d6eb;
+  background: linear-gradient(145deg, #fff 0%, #fbf7fd 100%);
+}
+.admin-shell .admin-custom-add-heading {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  margin-bottom: 1.2rem;
+}
+.admin-shell .admin-custom-add-heading h3 {
+  color: #70527f;
+  font-size: 1rem;
+  font-weight: 850;
+}
+.admin-shell .admin-custom-add-heading p {
+  margin-top: .2rem;
+  color: #85778c;
+  font-size: .78rem;
+  line-height: 1.5;
+}
+@media (max-width: 639px) {
+  .admin-shell .admin-product-edit-form,
+  .admin-shell .admin-custom-form,
+  .admin-shell .admin-custom-type-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-shell .admin-product-edit-form > label,
+  .admin-shell .admin-product-edit-form > label:nth-of-type(5),
+  .admin-shell .admin-custom-form .admin-custom-wide,
+  .admin-shell .admin-custom-type-fields {
+    grid-column: 1 / -1;
+  }
+  .admin-shell .admin-custom-delete-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-shell .admin-custom-delete-form .btn {
+    width: 100%;
+  }
+  .admin-shell .admin-custom-edit-summary {
+    gap: .6rem;
+    padding: .75rem;
+  }
+}
