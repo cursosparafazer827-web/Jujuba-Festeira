@@ -122,9 +122,42 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
         <span>Ver detalhes da encomenda</span>
         <span className="btn btn-light text-xs">Abrir detalhes</span>
        </summary>
-       <div className="mt-4">
-        <div className="mb-3"><OrderPrintButton orderId={order.id}/></div>
-        <details className="mb-4 rounded-xl bg-pink-50/60 p-3 group">
+       <div className="mt-4 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+         <p className="text-sm font-bold text-berry">Ficha completa da encomenda</p>
+         <OrderPrintButton orderId={order.id}/>
+        </div>
+        <section className="grid gap-3 rounded-xl border border-pink-100 p-3 sm:grid-cols-2" aria-label="Dados da encomenda">
+         <div>
+          <h4 className="mb-2 text-sm font-black text-berry">Cliente</h4>
+          <p className="break-words text-sm font-semibold">{order.customer_name}</p>
+          <p className="muted mt-1 break-words text-sm">{order.customer_phone}</p>
+          <a className="btn btn-light mt-3 text-xs" href={"https://wa.me/"+String(order.customer_phone).replace(/\\D/g,"")} target="_blank" rel="noreferrer">Abrir conversa no WhatsApp</a>
+         </div>
+         <div className="rounded-lg bg-pink-50/60 p-3">
+          <h4 className="mb-2 text-sm font-black text-berry">Resumo financeiro</h4>
+          <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
+           <dt className="muted">Preço unitário</dt><dd className="text-right font-semibold">{money(order.unit_price_cents)}</dd>
+           <dt className="muted">Quantidade</dt><dd className="text-right font-semibold">{order.quantity} un.</dd>
+           <dt className="muted">Total</dt><dd className="text-right font-black text-berry">{money(order.total_price_cents)}</dd>
+          </dl>
+         </div>
+        </section>
+        <section className="rounded-xl border border-pink-100 p-3">
+         <h4 className="mb-2 text-sm font-black text-berry">Produto e opção</h4>
+         <p className="text-sm"><strong>{order.product_name}</strong></p>
+         <p className="muted mt-1 text-sm">Variante / opção: {order.variant_name||"—"}</p>
+         <p className="muted mt-1 text-sm">Registada em: {new Date(order.order_date).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})}</p>
+        </section>
+        <section className="rounded-xl border border-pink-100 p-3">
+         <h4 className="mb-2 text-sm font-black text-berry">Personalizações escolhidas</h4>
+         {order.customizations?.details?<p className="whitespace-pre-line break-words text-sm">{order.customizations.details}</p>:<p className="muted text-sm">Não foram registadas personalizações.</p>}
+        </section>
+        <section className="rounded-xl border border-pink-100 p-3">
+         <h4 className="mb-2 text-sm font-black text-berry">Observações internas</h4>
+         {order.notes?<p className="whitespace-pre-line break-words text-sm">{order.notes}</p>:<p className="muted text-sm">Sem observações internas.</p>}
+        </section>
+        <details className="rounded-xl bg-pink-50/60 p-3 group">
          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden">
           <span>Editar dados da encomenda</span>
           <span className="btn btn-light text-xs">Editar encomenda</span>
@@ -143,13 +176,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
           <button className="btn sm:col-span-2">Guardar alterações</button>
          </form>
         </details>
-        <a className="btn btn-light text-xs" href={"https://wa.me/"+String(order.customer_phone).replace(/\\D/g,"")} target="_blank" rel="noreferrer">Abrir WhatsApp</a>
-        <div className="mt-3 grid gap-2 text-sm">
-         <p><strong>Telefone:</strong> {order.customer_phone}</p>
-         {order.customizations?.details?<p className="whitespace-pre-line"><strong>Personalizações:</strong> {order.customizations.details}</p>:null}
-         {order.notes?<p className="whitespace-pre-line"><strong>Observações:</strong> {order.notes}</p>:null}
-        </div>
-        <form action={updateOrderStatus} className="mt-4 flex flex-wrap items-end gap-2 border-t border-pink-100 pt-3">
+        <form action={updateOrderStatus} className="flex flex-wrap items-end gap-2 border-t border-pink-100 pt-4">
          <input type="hidden" name="id" value={order.id}/>
          <label className="field min-w-48 flex-1">Estado da encomenda<select name="status" defaultValue={order.status}>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label>
          <button className="btn btn-light">Atualizar estado</button>
