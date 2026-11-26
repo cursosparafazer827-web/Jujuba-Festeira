@@ -2115,3 +2115,214 @@ button, input, textarea, select { font: inherit; }
   font-size: .86rem;
   font-weight: 650;
 }
+
+
+/* Gestão de encomendas — formulários, filtros e cartões */
+.admin-shell .admin-order-form,
+.admin-shell .admin-order-edit-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1rem 1.15rem;
+}
+.admin-shell .admin-order-form .field,
+.admin-shell .admin-order-edit-form .field,
+.admin-shell .admin-order-filters .field,
+.admin-shell .admin-order-status-form .field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .48rem;
+  color: #5f5068;
+  font-size: .84rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+.admin-shell .admin-order-form .field input,
+.admin-shell .admin-order-form .field select,
+.admin-shell .admin-order-form .field textarea,
+.admin-shell .admin-order-edit-form .field input,
+.admin-shell .admin-order-edit-form .field select,
+.admin-shell .admin-order-edit-form .field textarea,
+.admin-shell .admin-order-filters input,
+.admin-shell .admin-order-status-form .field select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 49px;
+  padding: .78rem .95rem;
+  border: 1px solid #e5d9eb;
+  border-radius: 13px;
+  background: #fdfbfe;
+  color: #493d50;
+  font-size: 16px;
+  font-weight: 450;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(92,69,111,.025);
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.admin-shell .admin-order-form .field textarea,
+.admin-shell .admin-order-edit-form .field textarea {
+  min-height: 112px;
+  resize: vertical;
+}
+.admin-shell .admin-order-form .field input:focus,
+.admin-shell .admin-order-form .field select:focus,
+.admin-shell .admin-order-form .field textarea:focus,
+.admin-shell .admin-order-edit-form .field input:focus,
+.admin-shell .admin-order-edit-form .field select:focus,
+.admin-shell .admin-order-edit-form .field textarea:focus,
+.admin-shell .admin-order-filters input:focus,
+.admin-shell .admin-order-status-form .field select:focus {
+  border-color: #a98ab8;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(205,191,232,.25);
+}
+.admin-shell .admin-order-form > label:nth-of-type(7),
+.admin-shell .admin-order-form > label:nth-of-type(8),
+.admin-shell .admin-order-form > p,
+.admin-shell .admin-order-form > button,
+.admin-shell .admin-order-edit-form > label:nth-of-type(3),
+.admin-shell .admin-order-edit-form > label:nth-of-type(7),
+.admin-shell .admin-order-edit-form > label:nth-of-type(8),
+.admin-shell .admin-order-edit-form > p,
+.admin-shell .admin-order-edit-form > button {
+  grid-column: 1 / -1;
+}
+.admin-shell .admin-order-form > button,
+.admin-shell .admin-order-edit-form > button {
+  width: 100%;
+  margin-top: .2rem;
+}
+.admin-shell .admin-order-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: end;
+  gap: .85rem;
+  padding: 1rem;
+  border: 1px solid #eee5f2;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fdfaff, #faf6fc);
+}
+.admin-shell .admin-order-filters .field {
+  min-width: 220px;
+}
+.admin-shell .admin-order-filters .btn,
+.admin-shell .admin-order-status-filters .btn {
+  min-height: 44px;
+  padding: .65rem 1.15rem;
+  font-size: .8rem;
+}
+.admin-shell .admin-order-status-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  padding: 1rem;
+  border: 1px solid #eee5f2;
+  border-radius: 16px;
+  background: #fcf9fd;
+}
+.admin-shell .admin-order-status-filters .btn {
+  box-shadow: none;
+}
+.admin-shell .admin-order-card {
+  overflow: hidden;
+  border: 1px solid #eadfed;
+  border-radius: 19px;
+  background: linear-gradient(145deg, #fff, #fefcff);
+  box-shadow: 0 7px 22px rgba(79,55,95,.045);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.admin-shell .admin-order-card:hover {
+  border-color: #d8c4e1;
+  box-shadow: 0 12px 28px rgba(79,55,95,.075);
+}
+.admin-shell .admin-order-card > div:first-child {
+  padding: .2rem;
+}
+.admin-shell .admin-order-card details > summary {
+  min-height: 46px;
+  padding: .65rem .8rem;
+  border-radius: 11px;
+  background: #fcf9fd;
+  color: #70527f;
+  font-weight: 750;
+}
+.admin-shell .admin-order-card details > summary:hover {
+  background: #f7f0fa;
+}
+.admin-shell .admin-order-card section {
+  border-color: #eee5f2;
+  border-radius: 14px;
+}
+.admin-shell .admin-order-card .bg-pink-50\/60 {
+  background: #faf6fc;
+}
+.admin-shell .admin-order-card .btn {
+  min-height: 42px;
+  padding: .65rem 1rem;
+  font-size: .8rem;
+}
+.admin-shell .admin-order-status-form {
+  padding-top: 1rem;
+}
+.admin-shell .admin-order-status-form .field {
+  min-width: 220px;
+  flex: 1;
+}
+.admin-shell .admin-order-status-form .btn {
+  min-height: 49px;
+}
+@media (max-width: 700px) {
+  .admin-shell .admin-order-filters {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .admin-shell .admin-order-filters .field {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  .admin-shell .admin-order-status-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .admin-shell .admin-order-status-filters .btn {
+    width: 100%;
+  }
+}
+@media (max-width: 639px) {
+  .admin-shell .admin-order-form,
+  .admin-shell .admin-order-edit-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-shell .admin-order-form > label,
+  .admin-shell .admin-order-form > label:nth-of-type(7),
+  .admin-shell .admin-order-form > label:nth-of-type(8),
+  .admin-shell .admin-order-edit-form > label,
+  .admin-shell .admin-order-edit-form > label:nth-of-type(3),
+  .admin-shell .admin-order-edit-form > label:nth-of-type(7),
+  .admin-shell .admin-order-edit-form > label:nth-of-type(8) {
+    grid-column: 1 / -1;
+  }
+  .admin-shell .admin-order-form > button,
+  .admin-shell .admin-order-edit-form > button,
+  .admin-shell .admin-order-filters .btn {
+    width: 100%;
+  }
+  .admin-shell .admin-order-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-shell .admin-order-status-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-shell .admin-order-card {
+    padding: .9rem;
+    border-radius: 16px;
+  }
+  .admin-shell .admin-order-status-form {
+    align-items: stretch;
+  }
+  .admin-shell .admin-order-status-form .btn {
+    width: 100%;
+  }
+}
