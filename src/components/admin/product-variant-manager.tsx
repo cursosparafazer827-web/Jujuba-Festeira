@@ -17,12 +17,9 @@ const money = (cents: number) => (cents / 100).toFixed(2);
 
 export default function ProductVariantManager({ productId, variants }: Props) {
   return (
-    <section className="mt-4 border-t border-pink-100 pt-3">
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <h4 className="text-sm font-bold text-berry">Variantes ({variants.length})</h4>
-      </div>
-      <details>
-        <summary className="cursor-pointer text-sm font-semibold text-berry">Gerir variantes</summary>
+    <details className="mt-3 border-t border-pink-100 pt-3">
+      <summary className="cursor-pointer text-sm font-bold text-berry">Variantes ({variants.length}) · Gerir variantes</summary>
+      <div className="mt-3">
         <form action={saveVariant} className="mt-3 grid gap-2 rounded-lg bg-pink-50/60 p-3 sm:grid-cols-2">
           <input type="hidden" name="product_id" value={productId} />
           <strong className="text-sm sm:col-span-2">Adicionar variante</strong>
@@ -65,7 +62,7 @@ export default function ProductVariantManager({ productId, variants }: Props) {
             ))}
           </div>
         ) : <p className="muted mt-3 text-sm">Este produto ainda não tem variantes.</p>}
-      </details>
-    </section>
+      </div>
+    </details>
   );
 }
