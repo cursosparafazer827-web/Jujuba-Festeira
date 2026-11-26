@@ -128,18 +128,18 @@ export default function OrderStatistics({ orders, error = false }: Props) {
   const maxValue = Math.max(1, ...monthlyStats.map((month) => month.value));
 
   return (
-    <section className="mb-8">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+    <section className="mb-8 space-y-5">
+      <div className="flex flex-wrap items-end justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm">
         <div>
-          <h2 className="text-xl font-black">Resumo das encomendas</h2>
+          <p className="mb-1 text-[10px] font-bold uppercase tracking-[.18em] text-violet-600">Visão geral</p><h2 className="text-2xl font-black tracking-tight text-slate-800">Resumo das encomendas</h2>
           <p className="muted mt-1 text-sm">Estatísticas atualizadas com os registos do painel.</p>
         </div>
-        <label className="flex flex-col gap-1 text-sm font-semibold">
+        <label className="flex min-w-48 flex-col gap-1.5 text-xs font-bold text-slate-600">
           Período das estatísticas
           <select
             value={period}
             onChange={(event) => setPeriod(event.target.value as Period)}
-            className="rounded-xl border border-pink-200 bg-white px-3 py-2 text-sm"
+            className="min-h-11 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
           >
             {Object.entries(periodLabels).map(([value, label]) => (
               <option key={value} value={value}>{label}</option>
@@ -147,8 +147,8 @@ export default function OrderStatistics({ orders, error = false }: Props) {
           </select>
         </label>
       </div>
-      <p className="muted mb-3 text-xs">A mostrar: {periodLabels[period].toLowerCase()}.</p>
-      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+      <p className="mb-0 text-xs text-slate-500">A mostrar: {periodLabels[period].toLowerCase()}.</p>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map((card) => (
           <article key={card.label} className="rounded-2xl border border-pink-100 bg-white p-4 shadow-sm">
             <p className="muted text-xs font-semibold">{card.label}</p>
@@ -158,9 +158,9 @@ export default function OrderStatistics({ orders, error = false }: Props) {
         ))}
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <div className="panel min-w-0">
-          <h3 className="font-black">Evolução das encomendas</h3>
+      <div className="grid gap-4 xl:grid-cols-2">
+        <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 className="text-base font-extrabold text-slate-800">Evolução das encomendas</h3>
           <p className="muted mt-1 text-xs">Quantidade registada por mês, nos últimos 6 meses.</p>
           <div className="mt-5 flex h-44 items-end gap-2 sm:gap-4" role="img" aria-label="Gráfico de encomendas registadas por mês nos últimos seis meses">
             {monthlyStats.map((month) => (
@@ -179,7 +179,7 @@ export default function OrderStatistics({ orders, error = false }: Props) {
         </div>
 
         <div className="panel min-w-0">
-          <h3 className="font-black">Valor registado por mês</h3>
+          <h3 className="text-base font-extrabold text-slate-800">Valor registado por mês</h3>
           <p className="muted mt-1 text-xs">Total em reais, sem encomendas canceladas, nos últimos 6 meses.</p>
           <div className="mt-5 flex h-44 items-end gap-2 sm:gap-4" role="img" aria-label="Gráfico do valor registado por mês nos últimos seis meses">
             {monthlyStats.map((month) => (
@@ -198,13 +198,13 @@ export default function OrderStatistics({ orders, error = false }: Props) {
         </div>
       </div>
 
-      <div className="panel mt-4">
-        <h3 className="font-black">Produtos mais pedidos</h3>
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <h3 className="text-base font-extrabold text-slate-800">Produtos mais pedidos</h3>
         <p className="muted mt-1 text-xs">Classificação pela quantidade de unidades em encomendas não canceladas neste período.</p>
         {popularProducts.length ? (
           <ol className="mt-4 grid gap-3 sm:grid-cols-2">
             {popularProducts.map((product, index) => (
-              <li key={product.name} className="flex items-center justify-between gap-3 rounded-xl bg-pink-50/60 px-3 py-3">
+              <li key={product.name} className="flex items-center justify-between gap-3 rounded-xl bg-violet-50/70 px-3 py-3">
                 <span className="min-w-0">
                   <span className="mr-2 font-black text-berry">{index + 1}.</span>
                   <span className="font-semibold">{product.name}</span>
