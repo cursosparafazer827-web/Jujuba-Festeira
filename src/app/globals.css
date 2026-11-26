@@ -2454,3 +2454,160 @@ button, input, textarea, select { font: inherit; }
     padding: .85rem;
   }
 }
+
+ 
+/* Dashboard administrativa — apresentação refinada das estatísticas */
+.admin-shell .admin-statistics { color: #493d50; }
+.admin-shell .admin-statistics-header {
+  align-items: center;
+  padding: clamp(1.1rem, 2.5vw, 1.65rem);
+  border-color: #e8dced;
+  border-radius: 20px;
+  background: linear-gradient(120deg, #fff 0%, #fcf8fd 58%, #f8f1fb 100%);
+  box-shadow: 0 8px 24px rgba(79,55,95,.055);
+}
+.admin-shell .admin-statistics-header h2 {
+  color: #70527f;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  line-height: 1.25;
+}
+.admin-shell .admin-statistics-header > div > p:first-child {
+  color: #9870a4;
+  letter-spacing: .16em;
+}
+.admin-shell .admin-statistics-header label {
+  min-width: min(100%, 220px);
+  color: #705b78;
+}
+.admin-shell .admin-statistics-header select {
+  min-height: 46px;
+  border: 1px solid #e5d9eb;
+  border-radius: 12px;
+  background: #fff;
+  color: #493d50;
+  padding: .7rem .85rem;
+  font-size: 16px;
+}
+.admin-shell .admin-statistics > p {
+  color: #8a7b90;
+  line-height: 1.5;
+}
+.admin-shell .admin-statistics-cards { gap: .9rem; }
+.admin-shell .admin-stat-card {
+  min-width: 0;
+  padding: 1.2rem 1.25rem;
+  border-color: #eadfed;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #fff 0%, #fdfafe 100%);
+  box-shadow: 0 6px 20px rgba(79,55,95,.045);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.admin-shell .admin-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: #d9c6e2;
+  box-shadow: 0 11px 25px rgba(79,55,95,.08);
+}
+.admin-shell .admin-stat-card > div:first-of-type > p {
+  color: #786b80;
+  font-size: .78rem;
+  line-height: 1.4;
+}
+.admin-shell .admin-stat-card > div:first-of-type > span {
+  flex: 0 0 38px;
+  border: 1px solid #eee4f3;
+  background: #f6eff9;
+  color: #805d91;
+}
+.admin-shell .admin-stat-card > p:nth-of-type(1) {
+  color: #493d50;
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  line-height: 1.2;
+}
+.admin-shell .admin-stat-card > p:last-child {
+  color: #8a7b90;
+  line-height: 1.45;
+}
+.admin-shell .admin-statistics-charts { gap: 1rem; }
+.admin-shell .admin-stat-chart,
+.admin-shell .admin-stat-products {
+  min-width: 0;
+  padding: clamp(1rem, 2.5vw, 1.4rem);
+  border-color: #eadfed;
+  border-radius: 19px;
+  background: linear-gradient(145deg, #fff 0%, #fefcff 100%);
+  box-shadow: 0 7px 22px rgba(79,55,95,.045);
+}
+.admin-shell .admin-stat-chart h3,
+.admin-shell .admin-stat-products h3 {
+  color: #70527f;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+.admin-shell .admin-stat-chart > p,
+.admin-shell .admin-stat-products > p {
+  color: #8a7b90;
+  line-height: 1.55;
+}
+.admin-shell .admin-stat-chart [role="img"] > div > span:first-child {
+  color: #70527f;
+  font-size: .75rem;
+  font-weight: 800;
+}
+.admin-shell .admin-stat-chart [role="img"] > div > div {
+  border: 1px solid rgba(232,220,237,.7);
+  background: #faf5fc;
+}
+.admin-shell .admin-stat-chart [role="img"] > div > div > div {
+  background: linear-gradient(180deg, #bd9bcf, #9870a4);
+}
+.admin-shell .admin-stat-chart:nth-child(2) [role="img"] > div > div > div {
+  background: linear-gradient(180deg, #edb5d9, #d88fbd);
+}
+.admin-shell .admin-stat-chart [role="img"] > div > span:last-child {
+  color: #827389;
+  font-weight: 650;
+}
+.admin-shell .admin-stat-products ol { gap: .7rem; }
+.admin-shell .admin-stat-products li {
+  min-width: 0;
+  border: 1px solid #eee5f2;
+  border-radius: 13px;
+  background: #fcf9fd;
+  padding: .8rem .9rem;
+}
+.admin-shell .admin-stat-products li > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: #57465f;
+  line-height: 1.45;
+}
+.admin-shell .admin-stat-products li > span:first-child > span:first-child {
+  display: inline-flex;
+  min-width: 25px;
+  height: 25px;
+  align-items: center;
+  justify-content: center;
+  margin-right: .45rem;
+  border-radius: 8px;
+  background: #f0e7f5;
+  color: #765486;
+  font-size: .75rem;
+}
+.admin-shell .admin-stat-products li > span:last-child {
+  border-radius: 9px;
+  background: #f2eaf6;
+  padding: .35rem .55rem;
+  color: #765486;
+  font-size: .78rem;
+  white-space: nowrap;
+}
+@media (max-width: 639px) {
+  .admin-shell .admin-statistics-header { align-items: stretch; }
+  .admin-shell .admin-statistics-header label { width: 100%; }
+  .admin-shell .admin-stat-card { padding: 1rem; border-radius: 15px; }
+  .admin-shell .admin-stat-chart,
+  .admin-shell .admin-stat-products { padding: 1rem; border-radius: 16px; }
+  .admin-shell .admin-stat-chart [role="img"] { gap: .4rem; }
+  .admin-shell .admin-stat-chart [role="img"] > div > span:first-child { font-size: .68rem; }
+  .admin-shell .admin-stat-products li { align-items: flex-start; }
+}
