@@ -45,7 +45,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
     <span><span className="block text-xl font-black">＋ Registar nova encomenda</span><span className="muted mt-1 block text-sm">Abre este formulário quando precisares de registar um pedido recebido pelo WhatsApp.</span></span>
     <span className="btn btn-light">Abrir formulário</span>
    </summary>
-   <form action={createOrder} className="mt-4 grid gap-3 border-t border-pink-100 pt-4 sm:grid-cols-2">
+   <form action={createOrder} className="admin-order-form mt-4 grid gap-3 border-t border-pink-100 pt-4 sm:grid-cols-2">
     <label className="field">Nome do cliente<input name="customer_name" required maxLength={120}/></label>
     <label className="field">Telefone / WhatsApp<input name="customer_phone" required maxLength={40} placeholder="+55..."/></label>
     <label className="field">Produto<select name="product_id" required defaultValue=""><option value="" disabled>Escolhe um produto</option>{products?.map((p:ProductOption)=><option key={p.id} value={p.id}>{p.name}</option>)}</select></label>
@@ -64,13 +64,13 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
    </summary>
    <div className="mt-5 border-t border-pink-100 pt-4">
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="text-lg font-black">Lista de encomendas</h2><span className="pill">{orders?.length||0} {selectedStatus?"encomendas neste estado":"encomendas recentes"}</span></div>
-    <form method="get" className="mb-4 flex flex-wrap items-end gap-2 rounded-xl bg-pink-50/60 p-3"><input type="hidden" name="section" value="existing"/>
+    <form method="get" className="admin-order-filters mb-4 flex flex-wrap items-end gap-2 rounded-xl bg-pink-50/60 p-3"><input type="hidden" name="section" value="existing"/>
      {selectedStatus?<input type="hidden" name="status" value={selectedStatus}/>:null}
      <label className="field min-w-48 flex-1">Pesquisar encomenda<input name="q" type="search" maxLength={80} defaultValue={searchTerm} placeholder="Nome, número ou telefone"/></label>
      <button className="btn btn-light" type="submit">Pesquisar</button>
      {searchTerm?<Link href={selectedStatus?`/admin/encomendas?section=existing&status=${encodeURIComponent(selectedStatus)}`:"/admin/encomendas?section=existing"} className="btn btn-light">Limpar pesquisa</Link>:null}
     </form>
-    <nav aria-label="Filtrar encomendas por estado" className="mb-5 flex flex-wrap gap-2 rounded-xl bg-pink-50/60 p-3">
+    <nav aria-label="Filtrar encomendas por estado" className="admin-order-status-filters mb-5 flex flex-wrap gap-2 rounded-xl bg-pink-50/60 p-3">
      <Link href={searchTerm?`/admin/encomendas?section=existing&q=${encodeURIComponent(searchTerm)}`:"/admin/encomendas?section=existing"} aria-current={!selectedStatus?"page":undefined} className={!selectedStatus?"btn":"btn btn-light"}>Todas</Link>
      {statuses.map(status=>{
       const labels:Record<(typeof statuses)[number],string>={"Pendente":"Pendentes","Confirmada":"Confirmadas","Em produção":"Em produção","Concluída":"Concluídas","Entregue":"Entregues","Cancelada":"Canceladas"};
@@ -79,7 +79,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
      })}
     </nav>
     <div className="grid gap-4">
-     {orders?.map((order:OrderRecord)=><article key={order.id} data-order-card={order.id} className="rounded-xl border border-pink-100 p-4">
+     {orders?.map((order:OrderRecord)=><article key={order.id} data-order-card={order.id} className="admin-order-card rounded-xl border border-pink-100 p-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
        <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
@@ -165,7 +165,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
           <span>Editar dados da encomenda</span>
           <span className="btn btn-light text-xs">Editar encomenda</span>
          </summary>
-         <form action={updateOrder} className="mt-4 grid gap-3 border-t border-pink-100 pt-4 sm:grid-cols-2">
+         <form action={updateOrder} className="admin-order-edit-form mt-4 grid gap-3 border-t border-pink-100 pt-4 sm:grid-cols-2">
           <input type="hidden" name="id" value={order.id}/>
           <label className="field">Nome do cliente<input name="customer_name" required maxLength={120} defaultValue={order.customer_name}/></label>
           <label className="field">Telefone / WhatsApp<input name="customer_phone" required maxLength={40} defaultValue={order.customer_phone}/></label>
@@ -179,7 +179,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
           <button className="btn sm:col-span-2">Guardar alterações</button>
          </form>
         </details>
-        <form action={updateOrderStatus} className="flex flex-wrap items-end gap-2 border-t border-pink-100 pt-4">
+        <form action={updateOrderStatus} className="admin-order-status-form flex flex-wrap items-end gap-2 border-t border-pink-100 pt-4">
          <input type="hidden" name="id" value={order.id}/>
          <label className="field min-w-48 flex-1">Estado da encomenda<select name="status" defaultValue={order.status}>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label>
          <button className="btn btn-light">Atualizar estado</button>
