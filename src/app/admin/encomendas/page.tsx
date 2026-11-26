@@ -64,18 +64,18 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
    </summary>
    <div className="mt-5 border-t border-pink-100 pt-4">
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="text-lg font-black">Lista de encomendas</h2><span className="pill">{orders?.length||0} {selectedStatus?"encomendas neste estado":"encomendas recentes"}</span></div>
-    <form method="get" className="mb-4 flex flex-wrap items-end gap-2 rounded-xl bg-pink-50/60 p-3">
+    <form method="get" className="mb-4 flex flex-wrap items-end gap-2 rounded-xl bg-pink-50/60 p-3"><input type="hidden" name="section" value="existing"/>
      {selectedStatus?<input type="hidden" name="status" value={selectedStatus}/>:null}
      <label className="field min-w-48 flex-1">Pesquisar encomenda<input name="q" type="search" maxLength={80} defaultValue={searchTerm} placeholder="Nome, número ou telefone"/></label>
      <button className="btn btn-light" type="submit">Pesquisar</button>
-     {searchTerm?<Link href={selectedStatus?`/admin/encomendas?status=${encodeURIComponent(selectedStatus)}`:"/admin/encomendas"} className="btn btn-light">Limpar pesquisa</Link>:null}
+     {searchTerm?<Link href={selectedStatus?`/admin/encomendas?section=existing&status=${encodeURIComponent(selectedStatus)}`:"/admin/encomendas?section=existing"} className="btn btn-light">Limpar pesquisa</Link>:null}
     </form>
     <nav aria-label="Filtrar encomendas por estado" className="mb-5 flex flex-wrap gap-2 rounded-xl bg-pink-50/60 p-3">
-     <Link href={searchTerm?`/admin/encomendas?q=${encodeURIComponent(searchTerm)}`:"/admin/encomendas"} aria-current={!selectedStatus?"page":undefined} className={!selectedStatus?"btn":"btn btn-light"}>Todas</Link>
+     <Link href={searchTerm?`/admin/encomendas?section=existing&q=${encodeURIComponent(searchTerm)}`:"/admin/encomendas?section=existing"} aria-current={!selectedStatus?"page":undefined} className={!selectedStatus?"btn":"btn btn-light"}>Todas</Link>
      {statuses.map(status=>{
       const labels:Record<(typeof statuses)[number],string>={"Pendente":"Pendentes","Confirmada":"Confirmadas","Em produção":"Em produção","Concluída":"Concluídas","Entregue":"Entregues","Cancelada":"Canceladas"};
       const active=selectedStatus===status;
-      return <Link key={status} href={`/admin/encomendas?status=${encodeURIComponent(status)}${searchTerm?`&q=${encodeURIComponent(searchTerm)}`:""}`} aria-current={active?"page":undefined} className={active?"btn":"btn btn-light"}>{labels[status]}</Link>;
+      return <Link key={status} href={`/admin/encomendas?section=existing&status=${encodeURIComponent(status)}${searchTerm?`&q=${encodeURIComponent(searchTerm)}`:""}`} aria-current={active?"page":undefined} className={active?"btn":"btn btn-light"}>{labels[status]}</Link>;
      })}
     </nav>
     <div className="grid gap-4">
