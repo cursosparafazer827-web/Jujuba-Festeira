@@ -28,9 +28,12 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
  ]);
  const errorMessage=params.error==="invalid"?"Verifique os dados da encomenda e tente novamente.":params.error==="save"?"Não foi possível registar a encomenda. Tente novamente.":params.error==="status"?"Não foi possível atualizar o estado da encomenda.":params.error==="edit"?"Não foi possível editar a encomenda. Verifique os dados e tente novamente.":ordersError?"Não foi possível carregar as encomendas.":productsError?"Não foi possível carregar os produtos.":null;
  return <main className="container py-10">
-  <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
-   <div><Link href="/admin" className="text-sm font-bold text-berry">← Painel administrativo</Link><h1 className="mt-2 text-3xl font-black">Gestão de encomendas</h1><p className="muted mt-1">Regista os pedidos recebidos pelo WhatsApp e acompanha cada etapa.</p></div>
-   <span className="pill">{orders?.length||0} encomendas recentes</span>
+  <header className="mb-8 space-y-4">
+   <div className="flex flex-wrap items-start justify-between gap-4">
+    <div><Link href="/admin" className="text-sm font-bold text-berry">← Painel administrativo</Link><h1 className="mt-2 text-3xl font-black">Gestão de encomendas</h1><p className="muted mt-1">Regista os pedidos recebidos pelo WhatsApp e acompanha cada etapa.</p></div>
+    <span className="pill">{orders?.length||0} encomendas recentes</span>
+   </div>
+   <nav aria-label="Navegação administrativa" className="flex flex-wrap gap-2 rounded-xl border border-pink-100 bg-white p-2"><Link href="/admin" className="btn btn-light">Catálogo de produtos</Link><Link href="/admin/encomendas" aria-current="page" className="btn">Gestão de encomendas</Link></nav>
   </header>
   {params.saved?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Encomenda registada com sucesso.</p>:null}
   {params.updated?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Estado da encomenda atualizado.</p>:null}
