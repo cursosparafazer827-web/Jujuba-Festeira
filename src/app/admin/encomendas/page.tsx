@@ -81,7 +81,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
     <div className="grid gap-4">
      {orders?.map((order:OrderRecord)=><article key={order.id} data-order-card={order.id} className="admin-order-card rounded-xl border border-pink-100 p-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-       <div className="min-w-0 flex-1">
+       <div className="admin-order-customer min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
          <h3 className="font-black text-berry">Encomenda #{order.order_number}</h3>
          <span className={`rounded-full px-3 py-1 text-xs font-bold ${
@@ -93,14 +93,14 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
         </div>
         <p className="mt-2 break-words font-semibold">{order.customer_name}</p>
         <p className="muted mt-1 text-sm">{order.customer_phone}</p>
-        <div className="mt-3 grid gap-2 rounded-xl bg-pink-50/60 p-3 text-sm sm:grid-cols-2">
+        <div className="admin-order-summary-grid mt-3 grid gap-2 rounded-xl bg-pink-50/60 p-3 text-sm sm:grid-cols-2">
          <p className="min-w-0 break-words"><span className="muted">Produto:</span> <strong>{order.product_name}</strong></p>
          <p><span className="muted">Opção:</span> <strong>{order.variant_name||"—"}</strong></p>
          <p><span className="muted">Quantidade:</span> <strong>{order.quantity} un.</strong></p>
          <p><span className="muted">Data:</span> <strong>{new Date(order.order_date).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})}</strong></p>
         </div>
        </div>
-       <div className="shrink-0 rounded-xl border border-pink-100 bg-white px-4 py-3 sm:min-w-36 sm:text-right">
+       <div className="admin-order-total shrink-0 rounded-xl border border-pink-100 bg-white px-4 py-3 sm:min-w-36 sm:text-right">
         <p className="muted text-xs font-semibold">Valor total</p>
         <p className="mt-1 text-xl font-black text-berry">{money(order.total_price_cents)}</p>
        </div>
@@ -130,7 +130,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
          <p className="text-sm font-bold text-berry">Ficha completa da encomenda</p>
          <OrderPrintButton orderId={order.id}/>
         </div>
-        <section className="grid gap-3 rounded-xl border border-pink-100 p-3 sm:grid-cols-2" aria-label="Dados da encomenda">
+        <section className="admin-order-detail-section grid gap-3 rounded-xl border border-pink-100 p-3 sm:grid-cols-2" aria-label="Dados da encomenda">
          <div>
           <h4 className="mb-2 text-sm font-black text-berry">Cliente</h4>
           <p className="break-words text-sm font-semibold">{order.customer_name}</p>
@@ -146,7 +146,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
           </dl>
          </div>
         </section>
-        <section className="rounded-xl border border-pink-100 p-3">
+        <section className="admin-order-detail-section rounded-xl border border-pink-100 p-3">
          <h4 className="mb-2 text-sm font-black text-berry">Produto e opção</h4>
          <p className="text-sm"><strong>{order.product_name}</strong></p>
          <p className="muted mt-1 text-sm">Variante / opção: {order.variant_name||"—"}</p>
@@ -160,7 +160,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
          <h4 className="mb-2 text-sm font-black text-berry">Observações internas</h4>
          {order.notes?<p className="whitespace-pre-line break-words text-sm">{order.notes}</p>:<p className="muted text-sm">Sem observações internas.</p>}
         </section>
-        <details className="rounded-xl bg-pink-50/60 p-3 group">
+        <details className="admin-order-edit-details rounded-xl bg-pink-50/60 p-3 group">
          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden">
           <span>Editar dados da encomenda</span>
           <span className="btn btn-light text-xs">Editar encomenda</span>
