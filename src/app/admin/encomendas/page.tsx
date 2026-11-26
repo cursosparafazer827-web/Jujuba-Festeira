@@ -190,7 +190,6 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
      {!orders?.length?<p className="muted">{searchTerm?"Não foram encontradas encomendas para esta pesquisa.":selectedStatus?"Não existem encomendas com este estado.":"Ainda não existem encomendas registadas."}</p>:null}
     </div>
    </div>
-  </details>
+  </details>:<section className="panel"><p className="font-semibold text-berry">Escolhe uma opção em <strong>Gestão de encomendas</strong>, no menu lateral, para registar uma encomenda ou consultar as encomendas existentes.</p></section>}
  </main></AdminShell>;
 }
-:<section className="panel"><p className="font-semibold text-berry">Escolhe uma opção em <strong>Gestão de encomendas</strong>, no menu lateral, para registar uma encomenda ou consultar as encomendas existentes.</p></section>}
