@@ -1661,3 +1661,140 @@ button, input, textarea, select { font: inherit; }
     width: 100%;
   }
 }
+
+
+/* Catálogo administrativo — cartões de produto refinados */
+.admin-shell .admin-product-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1rem, 1.8vw, 1.45rem);
+  border: 1px solid #eadfed;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #fff 0%, #fefcff 100%);
+  box-shadow: 0 7px 22px rgba(79,55,95,.045);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.admin-shell .admin-product-card:hover {
+  border-color: #d8c4e1;
+  box-shadow: 0 13px 30px rgba(79,55,95,.085);
+  transform: translateY(-1px);
+}
+.admin-shell .admin-product-card-head {
+  gap: 1.15rem;
+  padding-bottom: 1rem;
+}
+.admin-shell .admin-product-thumb {
+  width: 92px;
+  height: 92px;
+  border: 1px solid #eadfed;
+  border-radius: 16px;
+  background: #faf5fc;
+  box-shadow: 0 3px 10px rgba(79,55,95,.06);
+}
+.admin-shell .admin-product-name {
+  color: #493653;
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  font-weight: 800;
+  letter-spacing: -.015em;
+  line-height: 1.35;
+}
+.admin-shell .admin-product-card .muted {
+  color: #82758a;
+}
+.admin-shell .admin-product-card .btn {
+  min-height: 42px;
+  padding: .65rem 1.15rem;
+  font-size: .8rem;
+}
+.admin-shell .admin-product-card .pill,
+.admin-shell .admin-product-card-head span.rounded-full {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  border-radius: 999px;
+  padding: .3rem .7rem;
+  font-size: .72rem;
+  font-weight: 750;
+}
+.admin-shell .admin-product-section {
+  margin-top: .8rem;
+  border-color: #eee6f1;
+  padding-top: .8rem;
+}
+.admin-shell .admin-product-section > summary,
+.admin-shell .admin-product-card > details:not(.admin-product-section) > summary {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  gap: .65rem;
+  padding: .65rem .8rem;
+  border: 1px solid #f0e8f3;
+  border-radius: 11px;
+  background: #fcf9fd;
+  color: #70527f;
+  font-size: .84rem;
+  font-weight: 750;
+  list-style: none;
+  transition: background .18s ease, border-color .18s ease;
+}
+.admin-shell .admin-product-section > summary::-webkit-details-marker,
+.admin-shell .admin-product-card > details:not(.admin-product-section) > summary::-webkit-details-marker {
+  display: none;
+}
+.admin-shell .admin-product-section > summary::before,
+.admin-shell .admin-product-card > details:not(.admin-product-section) > summary::before {
+  content: "＋";
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  background: #f1e8f5;
+  color: #866694;
+  font-size: .85rem;
+  font-weight: 800;
+}
+.admin-shell .admin-product-section[open] > summary::before,
+.admin-shell .admin-product-card > details[open]:not(.admin-product-section) > summary::before {
+  content: "−";
+}
+.admin-shell .admin-product-section > summary:hover,
+.admin-shell .admin-product-card > details:not(.admin-product-section) > summary:hover {
+  border-color: #dfcce7;
+  background: #f8f1fa;
+}
+.admin-shell .admin-product-card > form:last-child {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-color: #f1e5e8;
+}
+.admin-shell .admin-product-card > form:last-child .field {
+  color: #916b76;
+}
+.admin-shell .admin-product-card > form:last-child input {
+  min-height: 44px;
+  border: 1px solid #efdde2;
+  border-radius: 11px;
+  background: #fffafb;
+  padding: .65rem .8rem;
+}
+.admin-shell .admin-product-card > form:last-child .btn {
+  border-color: #b85f70;
+  background: #b85f70;
+  box-shadow: 0 5px 14px rgba(184,95,112,.14);
+}
+.admin-shell .admin-product-card > form:last-child .btn:hover {
+  border-color: #9f4d5e;
+  background: #9f4d5e;
+}
+@media (max-width: 639px) {
+  .admin-shell .admin-product-card { padding: 1rem; border-radius: 16px; }
+  .admin-shell .admin-product-thumb { width: 76px; height: 76px; border-radius: 13px; }
+  .admin-shell .admin-product-card-head { align-items: stretch; }
+  .admin-shell .admin-product-card-head > form { width: 100%; }
+  .admin-shell .admin-product-card-head > form .btn { width: 100%; }
+  .admin-shell .admin-product-card > form:last-child { align-items: stretch; }
+  .admin-shell .admin-product-card > form:last-child .btn { width: 100%; }
+}
