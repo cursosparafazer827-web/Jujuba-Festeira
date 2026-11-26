@@ -77,14 +77,30 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
     </nav>
     <div className="grid gap-4">
      {orders?.map((order:OrderRecord)=><article key={order.id} data-order-card={order.id} className="rounded-xl border border-pink-100 p-4">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-       <div className="min-w-0">
-        <h3 className="font-bold">Encomenda #{order.order_number} · {order.customer_name}</h3>
-        <p className="muted mt-1 text-xs">{new Date(order.order_date).toLocaleString("pt-BR")}</p>
-        <p className="mt-2 text-sm">{order.product_name}{order.variant_name?" · "+order.variant_name:""} · {order.quantity} un.</p>
-        <p className="mt-1 font-black text-berry">{money(order.total_price_cents)}</p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+       <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
+         <h3 className="font-black text-berry">Encomenda #{order.order_number}</h3>
+         <span className={`rounded-full px-3 py-1 text-xs font-bold ${
+          order.status==="Concluída"||order.status==="Entregue"?"bg-green-50 text-green-700":
+          order.status==="Cancelada"?"bg-red-50 text-red-700":
+          order.status==="Em produção"?"bg-purple-50 text-purple-700":
+          order.status==="Confirmada"?"bg-blue-50 text-blue-700":"bg-amber-50 text-amber-800"
+         }`}>{order.status}</span>
+        </div>
+        <p className="mt-2 break-words font-semibold">{order.customer_name}</p>
+        <p className="muted mt-1 text-sm">{order.customer_phone}</p>
+        <div className="mt-3 grid gap-2 rounded-xl bg-pink-50/60 p-3 text-sm sm:grid-cols-2">
+         <p className="min-w-0 break-words"><span className="muted">Produto:</span> <strong>{order.product_name}</strong></p>
+         <p><span className="muted">Opção:</span> <strong>{order.variant_name||"—"}</strong></p>
+         <p><span className="muted">Quantidade:</span> <strong>{order.quantity} un.</strong></p>
+         <p><span className="muted">Data:</span> <strong>{new Date(order.order_date).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})}</strong></p>
+        </div>
        </div>
-       <span className="pill">{order.status}</span>
+       <div className="shrink-0 rounded-xl border border-pink-100 bg-white px-4 py-3 sm:min-w-36 sm:text-right">
+        <p className="muted text-xs font-semibold">Valor total</p>
+        <p className="mt-1 text-xl font-black text-berry">{money(order.total_price_cents)}</p>
+       </div>
       </div>
       <div className="print-only">
        <h1>Jujuba Festeira</h1>
