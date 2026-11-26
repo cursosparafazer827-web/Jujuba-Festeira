@@ -1402,3 +1402,154 @@ button, input, textarea, select { font: inherit; }
     animation-duration: .01ms !important;
   }
 }
+
+
+/* Painel administrativo — formulário de catálogo e navegação */
+.admin-shell {
+  color: #493d50;
+  background: #faf8fc;
+  font-family: "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.admin-shell > div > .flex.min-h-14 {
+  min-height: 64px;
+  border-color: #eee5f2;
+  box-shadow: 0 3px 14px rgba(92,69,111,.035);
+}
+.admin-shell main.container {
+  width: min(1180px, calc(100% - 48px));
+  margin-inline: auto;
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-bottom: 3rem;
+}
+.admin-shell main h1 {
+  color: #70527f;
+  font-family: "Bodoni 72", Didot, Georgia, serif;
+  font-size: clamp(1.9rem, 3.5vw, 2.5rem);
+  font-weight: 650;
+  letter-spacing: -.04em;
+}
+.admin-shell .panel {
+  padding: clamp(1.1rem, 2.5vw, 2rem);
+  border: 1px solid #e9dfed;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(92,69,111,.07);
+}
+.admin-shell .panel summary {
+  color: #765486;
+  font-size: 1.18rem;
+  font-weight: 800;
+}
+.admin-shell .panel .muted {
+  color: #817587;
+}
+.admin-shell .admin-product-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.15rem;
+  align-items: start;
+}
+.admin-shell .admin-product-form .field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .48rem;
+  color: #5f5068;
+  font-size: .88rem;
+  font-weight: 700;
+}
+.admin-shell .admin-product-form .field input,
+.admin-shell .admin-product-form .field select,
+.admin-shell .admin-product-form .field textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: .75rem .9rem;
+  border: 1px solid #e5d9eb;
+  border-radius: 12px;
+  background: #fdfbfe;
+  color: #493d50;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.admin-shell .admin-product-form .field textarea {
+  min-height: 116px;
+  resize: vertical;
+}
+.admin-shell .admin-product-form .field input:focus,
+.admin-shell .admin-product-form .field select:focus,
+.admin-shell .admin-product-form .field textarea:focus {
+  border-color: #a98ab8;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(205,191,232,.25);
+}
+.admin-shell .admin-product-form > label:nth-of-type(5) {
+  grid-column: 1 / -1;
+}
+.admin-shell .admin-product-form > label:nth-of-type(7),
+.admin-shell .admin-product-form > label:nth-of-type(8) {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  gap: .65rem;
+  padding: .65rem .85rem;
+  border: 1px solid #eee5f2;
+  border-radius: 12px;
+  background: #fcf9fd;
+  color: #65566d;
+  font-size: .88rem;
+  font-weight: 600;
+}
+.admin-shell .admin-product-form input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #866694;
+}
+.admin-shell .admin-product-form .btn,
+.admin-shell .btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #866694;
+  border-radius: 999px;
+  padding: .8rem 1.5rem;
+  background: #866694;
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 750;
+  box-shadow: 0 8px 20px rgba(134,102,148,.16);
+  transition: background .18s ease, transform .18s ease;
+}
+.admin-shell .admin-product-form .btn:hover,
+.admin-shell .btn:hover {
+  background: #70527f;
+  transform: translateY(-1px);
+}
+.admin-shell .admin-product-form > button {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: .25rem;
+}
+@media (min-width: 640px) {
+  .admin-shell .admin-product-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .admin-shell .admin-product-form > label:nth-of-type(1),
+  .admin-shell .admin-product-form > label:nth-of-type(2),
+  .admin-shell .admin-product-form > label:nth-of-type(3),
+  .admin-shell .admin-product-form > label:nth-of-type(4) { grid-column: span 1; }
+  .admin-shell .admin-product-form > label:nth-of-type(5),
+  .admin-shell .admin-product-form > label:nth-of-type(6) { grid-column: span 1; }
+}
+@media (min-width: 1024px) {
+  .admin-shell .admin-product-form { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .admin-shell .admin-product-form > label:nth-of-type(5) { grid-column: span 2; }
+  .admin-shell .admin-product-form > label:nth-of-type(6) { grid-column: span 1; }
+}
+@media (max-width: 639px) {
+  .admin-shell main.container { width: calc(100% - 28px); }
+  .admin-shell .panel { border-radius: 18px; }
+  .admin-shell .admin-product-form > label:nth-of-type(5) { grid-column: 1 / -1; }
+}
