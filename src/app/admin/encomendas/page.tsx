@@ -40,7 +40,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
   {params.updated?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Estado da encomenda atualizado.</p>:null}
   {params.edited?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Encomenda atualizada com sucesso.</p>:null}
   {errorMessage?<p className="mb-4 rounded-xl bg-red-50 p-3 text-red-700">{errorMessage}</p>:null}
-  {section==="register"?  <details className="panel mb-8 group">
+  {section==="register"?  <details open className="panel mb-8 group">
    <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
     <span><span className="block text-xl font-black">＋ Registar nova encomenda</span><span className="muted mt-1 block text-sm">Abre este formulário quando precisares de registar um pedido recebido pelo WhatsApp.</span></span>
     <span className="btn btn-light">Abrir formulário</span>
@@ -57,7 +57,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
     <p className="muted text-xs sm:col-span-2">O valor total é calculado automaticamente a partir do preço unitário × quantidade.</p>
     <button className="btn sm:col-span-2">Registar encomenda</button>
    </form>
-  </details>:section==="existing"?  <details className="panel group">
+  </details>:section==="existing"?  <details open className="panel group">
    <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
     <span><span className="block text-xl font-black">Encomendas recebidas</span><span className="muted mt-1 block text-sm">{orders?.length||0} encomendas recentes. Abre para pesquisar, filtrar e gerir os pedidos.</span></span>
     <span className="btn btn-light">Mostrar encomendas</span>
