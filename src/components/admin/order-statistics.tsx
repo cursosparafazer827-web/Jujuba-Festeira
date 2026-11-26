@@ -150,10 +150,14 @@ export default function OrderStatistics({ orders, error = false }: Props) {
       <p className="mb-0 text-xs text-slate-500">A mostrar: {periodLabels[period].toLowerCase()}.</p>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map((card) => (
-          <article key={card.label} className="rounded-2xl border border-pink-100 bg-white p-4 shadow-sm">
-            <p className="muted text-xs font-semibold">{card.label}</p>
-            <p className="mt-2 break-words text-2xl font-black text-berry">{card.value}</p>
-            <p className="muted mt-1 text-xs">{card.detail}</p>
+          <article key={card.label} className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-600 to-fuchsia-400" />
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs font-bold text-slate-500">{card.label}</p>
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-50 text-lg text-violet-700">{card.label === "Total de encomendas" ? "▤" : card.label === "Pendentes" ? "◷" : card.label === "Concluídas" ? "✓" : "R$"}</span>
+            </div>
+            <p className="mt-3 break-words text-3xl font-black tracking-tight text-slate-800">{card.value}</p>
+            <p className="mt-1 text-xs text-slate-500">{card.detail}</p>
           </article>
         ))}
       </div>
@@ -178,7 +182,7 @@ export default function OrderStatistics({ orders, error = false }: Props) {
           </div>
         </div>
 
-        <div className="panel min-w-0">
+        <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 className="text-base font-extrabold text-slate-800">Valor registado por mês</h3>
           <p className="muted mt-1 text-xs">Total em reais, sem encomendas canceladas, nos últimos 6 meses.</p>
           <div className="mt-5 flex h-44 items-end gap-2 sm:gap-4" role="img" aria-label="Gráfico do valor registado por mês nos últimos seis meses">
