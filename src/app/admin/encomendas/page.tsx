@@ -10,9 +10,10 @@ type ProductOption={id:string;name:string};
 type OrderRecord={id:string;order_number:number;customer_name:string;customer_phone:string;product_name:string;variant_name:string|null;quantity:number;unit_price_cents:number;total_price_cents:number;customizations:{details?:string}|null;notes:string|null;status:(typeof statuses)[number];order_date:string};
 const money=(cents:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(cents/100);
 
-export default async function OrdersPage({searchParams}:{searchParams:Promise<{saved?:string;updated?:string;edited?:string;error?:string;status?:string;q?:string}>}){
+export default async function OrdersPage({searchParams}:{searchParams:Promise<{saved?:string;updated?:string;edited?:string;error?:string;status?:string;q?:string;section?:string}>}){
  const {supabase}=await requireAdmin();
  const params=await searchParams;
+ const section=params.section||"";
  const selectedStatus=statuses.includes(params.status as (typeof statuses)[number])?params.status as (typeof statuses)[number]:"";
  const searchTerm=(params.q||"").trim().replace(/[,.()\\\\%_*]/g," ").replace(/\s+/g," ").slice(0,80);
  let ordersQuery=supabase.from("orders").select("*");
@@ -39,7 +40,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
   {params.updated?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Estado da encomenda atualizado.</p>:null}
   {params.edited?<p className="mb-4 rounded-xl bg-green-50 p-3 text-green-800">Encomenda atualizada com sucesso.</p>:null}
   {errorMessage?<p className="mb-4 rounded-xl bg-red-50 p-3 text-red-700">{errorMessage}</p>:null}
-  <details className="panel mb-8 group">
+  {section==="register"?  <details className="panel mb-8 group">
    <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
     <span><span className="block text-xl font-black">＋ Registar nova encomenda</span><span className="muted mt-1 block text-sm">Abre este formulário quando precisares de registar um pedido recebido pelo WhatsApp.</span></span>
     <span className="btn btn-light">Abrir formulário</span>
@@ -56,8 +57,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
     <p className="muted text-xs sm:col-span-2">O valor total é calculado automaticamente a partir do preço unitário × quantidade.</p>
     <button className="btn sm:col-span-2">Registar encomenda</button>
    </form>
-  </details>
-  <details className="panel group">
+  </details>:section==="existing"?  <details className="panel group">
    <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
     <span><span className="block text-xl font-black">Encomendas recebidas</span><span className="muted mt-1 block text-sm">{orders?.length||0} encomendas recentes. Abre para pesquisar, filtrar e gerir os pedidos.</span></span>
     <span className="btn btn-light">Mostrar encomendas</span>
@@ -178,7 +178,7 @@ export default async function OrdersPage({searchParams}:{searchParams:Promise<{s
           <p className="muted text-xs sm:col-span-2">O valor total será recalculado automaticamente. O estado da encomenda não será alterado.</p>
           <button className="btn sm:col-span-2">Guardar alterações</button>
          </form>
-        </details>
+        </details>:<section className="panel"><p className="font-semibold text-berry">Escolhe uma opção em <strong>Gestão de encomendas</strong>, no menu lateral, para registar uma encomenda ou consultar as encomendas existentes.</p></section>}
         <form action={updateOrderStatus} className="flex flex-wrap items-end gap-2 border-t border-pink-100 pt-4">
          <input type="hidden" name="id" value={order.id}/>
          <label className="field min-w-48 flex-1">Estado da encomenda<select name="status" defaultValue={order.status}>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></label>
