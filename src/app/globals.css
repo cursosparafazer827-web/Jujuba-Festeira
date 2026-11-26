@@ -2094,3 +2094,24 @@ button, input, textarea, select { font: inherit; }
     padding: .75rem;
   }
 }
+
+
+/* Ajuste fino da ordem dos campos no formulário de edição */
+.admin-shell .admin-product-edit-form > label:nth-of-type(5),
+.admin-shell .admin-product-edit-form > label:nth-of-type(6) {
+  grid-column: 1 / -1;
+}
+.admin-shell .admin-product-edit-form > label:nth-of-type(7),
+.admin-shell .admin-product-edit-form > label:nth-of-type(8) {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: .65rem;
+  padding: .7rem .9rem;
+  border: 1px solid #eee5f2;
+  border-radius: 13px;
+  background: #fcf9fd;
+  color: #65566d;
+  font-size: .86rem;
+  font-weight: 650;
+}
