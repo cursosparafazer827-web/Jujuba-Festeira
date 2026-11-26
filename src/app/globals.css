@@ -2326,3 +2326,131 @@ button, input, textarea, select { font: inherit; }
     width: 100%;
   }
 }
+
+
+/* Refinamento dos cartões e fichas detalhadas das encomendas */
+.admin-shell .admin-order-customer h3 {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: .25rem .65rem;
+  border-radius: 9px;
+  background: #f5edf8;
+  color: #765486;
+  font-size: .82rem;
+  letter-spacing: .015em;
+}
+.admin-shell .admin-order-customer > p:first-of-type {
+  margin-top: .8rem;
+  color: #493d50;
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+.admin-shell .admin-order-customer > p:nth-of-type(2) {
+  display: inline-flex;
+  margin-top: .3rem;
+  align-items: center;
+  border-radius: 8px;
+  background: #faf6fc;
+  padding: .25rem .55rem;
+  color: #796b80;
+  font-size: .8rem;
+}
+.admin-shell .admin-order-total {
+  min-width: 150px;
+  border-color: #e8dced;
+  background: linear-gradient(145deg, #fff, #fbf7fd);
+  box-shadow: 0 4px 14px rgba(94,66,110,.055);
+}
+.admin-shell .admin-order-total p:last-child {
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  letter-spacing: -.025em;
+  line-height: 1.25;
+}
+.admin-shell .admin-order-summary-grid {
+  gap: .65rem;
+  border: 1px solid #f0e7f3;
+  background: #fcf9fd;
+  padding: .9rem;
+}
+.admin-shell .admin-order-summary-grid > p {
+  min-width: 0;
+  padding: .55rem .65rem;
+  border-radius: 9px;
+  background: #fff;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.admin-shell .admin-order-summary-grid > p strong {
+  color: #57465f;
+  font-weight: 750;
+}
+.admin-shell .admin-order-detail-section {
+  border-color: #ebdfef;
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 3px 12px rgba(92,69,111,.025);
+}
+.admin-shell .admin-order-detail-section h4 {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .8rem;
+  padding-bottom: .55rem;
+  border-bottom: 1px solid #f1e9f3;
+  color: #765486;
+  font-size: .83rem;
+  letter-spacing: .01em;
+}
+.admin-shell .admin-order-detail-section h4 + p,
+.admin-shell .admin-order-detail-section h4 + div {
+  line-height: 1.65;
+}
+.admin-shell .admin-order-detail-section .btn {
+  min-height: 40px;
+  border-radius: 10px;
+}
+.admin-shell .admin-order-edit-details {
+  border: 1px solid #eee3f2;
+  background: #fcf9fd;
+}
+.admin-shell .admin-order-edit-details > summary {
+  min-height: 46px;
+  padding: .6rem .75rem;
+  border-radius: 10px;
+  color: #70527f;
+  font-size: .84rem;
+  font-weight: 800;
+}
+.admin-shell .admin-order-edit-details[open] > summary {
+  background: #f4ebf7;
+}
+.admin-shell .admin-order-edit-form {
+  border-color: #eadfed;
+}
+.admin-shell .admin-order-status-form {
+  border-color: #eadfed;
+}
+.admin-shell .admin-order-status-form .field {
+  color: #705b78;
+}
+.admin-shell .admin-order-status-form select {
+  border: 1px solid #e5d9eb;
+  border-radius: 12px;
+  background: #fff;
+  padding: .75rem .9rem;
+}
+@media (max-width: 639px) {
+  .admin-shell .admin-order-total {
+    width: 100%;
+    min-width: 0;
+    text-align: left;
+  }
+  .admin-shell .admin-order-summary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-shell .admin-order-detail-section {
+    padding: .85rem;
+  }
+}
