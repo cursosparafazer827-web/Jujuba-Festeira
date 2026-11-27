@@ -87,7 +87,7 @@ export default function CatalogBrowser({ categories, products }: Props) {
                   </p>
                   <div className="jf-product-bottom mt-4 flex items-center justify-between gap-3">
                     <strong className="jf-product-price text-lg text-berry">{money(product.base_price_cents)}</strong>
-                    <Link className="jf-product-link btn btn-light text-sm" href={"/produto/" + product.slug}>Ver produto</Link>
+                    <Link className="jf-product-link btn btn-light text-sm" href={"/produto/" + product.slug} aria-label={`Ver produto: ${product.name}`}>Ver produto</Link>
                   </div>
                 </div>
               </article>
