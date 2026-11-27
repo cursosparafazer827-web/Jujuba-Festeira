@@ -3030,3 +3030,93 @@ button, input, textarea, select { font: inherit; }
   .site-shell .jf-featured-card,
   .site-shell .jf-featured-image img { transition: none; }
 }
+
+
+/* Etapa 2 — resumo claro da escolha antes de seguir para o WhatsApp */
+.site-shell .jf-order-summary {
+  margin-top: 1.35rem;
+  padding: clamp(1rem, 2.5vw, 1.35rem);
+  border: 1px solid #e8dced;
+  border-radius: 19px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(246,200,240,.2), transparent 10rem),
+    linear-gradient(135deg, #fbf7fd, #fffafd);
+}
+.site-shell .jf-order-summary-heading {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+.site-shell .jf-summary-sparkle {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  place-items: center;
+  border-radius: 9px;
+  background: #f2e8f7;
+  color: #9870a4;
+  font-size: .85rem;
+}
+.site-shell .jf-summary-product {
+  margin: .7rem 0 .55rem;
+  color: #57465f;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.site-shell .jf-summary-option {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .35rem .8rem;
+  padding: .65rem 0;
+  border-top: 1px solid #eee5f2;
+  color: #8b7c92;
+  font-size: .82rem;
+}
+.site-shell .jf-summary-option strong {
+  color: #6d5679;
+  font-size: .86rem;
+  text-align: right;
+}
+.site-shell .jf-summary-total {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .35rem .8rem;
+  padding-top: .7rem;
+  border-top: 1px solid #eee5f2;
+}
+.site-shell .jf-summary-total > span {
+  color: #786b80;
+  font-size: .84rem;
+  font-weight: 750;
+}
+.site-shell .jf-summary-total .jf-current-price {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+.site-shell .jf-summary-footnote {
+  margin: .55rem 0 0;
+  color: #92849a;
+  font-size: .74rem;
+  line-height: 1.55;
+}
+.site-shell .jf-whatsapp-submit {
+  min-height: 56px;
+  gap: .4rem;
+  font-size: .96rem;
+}
+.site-shell .jf-whatsapp-submit:disabled {
+  opacity: .55;
+}
+@media (max-width: 520px) {
+  .site-shell .jf-summary-option { align-items: flex-start; flex-direction: column; }
+  .site-shell .jf-summary-option strong { text-align: left; }
+  .site-shell .jf-summary-total .jf-current-price { font-size: 1.45rem; }
+  .site-shell .jf-whatsapp-submit { min-height: 54px; width: 100%; }
+}
