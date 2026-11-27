@@ -2611,3 +2611,193 @@ button, input, textarea, select { font: inherit; }
   .admin-shell .admin-stat-chart [role="img"] > div > span:first-child { font-size: .68rem; }
   .admin-shell .admin-stat-products li { align-items: flex-start; }
 }
+
+
+/* Identidade visual consistente da navegação administrativa */
+.admin-shell {
+  min-height: 100vh;
+  background: #f8f6fa;
+  color: #493d50;
+}
+.admin-shell .admin-sidebar {
+  z-index: 30;
+  background: linear-gradient(180deg, #3d1b68 0%, #351078 58%, #2e0d68 100%);
+  box-shadow: 8px 0 28px rgba(48,24,77,.09);
+}
+.admin-shell .admin-sidebar-brand {
+  min-height: 104px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-color: rgba(255,255,255,.13);
+  background: rgba(255,255,255,.025);
+}
+.admin-shell .admin-sidebar-brand > a {
+  width: fit-content;
+  border-radius: 8px;
+  font-size: 1.75rem;
+  letter-spacing: -.045em;
+}
+.admin-shell .admin-sidebar-brand > p {
+  color: #d9c7ed;
+  font-size: .65rem;
+  font-weight: 750;
+  letter-spacing: .17em;
+}
+.admin-shell .admin-sidebar-navigation {
+  padding: 1.35rem 1rem;
+}
+.admin-shell .admin-sidebar-navigation > p {
+  padding-inline: .45rem;
+  color: #d2b9e9;
+  font-size: .64rem;
+}
+.admin-shell .admin-sidebar nav { gap: .55rem; }
+.admin-shell .admin-sidebar nav > div > button {
+  min-height: 56px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  padding-inline: .8rem;
+  color: #f2eafa;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+.admin-shell .admin-sidebar nav > div > button:hover {
+  border-color: rgba(255,255,255,.12);
+  background: rgba(255,255,255,.09);
+}
+.admin-shell .admin-sidebar nav > div > button[aria-expanded="true"] {
+  border-color: rgba(255,255,255,.15);
+  background: linear-gradient(110deg, #7546a7, #633394);
+  box-shadow: 0 7px 18px rgba(20,7,39,.18);
+}
+.admin-shell .admin-sidebar nav > div > button > span:first-child {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 11px;
+  background: rgba(255,255,255,.1);
+}
+.admin-shell .admin-sidebar nav > div > div {
+  margin-left: 1.1rem;
+  padding-left: .8rem;
+  border-color: rgba(255,255,255,.24);
+}
+.admin-shell .admin-sidebar nav > div > div a {
+  display: flex;
+  min-height: 43px;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: .65rem .8rem;
+  color: #e7daf4;
+  font-size: .82rem;
+  line-height: 1.35;
+}
+.admin-shell .admin-sidebar nav > div > div a:hover {
+  border-color: rgba(255,255,255,.12);
+  background: rgba(255,255,255,.09);
+  color: #fff;
+}
+.admin-shell .admin-sidebar > div:last-child {
+  border-color: rgba(255,255,255,.13);
+  color: #d5c1e9;
+}
+.admin-shell .admin-topbar {
+  position: relative;
+  z-index: 10;
+  min-height: 64px;
+  border-color: #ece4f0;
+  background: rgba(255,255,255,.94);
+  padding-inline: clamp(1rem, 2.5vw, 2rem);
+  box-shadow: 0 3px 15px rgba(79,55,95,.035);
+}
+.admin-shell .admin-topbar > span {
+  color: #817389;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+.admin-shell .admin-topbar > a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eadfed;
+  border-radius: 999px;
+  background: #fbf7fd;
+  padding: .55rem 1rem;
+  color: #765486;
+  font-size: .8rem;
+  font-weight: 750;
+  transition: background .18s ease, border-color .18s ease;
+}
+.admin-shell .admin-topbar > a:hover {
+  border-color: #d8c4e1;
+  background: #f4ebf8;
+}
+.admin-shell .admin-sidebar button:focus-visible,
+.admin-shell .admin-sidebar a:focus-visible,
+.admin-shell .admin-topbar a:focus-visible {
+  outline: 3px solid #e7c6f2;
+  outline-offset: 3px;
+}
+@media (max-width: 767px) {
+  .admin-shell .admin-sidebar {
+    position: relative;
+    box-shadow: 0 8px 22px rgba(48,24,77,.12);
+  }
+  .admin-shell .admin-sidebar-brand {
+    min-height: 82px;
+    padding: 1rem 1.25rem;
+  }
+  .admin-shell .admin-sidebar-navigation {
+    padding: .85rem 1rem 1rem;
+  }
+  .admin-shell .admin-sidebar nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .55rem;
+  }
+  .admin-shell .admin-sidebar nav > div { min-width: 0; }
+  .admin-shell .admin-sidebar nav > div > button {
+    min-height: 58px;
+    height: 100%;
+    align-items: center;
+    gap: .45rem;
+    padding: .55rem;
+    font-size: .75rem;
+    line-height: 1.25;
+  }
+  .admin-shell .admin-sidebar nav > div > button > span:first-child {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    font-size: .95rem;
+  }
+  .admin-shell .admin-sidebar nav > div > button > span:last-child { margin-left: auto; }
+  .admin-shell .admin-sidebar nav > div > div {
+    margin: .45rem 0 0;
+    padding-left: .45rem;
+  }
+  .admin-shell .admin-sidebar nav > div > div a {
+    min-height: 40px;
+    padding: .55rem .6rem;
+    font-size: .74rem;
+  }
+  .admin-shell .admin-topbar {
+    min-height: 56px;
+    padding-inline: 1rem;
+  }
+}
+@media (max-width: 420px) {
+  .admin-shell .admin-sidebar nav { grid-template-columns: minmax(0, 1fr); }
+  .admin-shell .admin-sidebar nav > div > button {
+    min-height: 52px;
+    padding-inline: .75rem;
+    font-size: .82rem;
+  }
+  .admin-shell .admin-sidebar nav > div > button > span:first-child {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+  }
+}
