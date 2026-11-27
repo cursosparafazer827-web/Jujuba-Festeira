@@ -84,6 +84,7 @@ export default async function ProductDetails({ params }: { params: Promise<{ slu
                 photos={photos}
                 productName={product.name}
                 className="jf-product-carousel"
+                priority
               />
             </div>
             {photos.length > 1 ? (
