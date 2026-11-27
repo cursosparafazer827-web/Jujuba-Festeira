@@ -146,32 +146,47 @@ export default function ProductVariantSelector({
             <p>Preencha os dados para prepararmos a sua encomenda.</p>
           </div>
           <div className="jf-customization-fields">
-            {fields.map((field) => (
-              <label key={field.id} className="jf-custom-field">
-                <span className="jf-form-label">
-                  {field.label}{field.is_required ? <span className="jf-required-mark"> *</span> : null}
-                </span>
-                {field.field_type === "textarea" ? (
-                  <textarea name={field.field_key} required={field.is_required} placeholder={field.placeholder || ""} rows={3} className="jf-form-control jf-textarea" />
-                ) : field.field_type === "select" ? (
-                  <select name={field.field_key} required={field.is_required} defaultValue="" className="jf-form-control">
-                    <option value="">Selecione uma opção</option>
-                    {(field.options || []).map((option) => <option key={option} value={option}>{option}</option>)}
-                  </select>
-                ) : field.field_type === "radio" ? (
-                  <span className="jf-choice-list">
-                    {(field.options || []).map((option, index) => <label key={option} className="jf-choice-item"><input type="radio" name={field.field_key} value={option} required={field.is_required && index === 0} /><span>{option}</span></label>)}
-                  </span>
-                ) : field.field_type === "checkbox" ? (
-                  <span className="jf-choice-list">
-                    {(field.options || []).map((option) => <label key={option} className="jf-choice-item"><input type="checkbox" name={field.field_key} value={option} /><span>{option}</span></label>)}
-                  </span>
-                ) : (
-                  <input name={field.field_key} type={field.field_type === "number" ? "number" : "text"} min={field.field_type === "number" ? 1 : undefined} required={field.is_required} placeholder={field.placeholder || ""} className="jf-form-control" />
-                )}
-                {field.help_text ? <span className="jf-field-help">{field.help_text}</span> : null}
-              </label>
-            ))}
+            {fields.map((field) => {
+              const inputId = `custom-${field.id}`;
+              const label = <span className="jf-form-label">{field.label}{field.is_required ? <span className="jf-required-mark"> *</span> : null}</span>;
+              return (
+                <div key={field.id} className="jf-custom-field">
+                  {field.field_type === "radio" || field.field_type === "checkbox" ? (
+                    <fieldset className="min-w-0">
+                      <legend className="jf-form-label">{field.label}{field.is_required ? <span className="jf-required-mark"> *</span> : null}</legend>
+                      <span className="jf-choice-list">
+                        {(field.options || []).map((option, index) => (
+                          <label key={option} className="jf-choice-item">
+                            <input
+                              type={field.field_type}
+                              name={field.field_key}
+                              value={option}
+                              required={field.field_type === "radio" && field.is_required && index === 0}
+                            />
+                            <span>{option}</span>
+                          </label>
+                        ))}
+                      </span>
+                    </fieldset>
+                  ) : (
+                    <>
+                      <label htmlFor={inputId}>{label}</label>
+                      {field.field_type === "textarea" ? (
+                        <textarea id={inputId} name={field.field_key} required={field.is_required} placeholder={field.placeholder || ""} rows={3} className="jf-form-control jf-textarea" />
+                      ) : field.field_type === "select" ? (
+                        <select id={inputId} name={field.field_key} required={field.is_required} defaultValue="" className="jf-form-control">
+                          <option value="">Selecione uma opção</option>
+                          {(field.options || []).map((option) => <option key={option} value={option}>{option}</option>)}
+                        </select>
+                      ) : (
+                        <input id={inputId} name={field.field_key} type={field.field_type === "number" ? "number" : "text"} min={field.field_type === "number" ? 1 : undefined} required={field.is_required} placeholder={field.placeholder || ""} className="jf-form-control" />
+                      )}
+                    </>
+                  )}
+                  {field.help_text ? <span className="jf-field-help">{field.help_text}</span> : null}
+                </div>
+              );
+            })}
           </div>
           <p className="jf-required-legend">* Campos obrigatórios</p>
         </div>
