@@ -2855,3 +2855,178 @@ button, input, textarea, select { font: inherit; }
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
+
+
+/* Etapa 1 — novas secções da página inicial */
+.site-shell .jf-featured-section,
+.site-shell .jf-how-section,
+.site-shell .jf-faq-section {
+  position: relative;
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+}
+.site-shell .jf-featured-section {
+  background: linear-gradient(145deg, rgba(249,243,254,.78), rgba(255,255,255,.92) 55%, rgba(246,230,255,.5));
+}
+.site-shell .jf-section-heading {
+  max-width: 680px;
+  margin: 0 auto clamp(1.8rem, 4vw, 2.7rem);
+  text-align: center;
+}
+.site-shell .jf-section-heading .jf-eyebrow,
+.site-shell .jf-faq-intro .jf-eyebrow {
+  display: inline-block;
+  margin-bottom: .65rem;
+  color: #9870a4;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.site-shell .jf-section-heading h2 { margin-bottom: .75rem; }
+.site-shell .jf-section-heading p,
+.site-shell .jf-faq-intro > p { color: var(--jf-muted); }
+.site-shell .jf-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.site-shell .jf-featured-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(220,204,233,.78);
+  border-radius: 23px;
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(112,83,135,.075);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.site-shell .jf-featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 42px rgba(112,83,135,.13);
+}
+.site-shell .jf-featured-image {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8effb, #eee7fb);
+}
+.site-shell .jf-featured-image img { object-fit: contain; padding: .8rem; transition: transform .35s ease; }
+.site-shell .jf-featured-card:hover .jf-featured-image img { transform: scale(1.035); }
+.site-shell .jf-featured-placeholder {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  color: #9870a4;
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+.site-shell .jf-featured-copy { padding: 1.25rem 1.35rem 1.4rem; }
+.site-shell .jf-featured-copy h3 { margin: 0 0 .45rem; font-size: 1.25rem; }
+.site-shell .jf-featured-copy p {
+  min-height: 3.2em;
+  margin: 0 0 .9rem;
+  color: var(--jf-muted);
+  font-size: .9rem;
+}
+.site-shell .jf-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  color: #805d91;
+  font-size: .88rem;
+  font-weight: 800;
+}
+.site-shell .jf-text-link:hover { color: #b36cae; }
+.site-shell .jf-featured-action { margin-top: 1.8rem; text-align: center; }
+.site-shell .jf-how-section { background: rgba(255,255,255,.72); }
+.site-shell .jf-how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-shell .jf-how-grid li {
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 1.8rem);
+  border: 1px solid rgba(220,204,233,.75);
+  border-radius: 21px;
+  background: linear-gradient(145deg, #fff, #fcf8fd);
+  box-shadow: 0 9px 26px rgba(112,83,135,.055);
+}
+.site-shell .jf-step-number {
+  display: inline-grid;
+  width: 43px;
+  height: 43px;
+  margin-bottom: 1rem;
+  place-items: center;
+  border-radius: 14px;
+  background: #f1e7f7;
+  color: #805d91;
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+.site-shell .jf-how-grid h3 { margin-bottom: .55rem; font-size: 1.25rem; }
+.site-shell .jf-how-grid p { margin: 0; color: var(--jf-muted); font-size: .92rem; }
+.site-shell .jf-faq-section {
+  background: linear-gradient(120deg, rgba(246,230,255,.55), rgba(249,243,254,.8));
+}
+.site-shell .jf-faq-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+.site-shell .jf-faq-intro h2 { margin-bottom: .9rem; }
+.site-shell .jf-faq-intro > p { margin-bottom: 1.4rem; }
+.site-shell .jf-faq-list { display: grid; gap: .75rem; }
+.site-shell .jf-faq-list details {
+  border: 1px solid rgba(220,204,233,.85);
+  border-radius: 16px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 5px 18px rgba(112,83,135,.045);
+}
+.site-shell .jf-faq-list summary {
+  position: relative;
+  padding: 1.1rem 3rem 1.1rem 1.2rem;
+  color: #6f587d;
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+.site-shell .jf-faq-list summary::-webkit-details-marker { display: none; }
+.site-shell .jf-faq-list summary::after {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  color: #9870a4;
+  content: "+";
+  font-size: 1.35rem;
+  transform: translateY(-50%);
+}
+.site-shell .jf-faq-list details[open] summary::after { content: "−"; }
+.site-shell .jf-faq-list details p {
+  margin: 0;
+  padding: 0 1.2rem 1.15rem;
+  color: var(--jf-muted);
+  font-size: .92rem;
+}
+@media (max-width: 760px) {
+  .site-shell .jf-featured-grid,
+  .site-shell .jf-how-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-shell .jf-faq-layout { grid-template-columns: minmax(0, 1fr); gap: 1.6rem; }
+}
+@media (max-width: 540px) {
+  .site-shell .jf-featured-grid,
+  .site-shell .jf-how-grid { grid-template-columns: minmax(0, 1fr); }
+  .site-shell .jf-featured-copy p { min-height: 0; }
+  .site-shell .jf-faq-list summary { padding: 1rem 2.7rem 1rem 1rem; }
+  .site-shell .jf-faq-list details p { padding-inline: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-shell .jf-featured-card,
+  .site-shell .jf-featured-image img { transition: none; }
+}
