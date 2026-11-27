@@ -14,6 +14,7 @@ type Product = {
   category_id: string | null;
   is_featured: boolean;
   product_images: { image_url: string | null; alt_text: string | null; is_primary: boolean; sort_order: number }[] | null;
+  product_variants: { price_cents: number; is_active: boolean }[] | null;
 };
 
 type Props = { categories: Category[]; products: Product[] };
@@ -76,6 +77,10 @@ export default function CatalogBrowser({ categories, products }: Props) {
         <div className="jf-product-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProducts.map((product) => {
             const photos = product.product_images || [];
+            const activeVariants = (product.product_variants || []).filter((variant) => variant.is_active);
+            const prices = activeVariants.map((variant) => variant.price_cents);
+            const displayPrice = prices.length ? Math.min(...prices) : product.base_price_cents;
+            const hasVariablePrices = new Set(prices).size > 1;
             return (
               <article key={product.id} className="jf-product-card panel overflow-hidden p-0">
                 <div className="jf-product-photo"><ProductPhotoCarousel photos={photos} productName={product.name} className="h-52" imageFit="contain" /></div>
@@ -86,7 +91,9 @@ export default function CatalogBrowser({ categories, products }: Props) {
                     {product.short_description || "Personalize este produto para a sua festa."}
                   </p>
                   <div className="jf-product-bottom mt-4 flex items-center justify-between gap-3">
-                    <strong className="jf-product-price text-lg text-berry">{money(product.base_price_cents)}</strong>
+                    <strong className="jf-product-price text-lg text-berry">
+                      {hasVariablePrices ? "A partir de " : ""}{money(displayPrice)}
+                    </strong>
                     <Link className="jf-product-link btn btn-light text-sm" href={"/produto/" + product.slug} aria-label={`Ver produto: ${product.name}`}>Ver produto</Link>
                   </div>
                 </div>
