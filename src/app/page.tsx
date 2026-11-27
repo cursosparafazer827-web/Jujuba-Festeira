@@ -95,7 +95,6 @@ export default async function Home() {
                 fill
                 sizes="(max-width: 760px) 90vw, 44vw"
                 className="jf-about-photo"
-                unoptimized
               />
             ) : (
               <div className="jf-about-placeholder" aria-hidden="true">
