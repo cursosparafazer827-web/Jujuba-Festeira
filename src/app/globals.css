@@ -2841,3 +2841,17 @@ button, input, textarea, select { font: inherit; }
   78% { opacity: .85; }
   100% { opacity: 0; transform: translateX(125%); }
 }
+
+
+/* Cabeçalho público fixo durante a navegação */
+.site-shell .jf-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  border-bottom: 1px solid rgba(205,191,232,.72);
+  background: rgba(252,249,253,.97);
+  box-shadow: 0 8px 28px rgba(112,83,135,.09);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
