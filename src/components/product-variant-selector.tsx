@@ -31,6 +31,34 @@ type Props = {
 const money = (cents: number) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(cents / 100);
 
+const colorNames = new Set([
+  "amarelo", "amarela", "azul", "bege", " branco", "branca", "cinza",
+  "dourado", "dourada", "laranja", "lilás", "lilas", "marrom", "preto",
+  "preta", " rosa", "roxo", "roxa", "verde", "vermelho", "vermelha",
+]);
+
+function whatsappFieldLabel(field: CustomizationField, values: string[]) {
+  const label = field.label.trim();
+  const normalizedLabel = label.toLocaleLowerCase("pt-BR");
+  const normalizedOptions = (field.options || []).map((option) => option.trim().toLocaleLowerCase("pt-BR"));
+  const labelLooksLikeOptions = normalizedOptions.length > 1 &&
+    normalizedLabel.replace(/\\s+/g, "") === normalizedOptions.join(",").replace(/\\s+/g, "");
+
+  if (labelLooksLikeOptions) {
+    const selectedValues = values.map((value) => value.trim().toLocaleLowerCase("pt-BR"));
+    if (selectedValues.length && selectedValues.every((value) => colorNames.has(value))) {
+      return "Cor escolhida";
+    }
+    return "Preferência adicional";
+  }
+
+  if (["faça a sua escolha", "faca a sua escolha", "escolha"].includes(normalizedLabel)) {
+    return "Escolha da personalização";
+  }
+
+  return label || "Personalização";
+}
+
 export default function ProductVariantSelector({
   productName,
   basePriceCents,
@@ -56,22 +84,30 @@ export default function ProductVariantSelector({
       window.alert(`Por favor, preencha: ${missingRequired.label}.`);
       return;
     }
+
     const details = fields
       .map((field) => {
         const values = field.field_type === "checkbox"
           ? formData.getAll(field.field_key).map((value) => String(value).trim()).filter(Boolean)
           : [String(formData.get(field.field_key) || "").trim()].filter(Boolean);
-        return values.length ? `${field.label}: ${values.join(", ")}` : null;
+        if (!values.length) return null;
+        return `• ${whatsappFieldLabel(field, values)}: ${values.join(", ")}`;
       })
       .filter((value): value is string => Boolean(value));
 
     const message = [
-      `Olá! Gostaria de encomendar: ${productName}.`,
-      selected ? `Opção escolhida: ${selected.name}.` : null,
-      `Preço apresentado: ${money(price)}.`,
-      details.length ? "Dados para personalização:" : null,
+      "Olá! Gostaria de fazer uma encomenda. 🎉",
+      "",
+      "*RESUMO DO PEDIDO*",
+      `*Produto:* ${productName}`,
+      selected ? `*Opção escolhida:* ${selected.name}` : null,
+      `*Preço apresentado:* ${money(price)}`,
+      details.length ? "" : null,
+      details.length ? "*DADOS PARA PERSONALIZAÇÃO*" : null,
       ...details,
-    ].filter(Boolean).join("\n");
+      "",
+      "Aguardo a confirmação. Obrigado(a)!",
+    ].filter((line) => line !== null).join("\\n");
 
     const href = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
     window.location.assign(href);
