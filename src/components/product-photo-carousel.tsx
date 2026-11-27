@@ -54,7 +54,9 @@ export default function ProductPhotoCarousel({
           <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-1 text-xs font-semibold text-white">{active + 1}/{images.length}</span>
           <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
             {images.map((photo, index) => (
-              <button key={`${photo.image_url}-${index}`} type="button" aria-label={`Ver fotografia ${index + 1}`} onClick={() => setActive(index)} className={`h-2.5 w-2.5 rounded-full border border-white ${active === index ? "bg-white" : "bg-white/40"}`} />
+              <button key={`${photo.image_url}-${index}`} type="button" aria-label={`Ver fotografia ${index + 1}`} onClick={() => setActive(index)} aria-current={active === index ? "true" : undefined} className="rounded-full">
+                <span aria-hidden="true" />
+              </button>
             ))}
           </div>
         </>
