@@ -32,9 +32,9 @@ const money = (cents: number) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(cents / 100);
 
 const colorNames = new Set([
-  "amarelo", "amarela", "azul", "bege", " branco", "branca", "cinza",
+  "amarelo", "amarela", "azul", "bege", "branco", "branca", "cinza",
   "dourado", "dourada", "laranja", "lilás", "lilas", "marrom", "preto",
-  "preta", " rosa", "roxo", "roxa", "verde", "vermelho", "vermelha",
+  "preta", "rosa", "roxo", "roxa", "verde", "vermelho", "vermelha",
 ]);
 
 function whatsappFieldLabel(field: CustomizationField, values: string[]) {
@@ -42,7 +42,7 @@ function whatsappFieldLabel(field: CustomizationField, values: string[]) {
   const normalizedLabel = label.toLocaleLowerCase("pt-BR");
   const normalizedOptions = (field.options || []).map((option) => option.trim().toLocaleLowerCase("pt-BR"));
   const labelLooksLikeOptions = normalizedOptions.length > 1 &&
-    normalizedLabel.replace(/\\s+/g, "") === normalizedOptions.join(",").replace(/\\s+/g, "");
+    normalizedLabel.replace(/\s+/g, "") === normalizedOptions.join(",").replace(/\s+/g, "");
 
   if (labelLooksLikeOptions) {
     const selectedValues = values.map((value) => value.trim().toLocaleLowerCase("pt-BR"));
@@ -107,7 +107,7 @@ export default function ProductVariantSelector({
       ...details,
       "",
       "Aguardo a confirmação. Obrigado(a)!",
-    ].filter((line) => line !== null).join("\\n");
+    ].filter((line) => line !== null).join("\n");
 
     const href = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
     window.location.assign(href);
