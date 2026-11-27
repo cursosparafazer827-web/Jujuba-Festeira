@@ -13,7 +13,7 @@ export default async function Home() {
     supabase.from("categories").select("id,name,slug").eq("is_active", true).order("sort_order"),
     supabase
       .from("products")
-      .select("id,name,slug,short_description,base_price_cents,category_id,is_featured,product_images(image_url,alt_text,is_primary,sort_order)")
+      .select("id,name,slug,short_description,base_price_cents,category_id,is_featured,product_images(image_url,alt_text,is_primary,sort_order),product_variants(price_cents,is_active)")
       .eq("is_active", true)
       .order("is_featured", { ascending: false })
       .order("sort_order")
