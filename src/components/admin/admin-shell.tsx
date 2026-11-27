@@ -14,9 +14,9 @@ export default function AdminShell({ active, children }: Props) {
   ];
   return (
     <div className="admin-shell min-h-screen bg-[#f3f4f8] text-slate-800 md:flex">
-      <aside className="w-full shrink-0 bg-[#351078] text-white md:sticky md:top-0 md:flex md:h-screen md:w-[250px] md:flex-col">
-        <div className="border-b border-white/10 px-6 py-6"><Link href="/admin" className="text-2xl font-black tracking-tight text-white">jujuba<span className="text-pink-300">.</span></Link><p className="mt-1 text-xs text-violet-200">PAINEL DE ADMINISTRAÇÃO</p></div>
-        <div className="px-5 py-5"><p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-violet-300">Menu principal</p>
+      <aside className="admin-sidebar w-full shrink-0 bg-[#351078] text-white md:sticky md:top-0 md:flex md:h-screen md:w-[250px] md:flex-col">
+        <div className="admin-sidebar-brand border-b border-white/10 px-6 py-6"><Link href="/admin" className="text-2xl font-black tracking-tight text-white">jujuba<span className="text-pink-300">.</span></Link><p className="mt-1 text-xs text-violet-200">PAINEL DE ADMINISTRAÇÃO</p></div>
+        <div className="admin-sidebar-navigation px-5 py-5"><p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-violet-300">Menu principal</p>
           <nav aria-label="Navegação administrativa" className="grid gap-2">
             {sections.map(section => {
               const selected = active === section.key;
@@ -31,7 +31,7 @@ export default function AdminShell({ active, children }: Props) {
         </div>
         <div className="mt-auto hidden border-t border-white/10 p-5 text-xs leading-6 text-violet-200 md:block">Jujuba Festeira<br />Gestão da loja</div>
       </aside>
-      <div className="min-w-0 flex-1"><div className="flex min-h-14 items-center justify-between border-b border-slate-200 bg-white px-5 md:px-8"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Área administrativa</span><Link href="/" className="text-sm font-semibold text-[#7134ad] hover:underline">Ver loja ↗</Link></div>{children}</div>
+      <div className="min-w-0 flex-1"><div className="admin-topbar flex min-h-14 items-center justify-between border-b border-slate-200 bg-white px-5 md:px-8"><span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Área administrativa</span><Link href="/" className="text-sm font-semibold text-[#7134ad] hover:underline">Ver loja ↗</Link></div>{children}</div>
     </div>
   );
 }
