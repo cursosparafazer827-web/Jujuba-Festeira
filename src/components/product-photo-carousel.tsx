@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 type ProductPhoto = {
@@ -9,9 +10,21 @@ type ProductPhoto = {
   sort_order?: number;
 };
 
-type Props = { photos: ProductPhoto[]; productName: string; className?: string; imageFit?: "cover" | "contain" };
+type Props = {
+  photos: ProductPhoto[];
+  productName: string;
+  className?: string;
+  imageFit?: "cover" | "contain";
+  priority?: boolean;
+};
 
-export default function ProductPhotoCarousel({ photos, productName, className = "", imageFit = "cover" }: Props) {
+export default function ProductPhotoCarousel({
+  photos,
+  productName,
+  className = "",
+  imageFit = "cover",
+  priority = false,
+}: Props) {
   const images = [...photos]
     .filter((photo): photo is ProductPhoto & { image_url: string } => typeof photo.image_url === "string" && photo.image_url.length > 0)
     .sort((a, b) => Number(Boolean(b.is_primary)) - Number(Boolean(a.is_primary)) || (a.sort_order ?? 0) - (b.sort_order ?? 0));
@@ -25,7 +38,15 @@ export default function ProductPhotoCarousel({ photos, productName, className = 
 
   return (
     <div className={`relative overflow-hidden bg-pink-50 ${className}`}>
-      <img src={images[active].image_url!} alt={images[active].alt_text || productName} className={`h-full w-full ${imageFit === "contain" ? "object-contain" : "object-cover"}`} />
+      <Image
+        src={images[active].image_url}
+        alt={images[active].alt_text || productName}
+        fill
+        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 33vw"
+        priority={priority}
+        loading={priority ? "eager" : "lazy"}
+        className={`h-full w-full ${imageFit === "contain" ? "object-contain" : "object-cover"}`}
+      />
       {images.length > 1 ? (
         <>
           <button type="button" aria-label="Fotografia anterior" onClick={() => move(-1)} className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 px-3 py-2 text-lg font-bold text-berry shadow">‹</button>
