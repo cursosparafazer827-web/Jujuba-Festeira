@@ -141,18 +141,37 @@ export default function ProductVariantSelector({
         </div>
       ) : null}
 
-      <div className="jf-order-summary">
-        <span className="jf-price-caption">Preço apresentado</span>
-        <p className="jf-current-price">
-          {variants.length && !selected ? "Escolha uma opção" : money(price)}
+      <section className="jf-order-summary" aria-live="polite" aria-label="Resumo do pedido">
+        <div className="jf-order-summary-heading">
+          <span className="jf-summary-sparkle" aria-hidden="true">✦</span>
+          <span className="jf-price-caption">Resumo da sua escolha</span>
+        </div>
+        <p className="jf-summary-product">{productName}</p>
+        {variants.length > 0 ? (
+          <div className="jf-summary-option">
+            <span>Opção escolhida</span>
+            <strong>{selected ? selected.name : "Selecione uma opção acima"}</strong>
+          </div>
+        ) : null}
+        <div className="jf-summary-total">
+          <span>Preço apresentado</span>
+          <p className="jf-current-price">
+            {variants.length && !selected ? "Aguardando opção" : money(price)}
+          </p>
+        </div>
+        <p className="jf-summary-footnote">
+          {variants.length && !selected
+            ? "O valor será apresentado assim que escolher uma opção."
+            : "Confira os dados e continue para enviar a sua encomenda pelo WhatsApp."}
         </p>
-      </div>
+      </section>
       <button
         type="submit"
         className="btn jf-whatsapp-submit"
         disabled={variants.length > 0 && !selected}
       >
-        Consultar pelo WhatsApp
+        Continuar pelo WhatsApp
+        <span aria-hidden="true"> →</span>
       </button>
     </form>
   );
