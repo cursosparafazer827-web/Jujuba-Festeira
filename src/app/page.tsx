@@ -50,6 +50,41 @@ export default async function Home() {
         </div>
       </section>
 
+      {products?.some((product) => product.is_featured) ? (
+        <section className="jf-featured-section" aria-labelledby="jf-featured-title">
+          <div className="container">
+            <div className="jf-section-heading">
+              <span className="jf-eyebrow">Escolhas especiais</span>
+              <h2 id="jf-featured-title">Em destaque</h2>
+              <p>Algumas das peças que podem dar um toque especial à sua celebração.</p>
+            </div>
+            <div className="jf-featured-grid">
+              {products.filter((product) => product.is_featured).slice(0, 3).map((product) => {
+                const photo = (product.product_images || []).find((item) => item.is_primary && item.image_url)
+                  || (product.product_images || []).find((item) => item.image_url);
+                return (
+                  <article className="jf-featured-card" key={product.id}>
+                    <Link href={"/produto/" + product.slug} className="jf-featured-image">
+                      {photo?.image_url ? (
+                        <Image src={photo.image_url} alt={photo.alt_text || product.name} fill sizes="(max-width: 700px) 90vw, 30vw" />
+                      ) : (
+                        <div className="jf-featured-placeholder"><span>Feito para celebrar</span></div>
+                      )}
+                    </Link>
+                    <div className="jf-featured-copy">
+                      <h3>{product.name}</h3>
+                      <p>{product.short_description || "Uma peça especial para personalizar."}</p>
+                      <Link href={"/produto/" + product.slug} className="jf-text-link">Conhecer produto <span aria-hidden="true">→</span></Link>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+            <div className="jf-featured-action"><Link href="/#catalogo" className="btn btn-light">Ver todo o catálogo</Link></div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="jf-about-section" aria-labelledby="jf-about-title">
         <div className="container jf-about-grid">
           <div className="jf-about-visual">
@@ -97,6 +132,37 @@ export default async function Home() {
         {!products?.length ? (
           <p className="panel muted mt-6">Estamos a preparar o catálogo. Em breve teremos novidades!</p>
         ) : null}
+      </section>
+
+      <section className="jf-how-section" aria-labelledby="jf-how-title">
+        <div className="container">
+          <div className="jf-section-heading">
+            <span className="jf-eyebrow">É simples e especial</span>
+            <h2 id="jf-how-title">Como encomendar</h2>
+            <p>O caminho para transformar a sua ideia numa peça personalizada começa aqui.</p>
+          </div>
+          <ol className="jf-how-grid">
+            <li><span className="jf-step-number">01</span><h3>Escolha o produto</h3><p>Explore o catálogo e encontre a peça que combina com a sua celebração.</p></li>
+            <li><span className="jf-step-number">02</span><h3>Personalize</h3><p>Na página do produto, selecione as opções disponíveis e preencha os dados pedidos.</p></li>
+            <li><span className="jf-step-number">03</span><h3>Fale connosco</h3><p>Envie o seu pedido pelo WhatsApp para dar seguimento à encomenda.</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <section className="jf-faq-section" aria-labelledby="jf-faq-title">
+        <div className="container jf-faq-layout">
+          <div className="jf-faq-intro">
+            <span className="jf-eyebrow">Dúvidas frequentes</span>
+            <h2 id="jf-faq-title">Antes de escolher, estamos aqui para ajudar.</h2>
+            <p>Veja algumas respostas sobre a escolha e personalização dos produtos.</p>
+            <Link href="/#catalogo" className="btn">Explorar produtos</Link>
+          </div>
+          <div className="jf-faq-list">
+            <details><summary>Como faço uma encomenda?</summary><p>Escolha um produto, indique as opções de personalização disponíveis e envie o pedido pelo botão de WhatsApp na página do produto.</p></details>
+            <details><summary>Posso personalizar os produtos?</summary><p>Sim. As opções disponíveis aparecem na página de cada produto. Preencha os campos solicitados antes de enviar o pedido.</p></details>
+            <details><summary>O valor pode mudar conforme as opções?</summary><p>Sim. Quando um produto tem variantes com preços diferentes, o valor apresentado acompanha a opção selecionada.</p></details>
+          </div>
+        </div>
       </section>
 
       <SiteFooter whatsapp={whatsapp} />
