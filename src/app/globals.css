@@ -3120,3 +3120,34 @@ button, input, textarea, select { font: inherit; }
   .site-shell .jf-summary-total .jf-current-price { font-size: 1.45rem; }
   .site-shell .jf-whatsapp-submit { min-height: 54px; width: 100%; }
 }
+
+
+/* Acessibilidade: contraste e alvos de toque do carrossel público */
+.site-shell .jf-step-number { color: #684879; }
+.site-shell .jf-product-carousel button[aria-label^="Ver fotografia"] {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  place-items: center;
+}
+.site-shell .jf-product-carousel button[aria-label^="Ver fotografia"] > span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: rgba(255,255,255,.45);
+  box-shadow: 0 1px 4px rgba(40,25,50,.25);
+}
+.site-shell .jf-product-carousel button[aria-label^="Ver fotografia"][aria-current="true"] > span {
+  background: #fff;
+}
+.site-shell .jf-product-carousel button[aria-label^="Ver fotografia"]:focus-visible {
+  outline: 2px solid #684879;
+  outline-offset: 1px;
+}
