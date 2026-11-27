@@ -2801,3 +2801,43 @@ button, input, textarea, select { font: inherit; }
     flex-basis: 32px;
   }
 }
+
+
+/* Animação delicada de entrada do logótipo da marca */
+.site-shell .jf-brand {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  animation: jf-logo-arrive .9s cubic-bezier(.2,.75,.25,1) both;
+}
+.site-shell .jf-brand-logo {
+  transform-origin: center;
+  filter: drop-shadow(0 3px 8px rgba(118,84,134,.08));
+}
+.site-shell .jf-brand::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    112deg,
+    transparent 0%,
+    rgba(255,255,255,0) 34%,
+    rgba(255,255,255,.72) 49%,
+    rgba(255,255,255,0) 64%,
+    transparent 100%
+  );
+  content: "";
+  pointer-events: none;
+  transform: translateX(-125%);
+  animation: jf-logo-shine 1.35s ease-out .55s both;
+}
+@keyframes jf-logo-arrive {
+  from { opacity: 0; transform: translateY(12px) scale(.96); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes jf-logo-shine {
+  0% { opacity: 0; transform: translateX(-125%); }
+  18% { opacity: 1; }
+  78% { opacity: .85; }
+  100% { opacity: 0; transform: translateX(125%); }
+}
